@@ -8,23 +8,31 @@
     <link rel="stylesheet" href="styles.css">
 
     <style>
-        .page-content { background: #0a0a0b; padding: 0; }
+        .page-content { background: #ffffff; padding: 0; }
         .Subtitle-s { text-decoration: underline; margin-bottom: 1.2rem; }
 
         .service-hero {
             padding: 5rem 2rem;
-            color: #ffffff;
+            color: #0f172a;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(15,23,42,0.08);
         }
 
         .service-hero-container { max-width: 1000px; margin: 0 auto; }
-        .service-hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; }
-        .service-hero h2 { text-align: left; font-size: 1.5rem; margin: 1rem 0; }
-        .service-hero p { text-align: left; color: #cbd5e1; }
+        .service-hero h1 {
+            display: inline-block;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #06b6d4, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .service-hero h2 { text-align: left; font-size: 1.5rem; margin: 1rem 0; color: #0f172a; }
+        .service-hero p { text-align: left; color: #475569; }
 
         .service-hero ul { text-align: left; padding-left: 2rem; }
-        .service-hero li { color: #cbd5e1; margin-bottom: 0.75rem; }
+        .service-hero li { color: #475569; margin-bottom: 0.75rem; }
 
         .lead { font-size: 1.1rem; line-height: 1.6; }
 
@@ -47,11 +55,7 @@
 <nav class="navbar" id="navbar">
     <div class="nav-container">
         <a href="index.html" class="logo">
-            <img src="img/logo/clouduko.jpg" alt="Cloud UKO" class="logo-img">
-            <div>
-                <div class="logo-text">Cloud UKO</div>
-                <span class="logo-subtext">United Knowledge Operations</span>
-            </div>
+            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" class="logo-img">
         </a>
 
         <ul class="nav-links">
