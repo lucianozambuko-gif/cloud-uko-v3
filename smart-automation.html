@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Automation - Cloud UKO</title>
+    <meta name="description" content="Cloud UKO - Smart Automation services: workflow automation, invoicing, CRM automation and integrations.">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styling for Smart Automation */
+        .page-content {
+            background: #0a0a0b;
+            padding: 0;
+        }
+
+        .Subtitle-s {
+            text-decoration: underline;
+            margin-bottom: 1.2rem;
+        }
+
+        .service-hero {
+            padding: 5rem 2rem;
+            color: #ffffff;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .service-hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        .service-hero h2 {
+            text-align: left;
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin: 1rem 0 1rem 0;
+        }
+
+        .service-hero p {
+            text-align: left;
+            color: #cbd5e1;
+        }
+
+        .service-hero .lead {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .service-details {
+            padding: 4rem 2rem;
+        }
+
+        .content-container {
+            max-width: 700px;
+            border-radius: 12px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .content-container h2 {
+            color: #ffffff;
+            font-size: 1.75rem;
+            margin: 2.5rem 0 1rem 0;
+            border-bottom: 2px solid rgba(34, 197, 94, 0.5);
+            padding-bottom: 0.75rem;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .content-container h2:first-child {
+            margin-top: 0;
+        }
+
+        .content-container h3 {
+            color: #e2e8f0;
+            font-size: 1.25rem;
+            margin: 1.75rem 0 0.75rem 0;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .content-container p {
+            color: #cbd5e1;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        .cta-row {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+        }
+
+        .cta-row .btn {
+            text-align: center;
+            padding: 1rem 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .service-hero {
+                padding: 3rem 1.5rem;
+            }
+
+            .content-container {
+                padding: 1.5rem;
+            }
+
+            .content-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .cta-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .cta-row .btn {
+                flex: auto;
+                padding: 0.85rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/logo/clouduko.jpg" alt="Cloud UKO" class="logo-img">
+                <div>
+                    <div class="logo-text">Cloud UKO</div>
+                    <span class="logo-subtext">United Knowledge Operations</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="service.html" class="nav-link active">Services</a></li>
+                <li><a href="demos.html" class="nav-link">Demos</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <a href="contact.html" class="get-started">Get Started</a>
+
+            <!-- Mobile menu toggle button (hamburger) -->
+            <button class="mobile-menu-toggle" id="mobile-toggle">
+                <span></span><!-- Top line of hamburger -->
+                <span></span><!-- Middle line of hamburger -->
+                <span></span><!-- Bottom line of hamburger -->
+            </button>
+        </div>
+
+        <!-- Mobile navigation menu (hidden by default) -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="service.html" class="nav-link active">Services</a></li>
+                <li><a href="demos.html" class="nav-link">Demos</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <section class="service-hero">
+            <div class="service-hero-container">
+                <h1>Smart Automation</h1>
+                <h2>
+                    Small Businesses
+                </h2>
+
+                <p class="Subtitle-s">
+                    (e.g. local shops, salons, freelancers, small online stores)</p> 
+                </p>
+                <p class="lead">
+
+Automation Solutions
+• Client Booking & Follow-up System
+Automate customer bookings, confirmations, and reminders using n8n
+linked with WhatsApp or Gmail.
+Solves: Missed appointments & manual scheduling.
+• Invoice & Payment Tracking
+Automatically send invoices and track payments using Airtable, Google
+Sheets, and PayPal/Stripe.
+Solves: Time wasted on billing and financial errors.
+• Social Media Posting Bot (AI-Powered)
+AI creates and schedules social media posts using business info and
+latest trends.
+Solves: Inconsistent posting, lack of online presence.
+AI Marketing & ROI
+• AI Email Campaigns: AI crafts personalized messages to boost sales.
+• AI Ad Copywriting: Generate ad content that converts faster.
+• ROI: Typically increases monthly sales by 15-25%.
+Example: If sales are R20,000/month → Gain ~R3,000-R5,000 extra
+monthly.
+Estimated Cost Savings
+• Reduce admin time by up to 60%.
+• Save ±R4,000-R6,000/month in manual labor or software subscriptions.</p>
+<h2>
+ Medium Businesses
+</h2>
+
+<p class="Subtitle-s">
+    (e.g. agencies, e-commerce stores, logistics, beauty studios)
+</p>
+<p class="lead">
+Automation Solutions
+• CRM & Lead Automation
+Automatically capture leads from forms, WhatsApp, or emails into CRM
+(Airtable/HubSpot).
+Solves: Lost leads & slow response times.
+• Inventory & Order Management
+Use n8n to sync stock between your online store, POS, and supplier
+systems.
+Solves: Out-of-stock issues and double-selling.
+• Employee Workflow Automation
+Auto-assign tasks, update Airtable/Notion when a new order or client
+request comes in.
+Solves: Team communication breakdowns.
+AI Marketing & ROI
+• AI Predictive Marketing: Analyze customer data to find best-selling
+products & top markets.
+• AI Chatbots: Handle FAQs and product recommendations on
+WhatsApp or website.
+• ROI: 20-40% higher conversions.
+Example: Monthly revenue R100,000 → +R20,000-R40,000 per month.
+Estimated Cost Savings
+• Save up to R15,000-R25,000/month by reducing repetitive admin tasks.
+• Improve efficiency by 70%, allowing smaller teams to handle larger
+workloads.
+
+<h2>
+    Large Business / Enterprise Automation
+</h2>
+
+<p class="Subtitle-s">
+    Ideal for: Banks, SaaS companies, corporate retailers, logistics groups, and enterprise clients.
+</p>
+
+<p>
+Setup (Once-Off)
+R35,000 - R80,000+ (depending on data complexity)
+Includes:
+• Full AI Automation Infrastructure (n8n + API integrations)
+• Custom MCP Server - hosts AI agents securely inside company
+network
+• RAG (Retrieval-Augmented Generation) System - connects the
+company's internal documents, policies, FAQs, and reports to an AI
+assistant that can instantly answer staff or customer queries using
+verified company knowledge
+• Automated Dashboards for analytics and performance tracking
+What the RAG System Does
+• Integrates company data (PDFs, Airtable, CRM, Notion, internal docs)
+into an AI knowledge base.
+• Employees or customers can chat with the data through a chatbot,
+Slack, or web app.
+• Every answer is sourced from internal documents — so it's accurate,
+private, and secure.
+ Business Benefits
+ Saves Time:
+Staff spend 70% less time searching for internal information.
+→ A team of 50 can save up to R120,000+ monthly in lost time.
+ Cuts Support Costs:
+AI answers up to 80% of common questions instantly.
+→ Reduce customer support costs by R50,000-R100,000/month.
+ Improves Decision-Making:
+Executives get real-time insights from AI dashboards, eliminating slow
+manual reporting.
+ Boosts Efficiency:
+Integrates with n8n to automate workflows directly from answers.
+Example: “Show all unpaid invoices” → AI fetches & automates the task.
+
+</p></p>
+<div class="cta-row">
+                    <a href="contact.html" class="btn btn-primary">Request Automation Audit →</a>
+                    <a href="service.html" class="btn btn-secondary">Back to Services</a>
+                </div>
+
+        </div>
+
+        </section>
+    </main>
+
+ <!--
+    ==========================================
+    FOOTER SECTION
+    ==========================================
+    Website footer with company information and navigation links.
+    Includes logo, company description, and secondary navigation.
+    Provides additional contact and legal information.
+    ==========================================
+    -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="footer-logo-icon">
+                    <img src="img/logo/clouduko.jpg" alt="Cloud UKO" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                </div>
+                <div>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: white;">Cloud UKO</div>
+                    <div style="font-size: 0.75rem; color: #9ca3af;">United Knowledge Operations</div>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="service.html">Services</a>
+                <!-- <a href="projects.html">Projects</a> -->
+                <a href="demos.html">Demos</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            
+            <p class="footer-text">
+                © 2025 Cloud UKO. Transforming businesses through integrated digital solutions.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Navigation Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('navbar');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Mobile menu toggle
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    mobileToggle.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

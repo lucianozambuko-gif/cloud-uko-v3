@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>uko-logistics</title>
+    <meta name="description" content="Specialising in mining logistics facilitation in the DRC.">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styling for Smart Automation */
+        .page-content {
+            background: #0a0a0b;
+            padding: 0;
+        }
+
+        .Subtitle-s {
+            text-decoration: underline;
+            margin-bottom: 1.2rem;
+        }
+
+        .service-hero {
+            
+            padding: 5rem 2rem;
+            color: #ffffff;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .service-hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        .service-hero h2 {
+            text-align: left;
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin: 1rem 0 1rem 0;
+        }
+
+        .service-hero p {
+            text-align: left;
+            color: #cbd5e1;
+        }
+
+        .service-hero ul {
+            text-align: left;
+            padding-left: 2rem;
+            margin-left: 0;
+        }
+
+        .service-hero li {
+            color: #cbd5e1;
+            margin-bottom: 0.75rem;
+            text-align: left;
+        }
+
+        .service-hero .lead {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .service-details {
+            padding: 4rem 2rem;
+        }
+
+        .content-container {
+            max-width: 700px;
+            border-radius: 12px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .content-container h2 {
+            color: #ffffff;
+            font-size: 1.75rem;
+            margin: 2.5rem 0 1rem 0;
+            border-bottom: 2px solid rgba(34, 197, 94, 0.5);
+            padding-bottom: 0.75rem;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .content-container h2:first-child {
+            margin-top: 0;
+        }
+
+        .content-container h3 {
+            color: #e2e8f0;
+            font-size: 1.25rem;
+            margin: 1.75rem 0 0.75rem 0;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .content-container p {
+            color: #cbd5e1;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        .content-container ul {
+            text-align: left;
+            padding-left: 2rem;
+        }
+
+        .content-container li {
+            color: #cbd5e1;
+            margin-bottom: 0.75rem;
+            text-align: left;
+        }
+
+        .cta-row {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+        }
+
+        .cta-row .btn {
+            text-align: center;
+            padding: 1rem 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .service-hero {
+                padding: 3rem 1.5rem;
+            }
+
+            .content-container {
+                padding: 1.5rem;
+            }
+
+            .content-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .cta-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .cta-row .btn {
+                flex: auto;
+                padding: 0.85rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/logo/clouduko.jpg" alt="Cloud UKO" class="logo-img">
+                <div>
+                    <div class="logo-text">Cloud UKO</div>
+                    <span class="logo-subtext">United Knowledge Operations</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="service.html" class="nav-link active">Services</a></li>
+                <li><a href="demos.html" class="nav-link">Demos</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <a href="contact.html" class="get-started">Get Started</a>
+
+            <!-- Mobile menu toggle button (hamburger) -->
+            <button class="mobile-menu-toggle" id="mobile-toggle">
+                <span></span><!-- Top line of hamburger -->
+                <span></span><!-- Middle line of hamburger -->
+                <span></span><!-- Bottom line of hamburger -->
+            </button>
+        </div>
+
+        <!-- Mobile navigation menu (hidden by default) -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="service.html" class="nav-link active">Services</a></li>
+                <li><a href="demos.html" class="nav-link">Demos</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <section class="service-hero">
+            <div class="service-hero-container">
+                <h1>UKO Logistics</h1>
+                <h2>
+                    Connecting You to Trusted Experts. Simplifying Mining Operations. Ensuring Operational Excellence.
+                </h2>
+                <p class="lead">
+                    Specialising in mining logistics facilitation in the DRC, the services act as a reliable intermediary between mining companies and global service providers.
+                    All procurement, mining equipment supply, facility installation, and operational construction is professionally coordinated, connecting clients to the right, 
+                    trustworthy partners with extensive years of experience. Full operational support is provided without clients needing to manage the heavy workload themselves.
+
+<h2>
+    Mining Truck purchase and rental Facilitation
+</h2>
+
+<p>
+    Facilitating access to heavy-duty mining trucks, whether for purchase or rental, by connecting clients with trusted suppliers with proven expertise.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Coordinating the purchase, lease, or rental of mining trucks</li>
+        <li>Connecting clients to verified suppliers and fleet rental companies with extensive experience</li>
+        <li>Managing delivery schedules, fleet mobilisation, and operational readiness</li>
+        <li>Ensuring trucks meet operational and safety requirements through partner verification</li>
+        <li>Advising on vehicle selection tailored to mining project needs</li>
+    </ul>
+    <p>
+        Clients gain seamless access to reliable mining trucks without handling procurement or supplier relationships directly.
+    </p>
+    
+</p>
+
+</p>
+
+<p class="lead">
+<h2>
+    Facilitation of Mining facility supply And Construction
+</h2>
+
+<p>
+    Acting as a facilitator between mining companies and experienced construction and installation teams, ensuring facilities are built efficiently and safely.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Connecting clients to suppliers and contractors for processing plants and support infrastructure</li>
+        <li>Coordinating supply, installation, and construction schedules</li>
+        <li>Ensuring compliance with safety, environmental, and operational regulations</li>
+        <li>Overseeing the power, water, and material handling system installation</li>
+        <li>Providing progress updates and reporting on behalf of clients</li>
+    </ul>
+    <p>
+        The facilitation role ensures mining companies receive fully operational facilities without managing the operational workload.
+    </p>
+    
+</p>
+
+</p>
+
+<p class="lead">
+<h2>
+    Facilitation of Mining Machinery Provision
+</h2>
+
+<p>
+    Providing access to all types of mining machinery, from small processing units to industrial-scale plants and heavy-duty machines, through partners with extensive experience.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Connecting clients to verified machinery suppliers</li>
+        <li>Coordinating installation, commissioning, and on-site support</li>
+        <li>Arranging delivery and operational readiness checks</li>
+        <li>Facilitating maintenance agreements and ongoing technical support</li>
+        <li>Advising on equipment selection and scalability for mining operations</li>
+    </ul>
+    <p>
+        Clients benefit from high-quality mining machinery while all supplier coordination is handled professionally.
+    </p>
+    
+</p>
+
+</p>
+
+<p class="lead">
+<h2>
+    Mining Logistics and Supply Chain Facilitation
+</h2>
+
+<p>
+    Streamlined mining supply chain and logistics management ensure operational efficiency while reducing stress for mining companies.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Organising transport and delivery of heavy machinery and materials</li>
+        <li>Connecting clients to experienced logistics providers</li>
+        <li>Managing site mobilisation, inventory, and warehousing</li>
+        <li>Overseeing on-site delivery, installation, and operational readiness</li>
+        <li>Streamlining multi-party operations for complex mining projects</li>
+    </ul>
+    <p>
+        Facilitation guarantees timely, efficient, and reliable logistics while clients focus on production.
+    </p>
+    
+</p>
+
+</p>
+
+<div class="cta-row">
+                    <a href="contact.html" class="btn btn-primary">Request Automation Audit →</a>
+                    <a href="service.html" class="btn btn-secondary">Back to Services</a>
+                </div>
+
+        </div>
+
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="footer-logo-icon">
+                    <img src="img/logo/clouduko.jpg" alt="Cloud UKO" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                </div>
+                <div>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: white;">Cloud UKO</div>
+                    <div style="font-size: 0.75rem; color: #9ca3af;">United Knowledge Operations</div>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="service.html">Services</a>
+                <!-- <a href="projects.html">Projects</a> -->
+                <a href="demos.html">Demos</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            
+            <p class="footer-text">
+                © 2025 Cloud UKO. Transforming businesses through integrated digital solutions.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Navigation Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('navbar');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Mobile menu toggle
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    mobileToggle.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

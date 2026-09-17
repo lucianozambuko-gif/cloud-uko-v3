@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Cloud UKO</title>
+    <meta name="description" content="Get in touch with Cloud UKO for your digital transformation needs. Schedule a consultation and start your journey today.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Enhanced Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/logo/clouduko.jpg" alt="Cloud UKO" class="logo-img">
+                <div>
+                    <div class="logo-text">Cloud UKO</div>
+                    <span class="logo-subtext">United Knowledge Operations</span>
+                </div>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="service.html" class="nav-link">Services</a></li>
+                <li><a href="projects.html" class="nav-link">Projects</a></li>
+                <li><a href="demos.html" class="nav-link">Demos</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+
+            <a href="contact.html" class="get-started">Get Started</a>
+
+            <!-- Mobile menu toggle button (hamburger) -->
+            <button class="mobile-menu-toggle" id="mobile-toggle">
+                <span></span><!-- Top line of hamburger -->
+                <span></span><!-- Middle line of hamburger -->
+                <span></span><!-- Bottom line of hamburger -->
+            </button>
+        </div>
+
+        <!-- Mobile navigation menu (hidden by default) -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="service.html" class="nav-link">Services</a></li>
+                <li><a href="projects.html" class="nav-link">Projects</a></li>
+                <li><a href="demos.html" class="nav-link">Demos</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>Get In Touch</span>
+            </div>
+
+            <h1 class="hero-title">Ready to Transform Your Business?</h1>
+
+            <p class="hero-subtitle">
+                Schedule a consultation with our experts and discover how Cloud UKO can drive 
+                measurable growth and operational excellence for your organization.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="contact-container">
+            <div class="contact-grid">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h2>Let's Start Your Digital Transformation</h2>
+                    <p class="paragraph">
+                        Our team of experts is ready to help you unlock the full potential of your business 
+                        through integrated digital solutions that deliver proven results.
+                    </p>
+
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon email">
+                                <img src="img/icons/Mail.svg" alt="Cloud icon" />
+                            </div>
+                            <div class="contact-text">
+                                <h3>Email Us</h3>
+                                <p>info@clouduko.com</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon phone">
+                                <img src="img/icons/Phone.svg" alt="Cloud icon" />
+                            </div>
+                            <div class="contact-text">
+                                <h3>Call Us</h3>
+                                <p>+27 (74) 092 6666</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon location">
+                                <img src="img/icons/Navigation.svg" alt="Cloud icon" />
+                            </div>
+                            <div class="contact-text">
+                                <h3>Visit Us</h3>
+                                <p>Johannesburg, South Africa</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <div class="form-header">
+                        <h3 class="form-title">Schedule Your Consultation</h3>
+                        <p class="form-subtitle">Fill out the form below and we'll get back to you within 24 hours</p>
+                    </div>
+
+                    <div class="success-message" id="successMessage">
+                        Thank you! Your message has been sent successfully. We'll be in touch soon.
+                    </div>
+
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="firstName">First Name *</label>
+                                <input type="text" id="firstName" class="form-input" placeholder="John" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" class="form-input" placeholder="Doe" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email Address *</label>
+                                <input type="email" id="email" class="form-input" placeholder="john@company.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone Number</label>
+                                <input type="tel" id="phone" class="form-input" placeholder="+27 11 123-4567">
+                            </div>
+                        </div>
+
+                        <div class="form-group1">
+                            <label class="form-label" for="company">Company Name *</label>
+                            <input type="text" id="company" class="form-input" placeholder="Your Company Ltd" required>
+                        </div>
+
+                        <div class="form-group1">
+                            <label class="form-label">Interested Package</label>
+                            <div class="package-options">
+                                <div class="package-option" data-package="small">Small Business</div>
+                                <div class="package-option" data-package="medium">Medium Business</div>
+                                <div class="package-option" data-package="enterprise">Enterprise</div>
+                                <div class="package-option" data-package="consultation">Consultation</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group1">
+                            <label class="form-label" for="budget">Estimated Budget Range</label>
+                            <select id="budget" class="form-select">
+                                <option value="">Select budget range</option>
+                                <option value="under-50k">Under R 10,000</option>
+                                <option value="50k-100k">R 15,000 - R 35,000</option>
+                                <option value="100k-500k">R 50,000 - R 85,000</option>
+                                <option value="500k-1m">R 100,000 - R 200,000</option>
+                                <option value="over-1m">Over R 800,000</option>
+                                <option value="custom">Custom Amount</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group1" id="customBudgetGroup" style="display: none;">
+                            <label class="form-label" for="customBudget">Enter Custom Budget Amount</label>
+                            <input type="text" id="customBudget" class="form-input" placeholder="e.g., R 75,000 or R 2,500,000">
+                        </div>
+
+                        <div class="form-group1">
+                            <label class="form-label" for="message">Tell us about your project *</label>
+                            <textarea id="message" class="form-textarea" placeholder="Describe your business challenges, goals, and how we can help you achieve digital transformation..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="form-button">
+                            Send Message & Schedule Consultation →
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="benefits-container">
+            <div class="benefits-header">
+                <h2 class="benefits-title">Why Choose Cloud UKO?</h2>
+            </div>
+            <div class="benefits-grid">
+                <div class="feature-card">
+                    <h3 class="benefit-title">24-Hour Response</h3>
+                    <p class="benefit-description">Quick response time for all inquiries and consultations</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="benefit-title">Custom Solutions</h3>
+                    <p class="benefit-description">Tailored strategies designed specifically for your business</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="benefit-title">Proven Results</h3>
+                    <p class="benefit-description">Track record of 400%+ ROI across all client projects</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="benefit-title">Ongoing Support</h3>
+                    <p class="benefit-description">Continuous monitoring and optimization of your systems</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="footer-logo-icon">
+                    <img src="img/logo/clouduko.jpg" alt="Cloud UKO" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                </div>
+                <div>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: white;">Cloud UKO</div>
+                    <div style="font-size: 0.75rem; color: #9ca3af;">United Knowledge Operations</div>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="service.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="demos.html">Demos</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            
+            <p class="footer-text">
+                © 2025 Cloud UKO. Transforming businesses through integrated digital solutions.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Navigation Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('navbar');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const contactForm = document.getElementById('contactForm');
+            const packageOptions = document.querySelectorAll('.package-option');
+            const successMessage = document.getElementById('successMessage');
+
+            // Mobile menu toggle
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    mobileToggle.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Package selection
+            packageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    packageOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Custom budget functionality
+            const budgetSelect = document.getElementById('budget');
+            const customBudgetGroup = document.getElementById('customBudgetGroup');
+            
+            budgetSelect.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    customBudgetGroup.style.display = 'block';
+                } else {
+                    customBudgetGroup.style.display = 'none';
+                    document.getElementById('customBudget').value = '';
+                }
+            });
+
+            // Form submission
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(contactForm);
+                const selectedPackage = document.querySelector('.package-option.selected');
+                
+                // Add selected package to form data
+                if (selectedPackage) {
+                    formData.append('package', selectedPackage.dataset.package);
+                }
+
+                // Simulate form submission
+                const submitButton = contactForm.querySelector('.form-button');
+                const originalText = submitButton.textContent;
+                
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    successMessage.classList.add('show');
+                    contactForm.reset();
+                    packageOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        successMessage.classList.remove('show');
+                    }, 5000);
+                }, 2000);
+            });
+
+            // Form validation enhancements
+            const requiredFields = contactForm.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                field.addEventListener('blur', function() {
+                    if (!this.value.trim()) {
+                        this.style.borderColor = '#ef4444';
+                    } else {
+                        this.style.borderColor = '#16a34a';
+                    }
+                });
+
+                field.addEventListener('input', function() {
+                    if (this.value.trim()) {
+                        this.style.borderColor = '#16a34a';
+                    }
+                });
+            });
+
+            // Email validation
+            const emailField = document.getElementById('email');
+            emailField.addEventListener('blur', function() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(this.value)) {
+                    this.style.borderColor = '#ef4444';
+                } else {
+                    this.style.borderColor = '#16a34a';
+                }
+            });
+
+            // Prefill message when arriving from a service link
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('service')) {
+                const serviceName = decodeURIComponent(urlParams.get('service'));
+                const messageField = document.getElementById('message');
+                if (messageField) {
+                    messageField.value = `Hi, I'm interested in your service for ${serviceName}. Please send more details.`;
+                }
+
+                // Optionally set package-options or focus the form
+                const packageMap = {
+                    'Small Business': 'small',
+                    'Medium Business': 'medium',
+                    'Enterprise': 'enterprise'
+                };
+                // try to mark a package-option if it matches
+                const pkgKey = Object.keys(packageMap).find(k => k.toLowerCase() === serviceName.toLowerCase());
+                if (pkgKey) {
+                    const sel = document.querySelector(`.package-option[data-package="${packageMap[pkgKey]}"]`);
+                    if (sel) sel.classList.add('selected');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

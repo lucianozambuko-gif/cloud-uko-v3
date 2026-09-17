@@ -1,0 +1,2292 @@
+/*
+==========================================
+CLOUD UKO - MAIN STYLESHEET
+==========================================
+Author: Cloud UKO Development Team
+Description: Complete styling for Cloud UKO Digital Transformation website
+Version: 1.0
+Last Updated: November 2025
+==========================================
+*/
+
+/*
+==========================================
+1. GLOBAL RESET & BASE STYLES
+==========================================
+*/
+
+/* Universal box-sizing and margin/padding reset */
+* {
+    margin: 0;              /* Remove default margins from all elements */
+    padding: 0;             /* Remove default padding from all elements */
+    box-sizing: border-box; /* Include padding and border in element's total width/height */
+}
+
+/* Styles from contact.html */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #030712;
+    font-weight: 200;
+}
+
+/* Base body styling - sets the foundation for the entire website */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Modern system font stack */
+    background: #0a0a0b;    /* Dark navy background color */
+    color: white;           /* Default text color */
+    overflow-x: hidden;     /* Prevent horizontal scrolling */
+    line-height: 1.6;       /* Improve text readability with proper line spacing */
+    font-weight: 200;
+}
+
+/*
+==========================================
+2. NAVIGATION BAR STYLES
+==========================================
+*/
+
+/* Main navigation container - fixed to top of page */
+.navbar {
+    position: fixed;        /* Stay at top when scrolling */
+    top: 0;                 /* Align to very top of viewport */
+    width: 100%;            /* Full width across screen */
+    backdrop-filter: blur(20px); /* Modern blur effect behind navbar */
+    z-index: 1000;          /* Ensure navbar stays above other content */
+    padding: 0.5rem 0;        /* Vertical padding for navbar height */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+/* Enhanced navbar styling when user scrolls */
+.navbar.scrolled {
+    background: rgba(3, 7, 18, 0.98); /* More opaque when scrolled */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Add shadow depth */
+}
+
+/* Navigation content wrapper - centers content and sets max width */
+.nav-container {
+    max-width: 1280px;      /* Maximum width for large screens */
+    margin: 0 auto;         /* Center horizontally */
+    display: flex;          /* Use flexbox for layout */
+    justify-content: space-between; /* Space between logo and nav items */
+    align-items: center;    /* Vertically align items */
+    padding: 0 2rem;        /* Horizontal padding */
+}
+
+/*
+==========================================
+3. LOGO STYLES
+==========================================
+*/
+
+/* Logo container - combines icon and text */
+.logo {
+    display: flex;          /* Flexbox layout for logo elements */
+    align-items: center;    /* Vertically center icon and text */
+    gap: 0.75rem;          /* Space between icon and text */
+    text-decoration: none;  /* Remove underline from link */
+    color: inherit;         /* Use parent's text color */
+}
+.logo-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Logo icon circle with gradient background */
+.logo-icon {
+    width: 48px;            /* Icon width */
+    height: 48px;           /* Icon height (creates perfect circle) */
+    background: linear-gradient(135deg, #ef4444, #3b82f6); /* Red to blue gradient */
+    border-radius: 50%;     /* Make circular */
+    display: flex;          /* Center content inside */
+    align-items: center;    /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    color: white;           /* Icon color */
+    font-size: 1.5rem;      /* Icon size */
+    transition: transform 0.3s ease; /* Smooth animation on hover */
+}
+
+/* SVG icons inside logo icon */
+.logo-icon svg {
+    width: 24px;           /* SVG width */
+    height: 24px;          /* SVG height */
+    color: white;          /* SVG color */
+    fill: currentColor;    /* Use current text color for fill */
+}
+
+/* Logo hover effect - scale and rotate */
+.logo:hover .logo-icon {
+    transform: scale(1.1) rotate(5deg); /* Slightly larger and rotated */
+}
+
+/* Main logo text styling */
+.logo-text {
+    font-size: 1.5rem;     /* Large, prominent text */
+    font-weight: bold;     /* Bold font weight */
+    color: white;          /* White text color */
+}
+
+/* Subtitle text under logo */
+.logo-subtext {
+    font-size: 0.75rem;    /* Smaller subtitle text */
+    color: #9ca3af;        /* Muted gray color */
+    display: block;        /* Force to new line */
+}
+
+/*
+==========================================
+4. NAVIGATION LINKS
+==========================================
+*/
+
+/* Main navigation links container */
+.nav-links {
+    display: flex;         /* Horizontal layout */
+    list-style: none;      /* Remove bullet points */
+    gap: 2rem;            /* Space between navigation items */
+}
+
+/* Individual navigation link styling */
+.nav-links a {
+    color: #d1d5db;        /* Light gray text color */
+    text-decoration: none; /* Remove underline */
+    font-weight: 200;      /* Medium font weight */
+    padding: 0.5rem 1rem;  /* Padding for click area */
+    border-radius: 0.5rem; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth transitions */
+    position: relative;    /* For positioning pseudo-elements */
+}
+
+/* Hover and active states for navigation links */
+.nav-links a:hover,
+.nav-links a.active {
+    color: #808080;        /* Brand red color on hover */
+}
+
+/* Animated underline effect for navigation links */
+.nav-links a::after {
+    content: '';           /* Empty content for pseudo-element */
+    position: absolute;    /* Position relative to link */
+    bottom: -2px;         /* Position below text */
+    left: 50%;            /* Start from center */
+    width: 0;             /* Start with no width */
+    height: 2px;          /* Underline thickness */
+    background: #3b82f6;   /* Brand red color */
+    transition: all 0.3s ease; /* Smooth animation */
+    transform: translateX(-50%); /* Center the line */
+}
+
+/* Show underline on hover and active states */
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 80%;           /* Expand to 80% of link width */
+}
+
+/*
+==========================================
+5. GET STARTED BUTTON
+==========================================
+*/
+
+/* Main call-to-action button in navigation */
+.get-started {
+    background: linear-gradient(135deg, #148e41, #22c55e);
+    padding: 0.5rem 1rem; /* Comfortable padding */
+    border-radius: 0.5rem;  /* Rounded corners */
+    text-decoration: none;  /* Remove underline */
+    color: white;          /* White text */
+    font-weight: 200;      /* Semi-bold font */
+    transition: all 0.3s ease; /* Smooth animations */
+    border: none;          /* Remove default button border */
+    cursor: pointer;       /* Show pointer cursor */
+}
+
+/* Get Started button hover effect */
+.get-started:hover {
+    background: rgba(59, 130, 246, 0.1); /* Light blue background */
+    border: 2px solid rgba(59, 130, 246, 0.5); /* Blue border */
+    transform: translateY(-3px); /* Lift button */
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3); /* Add shadow */
+}
+
+/* AI character styles removed (floating assistant removed) */
+
+/*
+==========================================
+7. MOBILE MENU STYLES
+==========================================
+*/
+
+/* Mobile hamburger menu toggle button */
+.mobile-menu-toggle {
+    display: none;         /* Hidden by default (desktop) */
+    flex-direction: column; /* Stack hamburger lines vertically */
+    gap: 4px;             /* Space between hamburger lines */
+    background: none;      /* No background */
+    border: none;         /* No border */
+    cursor: pointer;      /* Show pointer cursor */
+    padding: 0.5rem;      /* Padding for touch targets */
+}
+
+/* Individual hamburger menu lines */
+.mobile-menu-toggle span {
+    width: 25px;          /* Line width */
+    height: 3px;          /* Line thickness */
+    background: white;     /* White lines */
+    border-radius: 2px;    /* Slightly rounded ends */
+    transition: all 0.3s ease; /* Smooth animation */
+}
+
+/* Hamburger to X animation - first line */
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px); /* Rotate and position */
+}
+
+/* Hamburger to X animation - middle line */
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;           /* Hide middle line */
+}
+
+/* Hamburger to X animation - last line */
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px); /* Rotate and position */
+}
+
+/* Mobile menu dropdown container */
+.mobile-menu {
+    display: none;        /* Hidden by default */
+    position: absolute;   /* Position relative to navbar */
+    top: 100%;           /* Position below navbar */
+    left: 0;             /* Align to left edge */
+    right: 0;            /* Align to right edge */
+    background: rgba(3, 7, 18, 0.98); /* Dark background */
+    backdrop-filter: blur(20px); /* Blur effect */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle top border */
+    padding: 2rem;       /* Padding for content */
+}
+
+/* Show mobile menu when active */
+.mobile-menu.active {
+    display: block;       /* Make visible */
+    animation: slideDown 0.3s ease; /* Slide down animation */
+}
+
+/* Mobile navigation links container */
+.mobile-nav-links {
+    display: flex;        /* Flexbox layout */
+    flex-direction: column; /* Stack links vertically */
+    gap: 1rem;           /* Space between links */
+    list-style: none;    /* Remove bullet points */
+}
+
+/* Mobile navigation link styling */
+.mobile-nav-links a {
+    color: #d1d5db;      /* Light gray text */
+    text-decoration: none; /* Remove underline */
+    font-weight: 200;     /* Medium font weight */
+    padding: 1rem;       /* Large padding for touch targets */
+    border-radius: 0.5rem; /* Rounded corners */
+    transition: all 0.3s ease; /* Smooth transitions */
+    text-align: center;   /* Center align text */
+}
+
+/* Mobile navigation link hover/active states */
+.mobile-nav-links a:hover,
+.mobile-nav-links a.active {
+    color: #808080;        /* Brand red color on hover */
+}
+
+/*
+==========================================
+7. HERO SECTION STYLES
+==========================================
+*/
+
+/* Main hero section - first section users see */
+.hero {
+    position: relative;   /* For positioning pseudo-elements */
+    min-height: calc(100vh - 40px); /* Nearly full viewport height */
+    display: flex;        /* Flexbox for centering content */
+    align-items: center;  /* Vertically center content */
+    justify-content: center; /* Horizontally center content */
+    overflow: hidden;     /* Hide overflow for effects */
+    padding: 80px 0 40px; /* Top padding for navbar, bottom for buttons */
+    /* Gradient background with color spots */
+    background: radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15), transparent 50%);
+}
+
+/* Hero background overlay for depth */
+.hero::before {
+    content: '';          /* Empty content for pseudo-element */
+    position: absolute;   /* Position over hero background */
+    inset: 0;            /* Cover entire hero section */
+    /* Gradient overlay from transparent to dark */
+    background: linear-gradient(to bottom, rgba(3, 7, 18, 0.3), rgba(3, 7, 18, 0.8), #0a0a0b);
+    z-index: 1;          /* Layer behind content */
+}
+
+/* Hero content container */
+.hero-content {
+    position: relative;   /* Position above background overlay */
+    z-index: 2;          /* Layer above background */
+    max-width: 1280px;   /* Maximum width for large screens */
+    margin: 0 auto;      /* Center horizontally */
+    padding: 0 2rem;     /* Horizontal padding */
+    text-align: center;  /* Center align all text */
+    animation: fadeInUp 1s ease; /* Fade in animation */
+    width: 100%;         /* Full width of container */
+}
+
+/*
+==========================================
+8. HERO BADGE STYLES
+==========================================
+*/
+
+/* Hero badge - "United Knowledge Operations" indicator */
+.hero-badge {
+    display: inline-flex; /* Inline flexbox for badge */
+    align-items: center;  /* Vertically center badge content */
+    gap: 0.5rem;         /* Space between dot and text */
+    padding: 1rem 2rem;  /* Comfortable padding */
+    background: #0a0a0b; /* black background */
+    border: 2px solid rgba(59, 130, 246, 0.5); /* Blue border */
+    border-radius: 9999px; /* Fully rounded (pill shape) */
+    margin-bottom: 2rem;  /* Space below badge */
+    animation: pulse 3s infinite; /* Pulsing animation */
+}
+
+/* Animated dot in hero badge */
+.hero-badge-dot {
+    width: 8px;          /* Dot width */
+    height: 8px;         /* Dot height */
+    background: #ffffff; /* Brand red color */
+    border-radius: 50%;  /* Perfect circle */
+    animation: blink 2s infinite; /* Blinking animation */
+}
+
+/* Hero badge text styling */
+.hero-badge-text {
+    font-size: 0.875rem; /* Slightly smaller text */
+    color: #FFFFFF;      /* Light red color */
+    font-weight: 500;    /* Medium font weight */
+}
+
+/*
+==========================================
+9. HERO TYPOGRAPHY
+==========================================
+*/
+
+/* Main hero title - "Cloud UKO" */
+.hero-title {
+    font-size: clamp(3rem, 8vw, 6rem); /* Responsive font size */
+    font-weight: 800;     /* Extra bold */
+    margin-bottom: 1.5rem; /* Space below title */
+    /* Gradient text effect */
+        background: linear-gradient(135deg, white, #93c5fd, #c084fc);
+    -webkit-background-clip: text; /* Clip gradient to text */
+    -webkit-text-fill-color: transparent; /* Make text transparent to show gradient */
+    background-clip: text; /* Standard property */
+    line-height: 1.1;     /* Tight line height for large text */
+    animation: slideInLeft 1s ease 0.2s both; /* Slide in from left */
+}
+
+/* Hero subtitle - "Integrated Digital Transformation" */
+.hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: #9ca3af;
+    max-width: 48rem;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    animation: fadeIn 1s ease 0.6s both;
+}
+
+/* Hero description paragraph */
+.hero-description {
+    font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive font size */
+    color: #9ca3af;       /* Muted gray color */
+    max-width: 48rem;     /* Limit line length for readability */
+    margin: 0 auto 3rem;  /* Center and add bottom margin */
+    line-height: 1.7;     /* Comfortable line spacing */
+    animation: fadeIn 1s ease 0.6s both; /* Fade in animation */
+}
+
+/*
+==========================================
+10. HERO BUTTONS
+==========================================
+*/
+
+/* Hero buttons container */
+.hero-buttons {
+    display: flex;        /* Flexbox layout */
+    flex-wrap: wrap;      /* Allow wrapping on small screens */
+    gap: 1rem;           /* Space between buttons */
+    justify-content: center; /* Center buttons */
+    animation: fadeInUp 1s ease 0.8s both; /* Fade up animation */
+}
+
+/* Base button styles */
+.btn {
+    padding: 1rem 2rem;   /* Comfortable padding for buttons */
+    border-radius: 0.5rem; /* Rounded corners */
+    font-weight: 200;     /* Semi-bold text */
+    font-size: 1.125rem;  /* Slightly larger text */
+    text-decoration: none; /* Remove underline from links */
+    transition: all 0.3s ease; /* Smooth transitions */
+    display: inline-flex; /* Inline flexbox for icon alignment */
+    align-items: center;  /* Vertically center content */
+    gap: 0.5rem;         /* Space between text and icons */
+    border: none;        /* Remove default button border */
+    cursor: pointer;     /* Show pointer cursor */
+    position: relative;  /* For positioning pseudo-elements */
+    overflow: hidden;    /* Hide overflow for effects */
+}
+
+/* Shimmer effect for buttons */
+.btn::before {
+    content: '';         /* Empty content for pseudo-element */
+    position: absolute;  /* Position over button */
+    top: 0;             /* Align to top */
+    left: -100%;        /* Start off-screen left */
+    width: 100%;        /* Full button width */
+    height: 100%;       /* Full button height */
+    /* Shimmer gradient effect */
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s; /* Smooth movement */
+}
+
+/* Activate shimmer on hover */
+.btn:hover::before {
+    left: 100%;         /* Move across button to right */
+}
+
+/* Primary button styling (main CTA) */
+.btn-primary {
+    background: linear-gradient(135deg, #148e41, #22c55e); /* Red gradient */
+    color: white;       /* White text */
+}
+
+/* Primary button hover effects */
+.btn-primary:hover {
+    background: rgba(59, 130, 246, 0.1); /* Light blue background */
+    border: 2px solid rgba(59, 130, 246, 0.5); /* Blue border */
+    transform: translateY(-3px); /* Lift button */
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3); /* Add shadow */
+}
+
+/* Secondary button styling */
+.btn-secondary {
+    border: 2px solid rgba(59, 130, 246, 0.5); /* Blue border */
+    color: white;       /* White text */
+    background: transparent; /* Transparent background */
+}
+
+/* Secondary button hover effects */
+.btn-secondary:hover {
+    background: rgba(59, 130, 246, 0.1); /* Light blue background */
+    border-color: #3b82f6; /* Solid blue border */
+    transform: translateY(-3px); /* Lift button */
+}
+
+/*
+==========================================
+11. SCROLL INDICATOR
+==========================================
+*/
+
+/* Scroll indicator positioned at bottom of hero */
+.scroll-indicator {
+    position: absolute;   /* Position within hero section */
+    bottom: 2rem;        /* Distance from bottom */
+    left: 50%;           /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for perfect centering */
+    z-index: 2;          /* Layer above background */
+    animation: bounce 2s infinite; /* Bouncing animation */
+}
+
+/* Mouse shape for scroll indicator */
+.scroll-mouse {
+    width: 28px;         /* Mouse width */
+    height: 45px;        /* Mouse height */
+    border: 2px solid rgba(255, 255, 255, 0.4); /* Semi-transparent border */
+    border-radius: 15px; /* Rounded mouse shape */
+    display: flex;       /* Flexbox for centering wheel */
+    align-items: flex-start; /* Align wheel to top */
+    justify-content: center; /* Center wheel horizontally */
+    padding: 8px;        /* Padding inside mouse */
+    cursor: pointer;     /* Show pointer cursor */
+}
+
+/* Mouse wheel indicator */
+.scroll-wheel {
+    width: 4px;          /* Wheel width */
+    height: 12px;        /* Wheel height */
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent white */
+    border-radius: 2px;  /* Rounded wheel */
+    animation: scrollWheel 2s infinite; /* Scrolling animation */
+}
+
+/*
+==========================================
+12. STATS SECTION
+==========================================
+*/
+
+/* Statistics section styling */
+.stats {
+    padding: 5rem 0;     /* Vertical padding */
+    position: relative;  /* For positioning backgrounds */
+    /* Gradient background with red accent */
+    background: linear-gradient(to bottom, #0a0a0b, rgba(255, 255, 255, 0.05), #0a0a0b);
+}
+
+/* Stats content container */
+.stats-container {
+    max-width: 1280px;   /* Maximum width */
+    margin: 0 auto;      /* Center horizontally */
+    padding: 0 2rem;     /* Horizontal padding */
+}
+
+/* Stats grid layout */
+.stats-grid {
+    display: grid;       /* CSS Grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
+    gap: 2rem;          /* Space between stat items */
+}
+
+/* Individual stat item */
+.stat-item {
+    text-align: center;  /* Center align content */
+    animation: fadeInUp 0.8s ease; /* Fade up animation */
+}
+
+/* Stat value (large numbers) */
+.stat-value {
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Responsive font size */
+    font-weight: bold;   /* Bold text */
+    color: white;        /* White text */
+    margin-bottom: 0.5rem; /* Space below value */
+    /* Gradient text effect */
+    background: linear-gradient(135deg, #2b2bf3, #22c55e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Stat label (descriptive text) */
+.stat-label {
+    color: #9ca3af;      /* Muted gray color */
+    font-size: 1rem;     /* Standard font size */
+    font-weight: 200;    /* Medium font weight */
+}
+
+/*
+==========================================
+13. PACKAGES SECTION
+==========================================
+*/
+
+/* Packages/pricing section */
+.packages {
+    padding: 8rem 0;     /* Large vertical padding */
+    position: relative;  /* For positioning effects */
+}
+
+/* Packages content container */
+.packages-container {
+    max-width: 1280px;   /* Maximum width */
+    margin: 0 auto;      /* Center horizontally */
+    padding: 0 2rem;     /* Horizontal padding */
+}
+
+/* Packages section header */
+.packages-header {
+    text-align: center;  /* Center align header content */
+    margin-bottom: 4rem; /* Large space below header */
+}
+
+/* Packages section title */
+.packages-title {
+    font-size: clamp(2.5rem, 6vw, 5rem); /* Responsive font size */
+    font-weight: bold;   /* Bold text */
+    margin-bottom: 1.5rem; /* Space below title */
+    /* Gradient text effect */
+    background: linear-gradient(135deg, white, #86efac, #93c5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Packages section subtitle */
+.packages-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive font size */
+    color: #9ca3af;      /* Muted gray color */
+    max-width: 48rem;    /* Limit line length */
+    margin: 0 auto;      /* Center horizontally */
+}
+
+/* Packages grid layout */
+.packages-grid {
+    display: grid;       /* CSS Grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsive columns */
+    gap: 2rem;          /* Space between package cards */
+}
+
+/*
+==========================================
+14. PACKAGE CARD STYLES
+==========================================
+*/
+
+/* Individual package card */
+.package-card {
+    border: 1px solid rgba(51, 65, 85, 0.3); /* Subtle border */
+    border-radius: 1.5rem; /* Rounded corners */
+    padding: 2.5rem;     /* Internal padding */
+    text-align: center;  /* Center align content */
+    transition: all 0.4s ease; /* Smooth transitions */
+    position: relative;  /* For positioning pseudo-elements */
+    overflow: hidden;    /* Hide overflow for effects */
+    cursor: pointer;     /* Show pointer cursor */
+}
+
+/* Package card hover background effect */
+.package-card::before {
+    content: '';         /* Empty content for pseudo-element */
+    position: absolute;  /* Position over card */
+    inset: 0;           /* Cover entire card */
+    /* Gradient overlay effect */
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(239, 68, 68, 0.1));
+    opacity: 0;         /* Hidden by default */
+    transition: opacity 0.3s ease; /* Smooth fade in */
+}
+
+/* Show overlay on hover */
+.package-card:hover::before {
+    opacity: 1;         /* Make overlay visible */
+}
+
+/* Package card hover effects */
+.package-card:hover {
+    transform: translateY(-10px) scale(1.02); /* Lift and slightly scale */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Large shadow */
+}
+
+/* Featured package card styling */
+.package-card.featured {
+    border: 1px solid rgba(51, 65, 85, 0.3);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(239, 68, 68, 0.1));
+}
+
+/* Featured package card hover effect */
+.package-card.featured::before {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(239, 68, 68, 0.1));
+}
+
+/* Enterprise package card styling */
+.package-card.enterprise {
+    border: 1px solid rgba(51, 65, 85, 0.3); /* Subtle border */
+
+}
+
+/* Enterprise package card hover effect */
+.package-card.enterprise::before {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(239, 68, 68, 0.1));
+}
+
+/*
+==========================================
+15. PACKAGE CARD CONTENT
+==========================================
+*/
+
+/* Package icon styling */
+.package-icon {
+    width: 80px;         /* Icon width */
+    height: 80px;        /* Icon height */
+    margin: 0 auto 1.5rem; /* Center and add bottom margin */
+    border-radius: 1.5rem; /* Rounded corners */
+    display: flex;       /* Flexbox for centering */
+    align-items: center; /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    font-size: 2.5rem;   /* Large icon size */
+    transition: all 0.3s ease; /* Smooth transitions */
+    position: relative;  /* Layer above overlay */
+    z-index: 2;         /* Ensure icon stays above overlay */
+}
+
+/* SVG icons inside package icon */
+.package-icon svg {
+    width: 40px;         /* SVG width */
+    height: 40px;        /* SVG height */
+    color: white;        /* White icon color */
+    fill: currentColor;  /* Use current color for fill */
+    stroke: currentColor; /* Use current color for stroke */
+    stroke-width: 2;     /* Stroke thickness */
+    stroke-linecap: round; /* Rounded line caps */
+    stroke-linejoin: round; /* Rounded line joins */
+}
+
+/* Package icon hover effect */
+.package-card:hover .package-icon {
+    transform: scale(1.1) rotate(5deg); /* Scale and rotate on hover */
+}
+
+/* Package name/title */
+.package-name {
+    font-size: 1.75rem;  /* Large title text */
+    font-weight: bold;   /* Bold text */
+    margin-bottom: 1rem; /* Space below title */
+    color: white;        /* White text */
+    position: relative;  /* Layer above overlay */
+    z-index: 2;         /* Ensure text stays above overlay */
+}
+
+/* Package description text */
+.package-description {
+    color: #9ca3af;      /* Muted gray color */
+    margin-bottom: 2rem; /* Space below description */
+    line-height: 1.6;    /* Comfortable line spacing */
+    position: relative;  /* Layer above overlay */
+    z-index: 2;         /* Ensure text stays above overlay */
+}
+
+/* Package price display */
+.package-price {
+    font-size: 2.5rem;   /* Large price text */
+    font-weight: bold;   /* Bold text */
+    color: white;        /* White text */
+    margin-bottom: 0.5rem; /* Small space below price */
+    position: relative;  /* Layer above overlay */
+    z-index: 2;         /* Ensure price stays above overlay */
+}
+
+/* Package upkeep/monthly cost text */
+.package-upkeep {
+    color: #9ca3af;      /* Muted gray color */
+    margin-bottom: 1.5rem; /* Space below upkeep text */
+    position: relative;  /* Layer above overlay */
+    z-index: 2;         /* Ensure text stays above overlay */
+}
+
+/*
+==========================================
+16. PACKAGE BADGES AND FEATURES
+==========================================
+*/
+
+/* Package badges container (ROI, Savings, etc.) */
+.package-badges {
+    display: flex;       /* Flexbox layout */
+    gap: 0.5rem;        /* Space between badges */
+    justify-content: center; /* Center badges */
+    margin-bottom: 2rem; /* Space below badges */
+    flex-wrap: wrap;     /* Allow wrapping on small screens */
+    position: relative;  /* Layer above overlay */
+    z-index: 2;         /* Ensure badges stay above overlay */
+}
+
+/* Individual package badge */
+.package-badge {
+    padding: 0.5rem 1rem; /* Comfortable padding */
+    border-radius: 9999px; /* Fully rounded (pill shape) */
+    font-size: 0.875rem; /* Smaller text */
+    font-weight: 600;    /* Semi-bold text */
+}
+
+/* ROI badge styling */
+.badge-roi {
+    background: rgba(34, 197, 94, 0.2); /* Light green background */
+    color: #22c55e;      /* Green text */
+    border: 1px solid rgba(34, 197, 94, 0.3); /* Green border */
+}
+
+/* Savings badge styling */
+.badge-savings {
+    background: rgba(59, 130, 246, 0.2); /* Light blue background */
+    color: #3b82f6;      /* Blue text */
+    border: 1px solid rgba(59, 130, 246, 0.3); /* Blue border */
+}
+
+/* Package features list */
+.package-features {
+    list-style: none;    /* Remove bullet points */
+    margin: 2rem 0 3rem 0; /* Increased bottom margin from 2rem to 3rem */
+    text-align: left;    /* Left align features */
+    position: relative;  /* Layer above overlay */
+    z-index: 2;         /* Ensure features stay above overlay */
+}
+
+/* Individual package feature item */
+.package-features li {
+    display: flex;       /* Flexbox for icon and text */
+    align-items: center; /* Vertically center content */
+    gap: 0.75rem;       /* Space between icon and text */
+    padding: 0.75rem 0; /* Vertical padding */
+    color: #d1d5db;     /* Light gray text */
+    font-size: 0.95rem; /* Slightly smaller text */
+}
+
+/* Checkmark icon for features */
+.package-features .check {
+    color: #22c55e;     /* Green checkmark */
+    font-weight: bold;  /* Bold checkmark */
+    font-size: 1.1rem;  /* Slightly larger checkmark */
+}
+
+/* Package button styling */
+.package-button {
+    width: 100%;        /* Full width button */
+    padding: 1.25rem;   /* Comfortable padding */
+    border-radius: 0.75rem; /* Rounded corners */
+    border: none;       /* Remove default border */
+    font-weight: 200;   /* Semi-bold text */
+    font-size: 1.1rem;  /* Slightly larger text */
+    cursor: pointer;    /* Show pointer cursor */
+    transition: all 0.3s ease; /* Smooth transitions */
+    border: 1px solid rgba(51, 65, 85, 0.3);
+    color: white;       /* White text */
+    text-decoration: none; /* Remove underline */
+    display: block;     /* Block display for full width */
+    text-align: center; /* Center align text */
+    position: relative; /* Layer above overlay */
+    z-index: 2;        /* Ensure button stays above overlay */
+}
+
+/* Featured package button styling */
+.package-card.featured .package-button {
+    background: linear-gradient(135deg, #ffffff, #2563eb);
+}
+
+/* Enterprise package button styling */
+.package-card.enterprise .package-button {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Add shadow */
+}
+
+/* Package button hover effect */
+.package-button:hover {
+    transform: translateY(-3px); /* Lift button */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Add shadow */
+    background: linear-gradient(135deg, #ffffff, #2563eb);
+}
+
+/*
+==========================================
+17. FEATURES SECTION
+==========================================
+*/
+
+/* Features section styling */
+.features {
+    padding: 8rem 0;
+    position: relative;
+    background: linear-gradient(to bottom, #0a0a0b, rgba(37, 99, 235, 0.05), #030712);
+}
+
+/* Features content container */
+.features-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Features section header */
+.features-header {
+    text-align: center;
+    margin-bottom: 6rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Features section title */
+.features-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, white, #86efac, #93c5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Features section subtitle */
+.features-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: #9ca3af;
+    max-width: 48rem;
+    margin: 0 auto;
+    font-weight: 200;
+}
+
+/* Features grid layout */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Individual feature card */
+.feature-card {
+    border: 1px solid rgba(51, 65, 85, 0.3);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Feature card hover effects */
+.feature-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Feature icon styling */
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #148e41, #22c55e);
+}
+
+/* Feature title */
+.feature-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+/* Feature description */
+.feature-description {
+    color: #9ca3af;
+    line-height: 1.6;
+    font-weight: 200;
+}
+
+/*
+==========================================
+17.5 VALUES SECTION
+==========================================
+*/
+
+/* Values section container */
+.values {
+    padding: 8rem 0;
+    position: relative;
+    background: linear-gradient(to bottom, #0a0a0b, rgba(37, 99, 235, 0.05), #030712);
+}
+
+/* Values content container */
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        margin: 0 0.5rem 0.5rem 0;
+        border-radius: 999px;
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.35);
+        color: #c7d2fe;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+        -webkit-appearance: none;
+        appearance: none;
+        border-width: 1px;
+
+    .services-list .service-option:hover {
+        transform: translateY(-2px);
+    }
+
+    .services-list .service-option.selected {
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) inset;
+    }
+/* Values section title */
+.values-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: rgb(255, 255, 255);
+}
+
+/* Values section subtitle */
+.values-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: #9ca3af;
+    max-width: 48rem;
+    margin: 0 auto;
+}
+
+/* Values grid layout */
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Individual value card */
+.value-card {
+    border: 1px solid rgba(51, 65, 85, 0.3);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Value card hover effects */
+.value-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Value icon */
+.value-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    transition: all 0.3s ease;
+}
+
+/* Value icon hover effect */
+.value-card:hover .value-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Value title */
+.value-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+/* Value description */
+.value-description {
+    color: #9ca3af;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments for values section */
+@media (max-width: 768px) {
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .value-card {
+        padding: 2rem;
+    }
+}
+
+/*
+==========================================
+18. CTA (CALL TO ACTION) SECTION
+==========================================
+*/
+
+/* Call to action section */
+.cta {
+    padding: 8rem 0;    /* Large vertical padding */
+    position: relative; /* For positioning backgrounds */
+    overflow: hidden;   /* Hide overflow for effects */
+    /* Background image for CTA */
+    background-image: url("img/Bg.jpg");
+    background-size: cover;    /* Cover the section */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat;
+}
+
+/* CTA background effect */
+.cta::before {
+    content: '';        /* Empty content for pseudo-element */
+    position: absolute; /* Position over section */
+    inset: 0;          /* Cover entire section */
+    /* Subtle translucent overlay so background image remains visible */
+    background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.18));
+    /* Reduce blur so the image is clear but text stays legible */
+    backdrop-filter: blur(10px);
+    pointer-events: none; /* Allow clicks through overlay */
+}
+
+/* CTA content container */
+.cta-container {
+    max-width: 64rem;   /* Narrower max width for focus */
+    margin: 0 auto;     /* Center horizontally */
+    padding: 0 2rem;    /* Horizontal padding */
+    text-align: center; /* Center align content */
+    position: relative; /* Layer above background */
+    z-index: 2;        /* Above background effect */
+}
+
+/* CTA section title */
+.cta-title {
+    font-size: clamp(2.5rem, 6vw, 4rem); /* Responsive font size */
+    font-weight: bold;  /* Bold text */
+    margin-bottom: 1.5rem; /* Space below title */
+    color: white;       /* White text */
+    text-shadow: 0 6px 18px rgba(0,0,0,0.6); /* Improve contrast over image */
+}
+
+/* CTA description text */
+.cta-description {
+    font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive font size */
+    color: #d1d5db;     /* Light gray color */
+    margin-bottom: 2.5rem; /* Space below description */
+    text-shadow: 0 4px 12px rgba(0,0,0,0.45); /* Improve contrast */
+}
+
+/* CTA buttons container */
+.cta-buttons {
+    display: flex;      /* Flexbox layout */
+    flex-wrap: wrap;    /* Allow wrapping */
+    gap: 1rem;         /* Space between buttons */
+    justify-content: center; /* Center buttons */
+}
+
+/* Primary CTA button */
+.btn-cta-primary {
+        background: linear-gradient(135deg, #148e41, #22c55e);
+        color: #ffffff; /* White text */
+    padding: 1.5rem 2.5rem; /* Large padding */
+}
+
+/* Primary CTA button hover effect */
+.btn-cta-primary:hover {
+    background: transparent; /* Transparent background */
+    border: 2px solid rgba(59, 130, 246, 0.5); /* Blue border */
+    transform: translateY(-3px); /* Lift button */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); /* Large shadow */
+}
+
+/* Secondary CTA button */
+.btn-cta-secondary {
+        border: 2px solid rgba(59, 130, 246, 0.5);
+    color: white;
+    background: transparent;
+    padding: 1.5rem 2.5rem; /* Large padding */
+}
+
+/* Secondary CTA button hover effect */
+.btn-cta-secondary:hover {
+    border: 2px solid rgba(59, 130, 246, 0.5); /* Blue border */
+    transform: translateY(-3px); /* Lift button */
+}
+
+/*
+==========================================
+17. SERVICES SECTION
+==========================================
+*/
+
+/* Services section container */
+.services {
+    position: relative;
+    background: linear-gradient(to bottom, #0a0a0b, rgba(37, 99, 235, 0.05), #030712);
+}
+
+/* Services content container */
+.services-list .service-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    margin: 0 0.5rem 0.5rem 0;
+    border-radius: 999px;
+    background: #2f3136; /* dark button fill */
+    border: 1px solid rgba(255,255,255,0.06);
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.services-list .service-option:hover {
+    transform: translateY(-2px);
+    background: #3a3c40;
+}
+
+.services-list .service-option:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.03);
+}
+
+.services-list .service-option.selected {
+    background: #242526;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+    transform: translateY(-2px);
+}
+/* Services section subtitle */
+.services-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: #9ca3af;
+    max-width: 48rem;
+    margin: 0 auto;
+    font-weight: 200;
+}
+
+/* Services grid layout */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Individual service card */
+.service-card {
+    border: 1px solid rgba(51, 65, 85, 0.3);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Service card hover effects */
+.service-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Service icon styling */
+.service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    transition: all 0.3s ease;
+        background: linear-gradient(135deg, #148e41, #2e69ec);
+}
+
+/* Ensure service icon images scale and sit nicely inside the colored square */
+.service-icon img,
+.service-icon svg {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+    pointer-events: none; /* prevent icon from capturing pointer events */
+    transition: transform 0.35s ease; /* match card hover transition */
+}
+
+/* Scale/rotate the inner icon when its card is hovered to match the colored square */
+.service-card:hover .service-icon img,
+.service-card:hover .service-icon svg {
+    transform: scale(1.08) rotate(5deg);
+}
+
+/* Service icon hover effect */
+.service-card:hover .service-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Service title */
+.service-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+/* Service description */
+.service-description {
+    color: #9ca3af;
+    line-height: 1.6;
+    font-weight: 200;
+    margin-bottom: 1.5rem;
+}
+
+/* Service feature list */
+.service-features {
+    list-style: none;    /* Remove bullet points */
+    margin: 2rem 0 3rem 0; /* Increased bottom margin from 2rem to 3rem */
+    text-align: left;    /* Left align features */
+    position: relative;  /* Layer above overlay */
+    z-index: 2;         /* Ensure features stay above overlay */
+}
+
+.service-feature {
+    list-style: none;
+    text-align: left;
+    margin: 2rem 0;
+    padding-left: 1rem;
+}
+
+/* Individual package feature item */
+.package-features li {
+    display: flex;       /* Flexbox for icon and text */
+    align-items: center; /* Vertically center content */
+    gap: 0.75rem;       /* Space between icon and text */
+    padding: 0.75rem 0; /* Vertical padding */
+    color: #d1d5db;     /* Light gray text */
+    font-size: 0.95rem; /* Slightly smaller text */
+}
+
+/* Checkmark icon for features */
+.package-features .check {
+    color: #22c55e;     /* Green checkmark */
+    font-weight: bold;  /* Bold checkmark */
+    font-size: 1.1rem;  /* Slightly larger checkmark */
+}
+
+/* Service button styling */
+.service-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    border-radius: 0.5rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 200;
+    transition: all 0.3s ease;
+}
+
+/* Service button hover effect */
+.service-button:hover {
+    background: linear-gradient(135deg, #148e41, #22c55e);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments for services section */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .service-card {
+        padding: 2rem;
+    }
+}
+
+/* Filter Section */
+.filters {
+    padding: 3rem 0;
+    background: rgba(15, 23, 42, 0.3);
+}
+
+.filters-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: #d1d5db;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    border-color: #8b5cf6;
+    color: white;
+}
+
+/* Projects Grid Section */
+.contact {
+    padding: 4rem 0;
+}
+
+.contact-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.contact-info {
+    color: #d1d5db;
+}
+
+.paragraph {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.form-subtitle {
+    margin-bottom: 1.5rem;
+}
+
+.form-row, .form-group1 {
+    margin: 1.5rem 0;
+}
+
+.contact-details .contact-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.contact-icon {
+    font-size: 1.25rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+    border-radius: 0.5rem;
+}
+
+.contact-text h3 {
+    margin: 0;
+    color: white;
+    font-size: 1rem;
+}
+
+.contact-form {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255,255,255,0.03);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+.form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+    color: #9ca3af;
+    outline: none;
+}
+
+.form-textarea { min-height: 140px; resize: vertical; }
+
+.form-row { display: flex; gap: 1rem; }
+.form-group { flex: 1; }
+
+.package-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.package-option { padding: 0.5rem 1rem; border-radius: 0.5rem; background: rgba(255,255,255,0.03); cursor: pointer; color: #d1d5db; border: 1px solid rgba(255,255,255,0.03); }
+.package-option.selected { background: linear-gradient(135deg,#148e41,#22c55e); color: white; border: none; }
+
+.form-button { display: inline-block; padding: 0.9rem 1.2rem; border-radius: 0.6rem; background: linear-gradient(135deg,#148e41,#22c55e); color: white; border: none; cursor: pointer; font-weight: 600; margin-top: 1rem; }
+
+.success-message { display: none; background: #16a34a; color: white; padding: 0.75rem 1rem; border-radius: 0.5rem; margin-bottom: 1rem; }
+.success-message.show { display: block; }
+
+@media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { flex-direction: column; }
+}
+
+/* Projects Grid Section */
+.projects {
+    padding: 5rem 0;
+    position: relative;
+}
+
+.projects-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+/* Project Card Styles */
+.project-card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(51, 65, 85, 0.3);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Project image styling */
+.project-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 1.5rem 1.5rem 0 0;
+}
+
+/* Project content container */
+.project-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Project title */
+.project-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+/* Project description */
+.project-description {
+    color: #d1d5db;
+    flex-grow: 1;
+}
+
+/* Project tags container */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+/* Individual project tag */
+.project-tag {
+    background: rgba(255, 255, 255, 0.1);
+    color: #d1d5db;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+}
+
+/* Project button */
+.project-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, #148e41, #22c55e);
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+/* Project button hover effect */
+.project-button:hover {
+    background: rgba(59, 130, 246, 0.1);
+    border: 2px solid rgba(59, 130, 246, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile Optimizations for Projects */
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .project-results {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-card {
+        min-width: unset;
+    }
+    
+    .project-content {
+        padding: 1.5rem;
+    }
+}
+
+/*
+==========================================
+BENEFITS SECTION (CONTACT PAGE)
+==========================================
+*/
+
+.benefits {
+    padding: 3.5rem 0;
+    background: transparent;
+}
+
+.benefits-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.benefits-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.benefits-title {
+    font-size: 1.75rem;
+    color: white;
+    margin: 0 0 0.5rem 0;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.benefit-item {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255,255,255,0.03);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.benefit-icon {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,#148e41,#22c55e);
+    color: white;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.benefit-title {
+    margin: 0 0 0.25rem 0;
+    color: white;
+    font-size: 1.05rem;
+}
+
+.benefit-description {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .benefits-grid { grid-template-columns: 1fr; }
+    .benefit-item { align-items: center; }
+}
+
+/* Center contents inside feature-card (used in contact.html benefits) */
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: 0.75rem;
+}
+
+.feature-card .benefit-icon {
+    margin-bottom: 0.25rem;
+}
+
+.feature-card .benefit-title { margin-top: 0.25rem; }
+
+
+/*
+==========================================
+20. FOOTER SECTION
+==========================================
+*/
+
+/* Footer section styling */
+.footer {
+    padding: 4rem 0 2rem; /* Vertical padding */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle top border */
+}
+
+/* Footer content container */
+.footer-container {
+    max-width: 1280px;  /* Maximum width */
+    margin: 0 auto;     /* Center horizontally */
+    padding: 0 2rem;    /* Horizontal padding */
+    text-align: center; /* Center align content */
+}
+
+/* Footer logo container */
+.footer-logo {
+    display: flex;      /* Flexbox layout */
+    align-items: center; /* Vertically center */
+    justify-content: center; /* Center horizontally */
+    gap: 0.75rem;      /* Space between icon and text */
+    margin-bottom: 1.5rem; /* Space below logo */
+}
+
+/* Footer logo icon */
+.footer-logo-icon {
+    width: 48px;        /* Icon width */
+    height: 48px;       /* Icon height */
+    background: linear-gradient(135deg, #ef4444, #3b82f6); /* Red to blue gradient */
+    border-radius: 50%; /* Perfect circle */
+    display: flex;      /* Flexbox for centering */
+    align-items: center; /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    color: white;       /* White icon color */
+    font-size: 1.5rem;  /* Large icon size */
+}
+
+/* Footer logo icon images */
+.footer-logo-icon img {
+    width: 48px;        /* Image width */
+    height: 48px;       /* Image height */
+    border-radius: 50%; /* Perfect circle */
+    object-fit: cover;  /* Cover the container */
+}
+
+/* SVG icons in footer logo */
+.footer-logo-icon svg {
+    width: 24px;        /* SVG width */
+    height: 24px;       /* SVG height */
+    color: white;       /* White color */
+    fill: currentColor; /* Use current color */
+}
+
+/* Footer logo title */
+.footer-logo-title {
+    font-size: 1.5rem;  /* Large title text */
+    font-weight: bold;  /* Bold text */
+    color: white;       /* White text */
+}
+
+/* Footer logo text container (for inline styled divs) */
+.footer-logo > div {
+    text-align: left;   /* Left align text */
+}
+
+/* Footer logo title (for inline styled divs) */
+.footer-logo > div > div:first-child {
+    font-size: 1.5rem;  /* Large title text */
+    font-weight: bold;  /* Bold text */
+    color: white;       /* White text */
+}
+
+/* Footer logo subtitle (for inline styled divs) */
+.footer-logo > div > div:last-child {
+    font-size: 0.75rem; /* Small subtitle text */
+    color: #9ca3af;     /* Muted gray color */
+}
+
+/* Footer logo subtitle */
+.footer-logo-subtitle {
+    font-size: 0.75rem; /* Small subtitle text */
+    color: #9ca3af;     /* Muted gray color */
+}
+
+/* Footer description text */
+.footer-text {
+    color: #9ca3af;     /* Muted gray color */
+    font-size: 0.875rem; /* Small text */
+    margin-bottom: 1rem; /* Space below text */
+}
+
+/* Footer links container */
+.footer-links {
+    display: flex;      /* Flexbox layout */
+    justify-content: center; /* Center links */
+    gap: 2rem;         /* Space between links */
+    margin-bottom: 2rem; /* Space below links */
+    flex-wrap: wrap;    /* Allow wrapping */
+}
+
+/* Individual footer links */
+.footer-links a {
+    color: #9ca3af;     /* Muted gray color */
+    text-decoration: none; /* Remove underline */
+    font-size: 0.875rem; /* Small text */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Footer link hover effect */
+.footer-links a:hover {
+    color: #808080;     /* Brand red on hover */
+}
+
+/*
+==========================================
+21. ANIMATIONS AND KEYFRAMES
+==========================================
+*/
+
+/* Fade in up animation - used for content reveals */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;        /* Start invisible */
+        transform: translateY(30px); /* Start below final position */
+    }
+    to {
+        opacity: 1;        /* End fully visible */
+        transform: translateY(0); /* End at final position */
+    }
+}
+
+/* Simple fade in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }   /* Start invisible */
+    to { opacity: 1; }     /* End fully visible */
+}
+
+/* Slide in from left animation */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;        /* Start invisible */
+        transform: translateX(-50px); /* Start left of final position */
+    }
+    to {
+        opacity: 1;        /* End fully visible */
+        transform: translateX(0); /* End at final position */
+    }
+}
+
+/* Slide in from right animation */
+@keyframes slideInRight {
+    from {
+        opacity: 0;        /* Start invisible */
+        transform: translateX(50px); /* Start right of final position */
+    }
+    to {
+        opacity: 1;        /* End fully visible */
+        transform: translateX(0); /* End at final position */
+    }
+}
+
+/* Slide down animation - used for mobile menu */
+@keyframes slideDown {
+    from {
+        opacity: 0;        /* Start invisible */
+        transform: translateY(-20px); /* Start above final position */
+    }
+    to {
+        opacity: 1;        /* End fully visible */
+        transform: translateY(0); /* End at final position */
+    }
+}
+
+/* Pulse animation - used for hero badge */
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); /* Normal size */
+        opacity: 1;        /* Fully visible */
+    }
+    50% { 
+        transform: scale(1.05); /* Slightly larger */
+        opacity: 0.9;      /* Slightly transparent */
+    }
+}
+
+/* Blink animation - used for hero badge dot */
+@keyframes blink {
+    0%, 100% { opacity: 1; }   /* Fully visible */
+    50% { opacity: 0.3; }      /* Semi-transparent */
+}
+
+/* Bounce animation - used for scroll indicator */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%); /* Normal position */
+    }
+    40% {
+        transform: translateY(-10px) translateX(-50%); /* Higher bounce */
+    }
+    60% {
+        transform: translateY(-5px) translateX(-50%); /* Lower bounce */
+    }
+}
+
+/* Scroll wheel animation - used for scroll indicator */
+@keyframes scrollWheel {
+    0% {
+        transform: translateY(0); /* Start position */
+        opacity: 0;        /* Invisible */
+    }
+    50% {
+        opacity: 1;        /* Visible */
+    }
+    100% {
+        transform: translateY(12px); /* End position */
+        opacity: 0;        /* Invisible */
+    }
+}
+
+/*
+==========================================
+22. RESPONSIVE DESIGN - MOBILE OPTIMIZATIONS
+==========================================
+*/
+
+/* Tablet and mobile optimization */
+@media (max-width: 768px) {
+    /* Hide desktop navigation links */
+    .nav-links {
+        display: none;
+    }
+    
+    /* Show mobile menu toggle */
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    /* Adjust hero section for mobile */
+    .hero {
+        padding: 100px 0 60px; /* Extra padding with bottom space */
+        min-height: calc(100vh - 60px); /* Adjusted height */
+    }
+    
+    /* Reduce hero content padding */
+    .hero-content {
+        padding: 0 1rem;
+    }
+    
+    /* Adjust hero badge for mobile */
+    .hero-badge {
+        margin-bottom: 1.5rem;
+        padding: 0.75rem 1.5rem;
+    }
+    
+    /* Stack hero buttons vertically */
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* Make buttons full width on mobile */
+    .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+    
+    /* Adjust stats grid for mobile */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+        gap: 1.5rem;
+    }
+    
+    /* Single column layout for packages */
+    .packages-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Single column layout for features */
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Stack CTA buttons vertically */
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* Stack footer links vertically */
+    .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* Small mobile optimization */
+@media (max-width: 480px) {
+    /* Reduce navigation padding */
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
+    /* Extra hero adjustments for small screens */
+    .hero {
+        padding: 120px 0 80px; /* More padding for small screens */
+        min-height: calc(100vh - 80px);
+    }
+    
+    /* Reduce hero content padding */
+    .hero-content {
+        padding: 0 1rem;
+    }
+    
+    /* Smaller hero badge for small screens */
+    .hero-badge {
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Smaller hero badge text */
+    .hero-badge-text {
+        font-size: 0.75rem;
+    }
+    
+    /* Reduce container padding for small screens */
+    .packages-container,
+    .features-container,
+    .cta-container {
+        padding: 0 1rem;
+    }
+    
+    /* Reduce card padding for small screens */
+    .package-card,
+    .feature-card {
+        padding: 1.5rem;
+    }
+}
+
+/*
+==========================================
+23. PERFORMANCE & ACCESSIBILITY
+==========================================
+*/
+
+/* Performance optimizations - indicate which elements will animate */
+.package-card,
+.feature-card,
+.btn {
+    will-change: transform; /* Optimize for transform animations */
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important; /* Nearly instant animations */
+        animation-iteration-count: 1 !important; /* Run once only */
+        transition-duration: 0.01ms !important; /* Nearly instant transitions */
+    }
+}
+
+/* Accessibility - focus styles for keyboard navigation */
+.nav-links a:focus,
+.btn:focus,
+.package-button:focus {
+    outline: 2px solid #ef4444; /* Brand color outline */
+    outline-offset: 2px;    /* Space between element and outline */
+}
+
+/* Add to your main stylesheet */
+a, .nav-link {
+  -webkit-tap-highlight-color: transparent; /* remove mobile tap highlight */
+}
+
+/* remove the red border/outline while pressed/clicked */
+a:active, a:focus, .nav-link:active, .nav-link:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+/* keep a visible focus ring for keyboard users */
+a:focus:not(:focus-visible), .nav-link:focus:not(:focus-visible) {
+  outline: none;
+}
+a:focus-visible, .nav-link:focus-visible {
+  outline: 2px solid #005fcc; /* adjust color/size as needed */
+  outline-offset: 2px;
+}
+
+/* ================================
+   SERVICES OVERVIEW SECTION
+================================ */
+
+.services-overview {
+    position: relative;
+    padding: 6rem 1.5rem;
+    background: #0b0f1a;
+    overflow: hidden;
+}
+
+.services-overview-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.services-video-wrapper {
+    position: relative;
+    width: 100%;
+    /* Maintain a 16:9 aspect ratio while remaining responsive */
+    aspect-ratio: 16 / 9;
+    max-height: 480px; /* Prevent the video from becoming excessively tall */
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.services-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Crop to fill wrapper while preserving aspect */
+    display: block;
+    z-index: 0;
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(11, 15, 26, 0.3),
+        rgba(11, 15, 26, 0.9)
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.services-content {
+    position: relative;
+    margin-top: -140px; /* Smaller overlap for a cleaner layout */
+    padding: 3rem;
+    background: rgba(17, 24, 39, 0.92);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    z-index: 2;
+}
+
+/* Responsive tweaks for smaller screens */
+@media (max-width: 900px) {
+    .services-video-wrapper {
+        aspect-ratio: 4 / 3;
+        max-height: 360px;
+    }
+    .services-content {
+        margin-top: -120px;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-video-wrapper {
+        aspect-ratio: 16 / 9;
+        max-height: 260px;
+        border-radius: 12px;
+    }
+    .services-content {
+        margin-top: -90px;
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+}
+
+/* (Removed mute/overlay UI — video plays with sound by default) */
+
+.services-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.services-subtitle {
+    color: #9ca3af;
+    margin-bottom: 2rem;
+    max-width: 720px;
+}
+
+.services-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.services-list span {
+    padding: 0.5rem 1rem;
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    border-radius: 999px;
+    font-size: 0.9rem;
+    color: #c7d2fe;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.footer-socials img {
+    width: 22px;
+    height: 22px;
+    opacity: 0.75;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footer-socials img:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* FONT STYLE FOR PROJECT BUTTONS */
+
+.project-link {
+    display: inline-block;
+    padding: 8px 14px;
+    background-color: #6b8e8e;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.project-link:hover {
+    background-color: #567575;
+}

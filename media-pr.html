@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Media & PR - Cloud UKO</title>
+    <meta name="description" content="Cloud UKO - Public relations and media outreach.">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styling for Smart Automation */
+        .page-content {
+            background: #0a0a0b;
+            padding: 0;
+        }
+
+        .Subtitle-s {
+            text-decoration: underline;
+            margin-bottom: 1.2rem;
+        }
+
+        .service-hero {
+            padding: 5rem 2rem;
+            color: #ffffff;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .service-hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+
+        .service-hero h2 {
+            text-align: left;
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin: 1rem 0 1rem 0;
+        }
+
+        .service-hero p {
+            text-align: left;
+            color: #cbd5e1;
+        }
+
+        .service-hero ul {
+            text-align: left;
+            padding-left: 2rem;
+            margin-left: 0;
+        }
+
+        .service-hero li {
+            color: #cbd5e1;
+            margin-bottom: 0.75rem;
+            text-align: left;
+        }
+
+        .service-hero .lead {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .service-details {
+            padding: 4rem 2rem;
+        }
+
+        .content-container {
+            max-width: 700px;
+            border-radius: 12px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .content-container h2 {
+            color: #ffffff;
+            font-size: 1.75rem;
+            margin: 2.5rem 0 1rem 0;
+            border-bottom: 2px solid rgba(34, 197, 94, 0.5);
+            padding-bottom: 0.75rem;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .content-container h2:first-child {
+            margin-top: 0;
+        }
+
+        .content-container h3 {
+            color: #e2e8f0;
+            font-size: 1.25rem;
+            margin: 1.75rem 0 0.75rem 0;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .content-container p {
+            color: #cbd5e1;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        .content-container ul {
+            text-align: left;
+            padding-left: 2rem;
+        }
+
+        .content-container li {
+            color: #cbd5e1;
+            margin-bottom: 0.75rem;
+            text-align: left;
+        }
+
+        .cta-row {
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+        }
+
+        .cta-row .btn {
+            text-align: center;
+            padding: 1rem 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .service-hero {
+                padding: 3rem 1.5rem;
+            }
+
+            .content-container {
+                padding: 1.5rem;
+            }
+
+            .content-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .cta-row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .cta-row .btn {
+                flex: auto;
+                padding: 0.85rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/logo/clouduko.jpg" alt="Cloud UKO" class="logo-img">
+                <div>
+                    <div class="logo-text">Cloud UKO</div>
+                    <span class="logo-subtext">United Knowledge Operations</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="service.html" class="nav-link active">Services</a></li>
+                <li><a href="demos.html" class="nav-link">Demos</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <a href="contact.html" class="get-started">Get Started</a>
+
+            <!-- Mobile menu toggle button (hamburger) -->
+            <button class="mobile-menu-toggle" id="mobile-toggle">
+                <span></span><!-- Top line of hamburger -->
+                <span></span><!-- Middle line of hamburger -->
+                <span></span><!-- Bottom line of hamburger -->
+            </button>
+        </div>
+
+        <!-- Mobile navigation menu (hidden by default) -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="service.html" class="nav-link active">Services</a></li>
+                <li><a href="demos.html" class="nav-link">Demos</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="page-content">
+        <section class="service-hero">
+            <div class="service-hero-container">
+                <h1>Media & PR Services</h1>
+                <p class="lead">
+                    Comprehensive media visibility is provided, covering strategic public relations, professional editorial content, high-quality video production, and billboard advertising.
+                    An integrated approach ensures every story told strengthens reputation, builds trust, and connects brands to their target audience across print, digital, and broadcast platforms.
+
+<h2>
+    Public Relations Services
+</h2>
+
+<p>
+    Public relations services help brands, organisations, and public figures manage reputation, build credibility, and engage audiences effectively.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Professional press release writing and media distribution</li>
+        <li>Strategic storytelling and brand positioning</li>
+        <li>Media pitching and interview coordination</li>
+        <li>Reputation and crisis management</li>
+        <li>Media training and communication coaching</li>
+    </ul>
+    <p>
+        Messages reach the right audience through trusted media networks and authentic, tailored storytelling that reflects brand values.
+    </p>
+    
+</p>
+
+</p>
+
+<p class="lead">
+<h2>
+    Articles And Editorial Content
+</h2>
+
+<p>
+    Editorial teams produce engaging and well-researched content that reflects a brand’s authority and vision.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Branded feature articles and thought leadership pieces</li>
+        <li>Executive profiles and interviews</li>
+        <li>Corporate storytelling and blog management</li>
+        <li>Ghostwriting and editorial strategy</li>
+        <li>SEO-optimised digital publishing</li>
+    </ul>
+    <p>
+        Every article is carefully written to inform, influence, and inspire, enhancing visibility across search engines and news platforms.
+    </p>
+    
+</p>
+
+</p>
+
+<p class="lead">
+<h2>
+    Magazine Features And Print Media
+</h2>
+
+<p>
+    Collaboration with leading magazines ensures brand stories reach the right audience.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Editorial features in business, lifestyle, or industry magazines</li>
+        <li>Advertorial layouts and brand profiles</li>
+        <li>Executive interviews and leadership spotlights</li>
+        <li>Cover story opportunities for corporate and public figures</li>
+    </ul>
+    <p>
+        Magazine placements build long-term brand trust and visibility while positioning organisations among recognised industry leaders.
+    </p>
+    
+</p>
+
+</p>
+
+<p class="lead">
+<h2>
+    Television And broadcast exposure
+</h2>
+
+<p>
+    Television remains a powerful storytelling platform.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Sponsored interviews and talk show features</li>
+        <li>Branded TV segments on national or regional channels</li>
+        <li>Corporate or product adverts for broadcast</li>
+        <li>Behind-the-scenes and documentary-style production</li>
+    </ul>
+    <p>
+        Each project is managed from concept development to final production to ensure a professional, high-impact television presence.
+    </p>
+    
+</p>
+
+</p>
+
+<p class="lead">
+<h2>
+    Video production Services
+</h2>
+
+<p>
+    Full-service video production creates compelling visual content that engages audiences and communicates brand stories effectively.
+
+</p>
+<p>
+    <p class="Subtitle-s">
+        Services include:
+    </p>
+    <ul>
+        <li>Corporate and brand story videos</li>
+        <li>Promotional and advertising films</li>
+        <li>Documentary-style interviews and mini-series</li>
+        <li>4K filming, drone footage, and voice-over production</li>
+        <li>Scriptwriting, editing, and motion graphics</li>
+    </ul>
+    <p>
+        Each production combines creativity and strategy to deliver a cinematic experience that strengthens brand identity and audience engagement.
+    </p>
+    
+</p>
+
+</p>
+<div class="cta-row">
+                    <a href="contact.html" class="btn btn-primary">Request Automation Audit →</a>
+                    <a href="service.html" class="btn btn-secondary">Back to Services</a>
+                </div>
+
+        </div>
+
+        </section>
+    </main>
+
+ <!--
+    ==========================================
+    FOOTER SECTION
+    ==========================================
+    Website footer with company information and navigation links.
+    Includes logo, company description, and secondary navigation.
+    Provides additional contact and legal information.
+    ==========================================
+    -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="footer-logo-icon">
+                    <img src="img/logo/clouduko.jpg" alt="Cloud UKO" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                </div>
+                <div>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: white;">Cloud UKO</div>
+                    <div style="font-size: 0.75rem; color: #9ca3af;">United Knowledge Operations</div>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="service.html">Services</a>
+                <!-- <a href="projects.html">Projects</a> -->
+                <a href="demos.html">Demos</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            
+            <p class="footer-text">
+                © 2025 Cloud UKO. Transforming businesses through integrated digital solutions.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Navigation Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('navbar');
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Mobile menu toggle
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    mobileToggle.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
