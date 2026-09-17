@@ -39,6 +39,12 @@ Version: 2.0 - Light theme
 
     /* Action color (buttons / conversions) */
     --action-gradient: linear-gradient(135deg, #1d4ed8, #3b82f6);
+
+    /* Soft card tints (so grids of cards aren't all flat white) */
+    --tint-cyan: rgba(6, 182, 212, 0.08);
+    --tint-blue: rgba(37, 99, 235, 0.08);
+    --tint-purple: rgba(124, 58, 237, 0.08);
+    --tint-teal: rgba(20, 184, 166, 0.08);
 }
 
 /*
@@ -698,7 +704,7 @@ drift at their own speed as the page scrolls (see parallax.js).
 /* Individual package card */
 .package-card {
     border: 1px solid var(--border);
-    background: var(--surface);
+    background: var(--tint-cyan);
     box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
     border-radius: 1.5rem; /* Rounded corners */
     padding: 2.5rem;     /* Internal padding */
@@ -745,6 +751,7 @@ drift at their own speed as the page scrolls (see parallax.js).
 /* Enterprise package card styling */
 .package-card.enterprise {
     border: 1px solid var(--border);
+    background: var(--tint-purple);
 }
 
 /* Enterprise package card hover effect */
@@ -1820,6 +1827,29 @@ BENEFITS SECTION (CONTACT PAGE)
 
 .feature-card .benefit-title { margin-top: 0.25rem; }
 
+/*
+==========================================
+19.5 CARD COLOR VARIETY
+==========================================
+Cycle soft brand tints across card grids so they don't all read as
+flat white slabs - specificity (class + nth-child) beats the plain
+.card-name background rules above regardless of source order.
+*/
+.service-card:nth-child(4n+1),
+.feature-card:nth-child(4n+1),
+.value-card:nth-child(4n+1) { background: var(--tint-cyan); }
+
+.service-card:nth-child(4n+2),
+.feature-card:nth-child(4n+2),
+.value-card:nth-child(4n+2) { background: var(--tint-blue); }
+
+.service-card:nth-child(4n+3),
+.feature-card:nth-child(4n+3),
+.value-card:nth-child(4n+3) { background: var(--tint-purple); }
+
+.service-card:nth-child(4n+4),
+.feature-card:nth-child(4n+4),
+.value-card:nth-child(4n+4) { background: var(--tint-teal); }
 
 /*
 ==========================================
