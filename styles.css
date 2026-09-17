@@ -2094,73 +2094,141 @@ a:focus-visible, .nav-link:focus-visible {
     margin: 0 auto;
 }
 
-.services-video-wrapper {
-    position: relative;
-    width: 100%;
-    /* Maintain a 16:9 aspect ratio while remaining responsive */
-    aspect-ratio: 16 / 9;
-    max-height: 480px; /* Prevent the video from becoming excessively tall */
+.services-content {
+    padding: 0 0 3rem;
+    text-align: center;
+}
+
+.services-content .services-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.services-content .services-list {
+    justify-content: center;
+}
+
+/*
+==========================================
+LIVE SYSTEMS SHOWCASE
+==========================================
+Replaces the old "what we do" video with real
+screenshots of the systems we've actually built.
+*/
+
+.showcase-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.showcase-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.showcase-subtitle {
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.showcase-card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.12);
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    transition: all 0.3s ease;
 }
 
-.services-video {
+.showcase-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
+    border-color: rgba(37, 99, 235, 0.3);
+}
+
+.showcase-browser-bar {
+    display: flex;
+    gap: 6px;
+    padding: 0.75rem 1rem;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+}
+
+.showcase-browser-bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.15);
+}
+
+.showcase-image {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Crop to fill wrapper while preserving aspect */
+    height: 200px;
+    object-fit: cover;
+    object-position: top;
     display: block;
-    z-index: 0;
 }
 
-.video-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.85)
-    );
-    pointer-events: none;
-    z-index: 1;
+.showcase-caption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
 }
 
-.services-content {
-    position: relative;
-    margin-top: -140px; /* Smaller overlap for a cleaner layout */
-    padding: 3rem;
+.showcase-caption-title {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.showcase-caption-link {
+    font-size: 0.875rem;
+    color: var(--accent-blue);
+    white-space: nowrap;
+}
+
+.showcase-card-more {
+    display: flex;
+    flex-direction: column;
+    background: var(--brand-gradient-soft);
+}
+
+.showcase-more-icon {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    min-height: 200px;
+}
+
+.showcase-card-more .showcase-caption {
     background: var(--surface);
-    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.12);
-    border-radius: 16px;
-    z-index: 2;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
 }
 
 /* Responsive tweaks for smaller screens */
 @media (max-width: 900px) {
-    .services-video-wrapper {
-        aspect-ratio: 4 / 3;
-        max-height: 360px;
-    }
-    .services-content {
-        margin-top: -120px;
-        padding: 2rem;
+    .showcase-grid {
+        grid-template-columns: 1fr;
     }
 }
-
-@media (max-width: 480px) {
-    .services-video-wrapper {
-        aspect-ratio: 16 / 9;
-        max-height: 260px;
-        border-radius: 12px;
-    }
-    .services-content {
-        margin-top: -90px;
-        padding: 1.5rem;
-        border-radius: 12px;
-    }
-}
-
-/* (Removed mute/overlay UI — video plays with sound by default) */
 
 .services-title {
     font-size: 2.2rem;

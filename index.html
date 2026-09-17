@@ -26,29 +26,6 @@ Features: Responsive design, modern animations, accessibility optimized
     
     <!-- Link to external CSS stylesheet with comprehensive styling -->
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Small helper styles for the services video mute button */
-        .services-video-wrapper { position: relative; }
-        .video-mute-button {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            border: none;
-            padding: 8px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            z-index: 10;
-            font-size: 16px;
-            touch-action: manipulation;
-        }
-        .video-mute-button:focus { outline: 2px solid #fff; }
-        /* Ensure a minimum touch target on small devices */
-        @media (max-width: 600px) {
-            .video-mute-button { padding: 12px 14px; font-size: 18px; top: 10px; right: 10px; }
-        }
-    </style>
 </head>
 
 <!-- 
@@ -226,14 +203,6 @@ BODY SECTION - MAIN WEBSITE CONTENT
     <section class="services-overview">
         <div class="services-overview-container">
 
-                <div class="services-video-wrapper" id="services-video-wrapper">
-                <video id="servicesVideo" autoplay muted loop playsinline class="services-video">
-                    <source src="img/cloudUko-what we do.mp4" type="video/mp4">
-                </video>
-                <button id="mute-btn" class="video-mute-button" aria-pressed="false" aria-label="Unmute video">🔇</button>
-                <div class="video-overlay"></div>
-            </div>
-
             <div class="services-content">
                 <h2 class="services-title">What We Do</h2>
                 <p class="services-subtitle">
@@ -250,6 +219,39 @@ BODY SECTION - MAIN WEBSITE CONTENT
                     <button type="button" class="service-option" data-service="Technical Support & Maintenance">Technical Support &amp; Maintenance</button>
                     <button type="button" class="service-option" data-service="Analytics, Reporting & Integrations">Analytics, Reporting &amp; Integrations</button>
                 </div>
+            </div>
+
+            <div class="showcase-header">
+                <h3 class="showcase-title">Real Systems, Not Mockups</h3>
+                <p class="showcase-subtitle">Every card below is a live, working system we built &mdash; click through and try it yourself.</p>
+            </div>
+
+            <div class="showcase-grid">
+                <a class="showcase-card" href="https://school-erp-backend-production-a600.up.railway.app/" target="_blank" rel="noopener noreferrer">
+                    <div class="showcase-browser-bar"><span></span><span></span><span></span></div>
+                    <img src="img/showcase/erp.png" alt="CloudUko School ERP system dashboard" class="showcase-image" loading="lazy">
+                    <div class="showcase-caption">
+                        <span class="showcase-caption-title">ERP System</span>
+                        <span class="showcase-caption-link">Visit live demo →</span>
+                    </div>
+                </a>
+
+                <a class="showcase-card" href="https://online-tutor-web.vercel.app/" target="_blank" rel="noopener noreferrer">
+                    <div class="showcase-browser-bar"><span></span><span></span><span></span></div>
+                    <img src="img/showcase/booking.png" alt="Lumen tutor booking platform homepage" class="showcase-image" loading="lazy">
+                    <div class="showcase-caption">
+                        <span class="showcase-caption-title">Booking & Marketplace Platform</span>
+                        <span class="showcase-caption-link">Visit live demo →</span>
+                    </div>
+                </a>
+
+                <a class="showcase-card showcase-card-more" href="demos.html">
+                    <div class="showcase-more-icon">→</div>
+                    <div class="showcase-caption">
+                        <span class="showcase-caption-title">See All Live Demos</span>
+                        <span class="showcase-caption-link">ERP &middot; Invoicing &middot; POS &middot; Booking</span>
+                    </div>
+                </a>
             </div>
 
         </div>
@@ -663,62 +665,8 @@ BODY SECTION - MAIN WEBSITE CONTENT
             observer.observe(el);
         });
 
-        /**
-         * "What We Do" video source. The raw file is kept out of git (it's ~100MB
-         * and breaks GitHub pushes) - host it externally (YouTube unlisted, Vercel,
-         * Cloudinary, etc.) and paste the direct MP4/embed URL here.
-         */
-        const servicesVideoUrl = '';
-
-        // Mute button wiring: ensure autoplay works (video muted) and allow toggle
         document.addEventListener('DOMContentLoaded', function() {
-            const servicesVideo = document.getElementById('servicesVideo');
-            const muteBtn = document.getElementById('mute-btn');
-            const videoWrapper = document.getElementById('services-video-wrapper');
-
-            if (servicesVideo && servicesVideoUrl) {
-                servicesVideo.querySelector('source').src = servicesVideoUrl;
-                servicesVideo.load();
-            }
-
-            // Hide the video block gracefully if the file isn't available
-            // (e.g. deployed without the local video and no external URL set yet)
-            if (servicesVideo) {
-                servicesVideo.addEventListener('error', function () {
-                    if (videoWrapper) videoWrapper.style.display = 'none';
-                });
-            }
-
-            if (servicesVideo) {
-                // Ensure it's muted so autoplay is allowed in browsers
-                servicesVideo.muted = true;
-                // Try to play (some browsers require user gesture; catch errors)
-                const p = servicesVideo.play();
-                if (p && typeof p.then === 'function') p.catch(() => {});
-            }
-
-            if (muteBtn && servicesVideo) {
-                muteBtn.addEventListener('click', function() {
-                    // Toggle muted state
-                    servicesVideo.muted = !servicesVideo.muted;
-                    // Update ARIA to indicate 'pressed' when unmuted
-                    this.setAttribute('aria-pressed', String(!servicesVideo.muted));
-                    this.setAttribute('aria-label', servicesVideo.muted ? 'Unmute video' : 'Mute video');
-                    this.textContent = servicesVideo.muted ? '🔇' : '🔊';
-
-                    // If unmuted, set volume and ensure playback (user gesture present)
-                    if (!servicesVideo.muted) {
-                        try {
-                            servicesVideo.volume = 1.0;
-                            const playPromise = servicesVideo.play();
-                            if (playPromise && typeof playPromise.then === 'function') playPromise.catch(() => {});
-                        } catch (err) {
-                            // ignore playback errors
-                        }
-                    }
-                });
-            }
-            // Service Option Button Handler (inside DOMContentLoaded for reliability)
+            // Service Option Button Handler
             const options = document.querySelectorAll('.service-option');
             options.forEach(opt => {
                 opt.addEventListener('click', function (e) {
