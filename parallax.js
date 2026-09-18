@@ -1,4 +1,12 @@
 /**
+ * Shared scroll/background effects for the Cloud UKO site:
+ *  1. Parallax drift for decorative hero shapes (.parallax-shape)
+ *  2. Cursor-following glow (.mouse-glow)
+ *  3. Scroll-linked hue-rotating logo background layer (.logo-bg-layer)
+ *  4. Scroll-triggered typewriter reveal for headings (.type-target)
+ */
+
+/**
  * Lightweight scroll parallax for decorative background shapes.
  * Any element with class="parallax-shape" and a data-speed attribute
  * (fraction of scroll distance, e.g. 0.2) will drift as the page scrolls.
@@ -57,4 +65,83 @@ document.addEventListener('DOMContentLoaded', function () {
             glowTicking = true;
         }
     }, { passive: true });
+});
+
+/**
+ * Scroll-linked hue-rotating logo background. The layer itself is a
+ * fixed, tiled, low-opacity pattern of the Cloud UKO icon (see CSS);
+ * this just turns the hue-rotate dial as scrollY increases, so it
+ * cycles continuously through the brand gradient and beyond -
+ * completely independent of the foreground palette.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    var logoLayer = document.querySelector('.logo-bg-layer');
+    if (!logoLayer) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var hueTicking = false;
+
+    function updateHue() {
+        var y = window.scrollY || window.pageYOffset;
+        var degrees = (y * 0.12) % 360;
+        logoLayer.style.filter = 'hue-rotate(' + degrees.toFixed(1) + 'deg)';
+        hueTicking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+        if (!hueTicking) {
+            window.requestAnimationFrame(updateHue);
+            hueTicking = true;
+        }
+    }, { passive: true });
+
+    updateHue();
+});
+
+/**
+ * Scroll-triggered typewriter reveal. Any element with class
+ * "type-target" has its text content typed in character-by-character
+ * the first time it scrolls into view, instead of animating on load.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    var targets = document.querySelectorAll('.type-target');
+    if (!targets.length || !('IntersectionObserver' in window)) return;
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function typeIn(el) {
+        var text = el.textContent;
+        if (reduceMotion) return;
+
+        el.textContent = '';
+        el.classList.add('is-typing');
+
+        var i = 0;
+        // Faster per-character delay for longer headlines so nothing
+        // takes forever to finish typing.
+        var speed = Math.max(18, Math.min(45, 900 / Math.max(text.length, 1)));
+
+        (function step() {
+            el.textContent = text.slice(0, i);
+            i++;
+            if (i <= text.length) {
+                setTimeout(step, speed);
+            } else {
+                el.classList.remove('is-typing');
+            }
+        })();
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                typeIn(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.4 });
+
+    targets.forEach(function (el) {
+        observer.observe(el);
+    });
 });

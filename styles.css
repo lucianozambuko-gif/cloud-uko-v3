@@ -588,6 +588,50 @@ drift at their own speed as the page scrolls (see parallax.js).
 
 /*
 ==========================================
+HUE-ROTATING LOGO BACKGROUND
+==========================================
+A fixed, tiled, low-opacity pattern of the Cloud UKO icon that sits
+behind everything. Its hue-rotate filter is turned by parallax.js as
+the page scrolls, so it cycles through colors independently of the
+foreground palette.
+*/
+.logo-bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.1;
+    background-image: url('img/logo/clouduko-icon.png');
+    background-repeat: repeat;
+    background-size: 130px 130px;
+    will-change: filter;
+}
+
+@media (max-width: 600px) {
+    .logo-bg-layer {
+        background-size: 90px 90px;
+        opacity: 0.08;
+    }
+}
+
+/*
+==========================================
+SCROLL-TRIGGERED TYPEWRITER HEADLINES
+==========================================
+*/
+.is-typing::after {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 0.85em;
+    margin-left: 4px;
+    vertical-align: -0.1em;
+    background: currentColor;
+    animation: blink 0.8s step-end infinite;
+}
+
+/*
+==========================================
 12. STATS SECTION
 ==========================================
 */
