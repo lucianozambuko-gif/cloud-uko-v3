@@ -377,8 +377,9 @@ body {
 /* Main hero title - "Cloud UKO" */
 .hero-title {
     display: block; /* Keep block: an inline-block here would flow onto the same line as the preceding badge */
-    font-size: clamp(3rem, 8vw, 6rem); /* Responsive font size */
+    font-size: clamp(2.1rem, 8vw, 6rem); /* Responsive font size - low enough that long single words (e.g. "Comprehensive") don't overflow narrow phones */
     font-weight: 800;     /* Extra bold */
+    overflow-wrap: break-word;
     margin-bottom: 1.5rem; /* Space below title */
     /* Brand gradient text effect */
     background: var(--brand-gradient);
@@ -1217,10 +1218,9 @@ SCROLL-TRIGGERED TYPEWRITER HEADLINES
 
 /* Responsive adjustments for values section */
 @media (max-width: 768px) {
-    .values-grid {
-        grid-template-columns: 1fr;
-    }
-
+    /* .values-grid intentionally left on auto-fit - it already collapses
+       to 1 column once 2x 300px cards no longer fit (e.g. real phones),
+       but keeps 2 columns on tablets where there's room. */
     .value-card {
         padding: 2rem;
     }
@@ -1497,10 +1497,7 @@ SCROLL-TRIGGERED TYPEWRITER HEADLINES
 
 /* Responsive adjustments for services section */
 @media (max-width: 768px) {
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-
+    /* .services-grid stays on auto-fit for the same reason as .values-grid */
     .service-card {
         padding: 2rem;
     }
@@ -1750,10 +1747,8 @@ SCROLL-TRIGGERED TYPEWRITER HEADLINES
 
 /* Mobile Optimizations for Projects */
 @media (max-width: 768px) {
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-
+    /* .projects-grid stays on auto-fit (its 400px card minimum already
+       collapses to 1 column below ~850px on its own) */
     .filter-buttons {
         flex-direction: column;
         gap: 0.5rem;
@@ -1847,7 +1842,7 @@ BENEFITS SECTION (CONTACT PAGE)
 }
 
 @media (max-width: 768px) {
-    .benefits-grid { grid-template-columns: 1fr; }
+    /* .benefits-grid stays on auto-fit */
     .benefit-item { align-items: center; }
 }
 
@@ -2086,15 +2081,8 @@ flat white slabs - specificity (class + nth-child) beats the plain
         gap: 1.5rem;
     }
 
-    /* Single column layout for packages */
-    .packages-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* Single column layout for features */
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
+    /* .packages-grid and .features-grid stay on auto-fit so tablets get
+       2 columns where there's room, collapsing to 1 on real phones */
 
     /* Stack CTA buttons vertically */
     .cta-buttons {
@@ -2348,18 +2336,15 @@ screenshots of the systems we've actually built.
     gap: 0.25rem;
 }
 
-/* Responsive tweaks for smaller screens */
-@media (max-width: 900px) {
-    .showcase-grid {
-        grid-template-columns: 1fr;
-    }
-}
+/* .showcase-grid stays on auto-fit at every width - its 300px minimum
+   already gives 2 columns on tablets and 1 on phones without help. */
 
 .services-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 1rem;
+    overflow-wrap: break-word;
 }
 
 .services-subtitle {
@@ -2390,16 +2375,27 @@ screenshots of the systems we've actually built.
     margin: 1.5rem 0;
 }
 
-.footer-socials img {
+.footer-socials a {
+    color: var(--text-secondary);
+    display: inline-flex;
+}
+
+.footer-socials img,
+.footer-socials svg {
     width: 22px;
     height: 22px;
     opacity: 0.75;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
 
-.footer-socials img:hover {
+.footer-socials a:hover img,
+.footer-socials a:hover svg {
     opacity: 1;
     transform: translateY(-2px);
+}
+
+.footer-socials a:hover {
+    color: var(--accent-blue);
 }
 
 /* FONT STYLE FOR PROJECT BUTTONS */
