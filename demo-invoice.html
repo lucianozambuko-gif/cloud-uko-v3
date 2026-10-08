@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoicing System Demo - Cloud UKO</title>
+    <meta name="description" content="Try a live, interactive demo of the invoicing system Cloud UKO builds for clients - create quotes, send invoices, and track payments.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="demo-apps.css">
+    <style>
+        @media print {
+            .demo-app-bar, .demo-app-note, .demo-tabs, #panel-history { display: none !important; }
+            body.demo-app-body { background: #fff; }
+            .demo-app-main { padding: 0; }
+        }
+    </style>
+</head>
+<body class="demo-app-body">
+
+    <header class="demo-app-bar">
+        <a href="index.html" class="demo-app-logo">
+            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO">
+        </a>
+        <div class="demo-app-bar-title">
+            Invoicing System <span class="demo-app-badge">Live Demo</span>
+        </div>
+        <div class="demo-app-bar-actions">
+            <button type="button" class="demo-app-btn-ghost" id="resetBtn">Reset Demo Data</button>
+            <a href="demos.html" class="demo-app-btn-ghost">← Back to Demos</a>
+        </div>
+    </header>
+    <p class="demo-app-note">This is a self-contained sandbox - everything you create is saved only in your browser, nothing is sent anywhere. Reset it any time.</p>
+
+    <main class="demo-app-main">
+
+        <div class="demo-tabs">
+            <button type="button" class="demo-tab active" data-tab="create">Create Invoice</button>
+            <button type="button" class="demo-tab" data-tab="history">Invoice History</button>
+        </div>
+
+        <!-- Create -->
+        <section class="demo-panel active" id="panel-create">
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <h2>New Invoice</h2>
+                </div>
+
+                <div class="demo-form-grid" style="margin-bottom: 1.5rem;">
+                    <div class="demo-field">
+                        <label for="clientName">Client name</label>
+                        <input type="text" id="clientName" placeholder="e.g. Aurora Studio">
+                    </div>
+                    <div class="demo-field">
+                        <label for="clientEmail">Client email</label>
+                        <input type="email" id="clientEmail" placeholder="billing@client.com">
+                    </div>
+                    <div class="demo-field">
+                        <label for="invoiceDate">Invoice date</label>
+                        <input type="date" id="invoiceDate">
+                    </div>
+                </div>
+
+                <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--text-primary);">Line Items</h3>
+                <div class="demo-line-items" id="lineItems">
+                    <div class="demo-line-head">
+                        <span>Description</span><span>Qty</span><span>Unit Price (R)</span><span>Total</span><span></span>
+                    </div>
+                </div>
+                <button type="button" class="demo-app-btn-ghost" id="addLineBtn">+ Add Line</button>
+
+                <div class="demo-summary">
+                    <div class="demo-summary-row"><span>Subtotal</span><span id="subtotalOut">R 0.00</span></div>
+                    <div class="demo-summary-row"><span>VAT (15%)</span><span id="vatOut">R 0.00</span></div>
+                    <div class="demo-summary-row total"><span>Total</span><span id="totalOut">R 0.00</span></div>
+                </div>
+
+                <div class="demo-form-actions">
+                    <button type="button" class="btn btn-primary" id="saveInvoiceBtn">Save Invoice</button>
+                    <button type="button" class="demo-app-btn-ghost" id="clearFormBtn">Clear Form</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- History -->
+        <section class="demo-panel" id="panel-history">
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <h2>Invoice History</h2>
+                </div>
+                <div class="demo-table-wrap">
+                    <table class="demo-table">
+                        <thead>
+                            <tr><th>Invoice #</th><th>Client</th><th>Date</th><th>Total</th><th>Status</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="historyBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Print-friendly preview (shown when "View" is clicked) -->
+        <section id="panel-preview" style="display:none;">
+            <div class="demo-form-actions" style="margin-bottom: 1.25rem;">
+                <button type="button" class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+                <button type="button" class="demo-app-btn-ghost" id="closePreviewBtn">← Back to History</button>
+            </div>
+            <div class="demo-invoice-preview" id="invoicePreview"></div>
+        </section>
+
+    </main>
+
+    <div class="demo-toast" id="toast"></div>
+
+    <script>
+        const STORAGE_KEY = 'clouduko_demo_invoice';
+        const VAT_RATE = 0.15;
+
+        function todayISO() {
+            return new Date().toISOString().slice(0, 10);
+        }
+
+        function seedData() {
+            return {
+                nextNumber: 1003,
+                invoices: [
+                    {
+                        id: 1, number: 'INV-1001', client: 'Aurora Studio', email: 'accounts@aurora-studio.co.za',
+                        date: '2026-09-18', status: 'Paid',
+                        items: [{ desc: 'Website maintenance - September', qty: 1, price: 2500 }]
+                    },
+                    {
+                        id: 2, number: 'INV-1002', client: 'Lavish Bites', email: 'hello@lavishbites.co.za',
+                        date: '2026-09-29', status: 'Unpaid',
+                        items: [
+                            { desc: 'POS system - monthly upkeep', qty: 1, price: 1500 },
+                            { desc: 'Additional till setup', qty: 2, price: 650 }
+                        ]
+                    }
+                ]
+            };
+        }
+
+        function loadData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) { /* fall through to reseed */ }
+            const seeded = seedData();
+            saveData(seeded);
+            return seeded;
+        }
+
+        function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+        let data = loadData();
+        let lineCounter = 0;
+
+        function formatRand(n) {
+            return 'R ' + Number(n).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        function addLine(desc, qty, price) {
+            lineCounter++;
+            const row = document.createElement('div');
+            row.className = 'demo-line-row';
+            row.dataset.lineId = lineCounter;
+            row.innerHTML = `
+                <input type="text" class="line-desc" placeholder="Description" value="${desc ? escapeHtml(desc) : ''}">
+                <input type="number" class="line-qty" min="1" value="${qty || 1}">
+                <input type="number" class="line-price" min="0" step="0.01" value="${price || ''}" placeholder="0.00">
+                <div class="demo-line-total">R 0.00</div>
+                <button type="button" class="demo-line-remove" title="Remove line">✕</button>
+            `;
+            document.getElementById('lineItems').appendChild(row);
+
+            row.querySelectorAll('input').forEach(input => input.addEventListener('input', recalcTotals));
+            row.querySelector('.demo-line-remove').addEventListener('click', () => {
+                row.remove();
+                recalcTotals();
+            });
+            recalcTotals();
+        }
+
+        function recalcTotals() {
+            let subtotal = 0;
+            document.querySelectorAll('#lineItems .demo-line-row').forEach(row => {
+                const qty = parseFloat(row.querySelector('.line-qty').value) || 0;
+                const price = parseFloat(row.querySelector('.line-price').value) || 0;
+                const lineTotal = qty * price;
+                row.querySelector('.demo-line-total').textContent = formatRand(lineTotal);
+                subtotal += lineTotal;
+            });
+            const vat = subtotal * VAT_RATE;
+            document.getElementById('subtotalOut').textContent = formatRand(subtotal);
+            document.getElementById('vatOut').textContent = formatRand(vat);
+            document.getElementById('totalOut').textContent = formatRand(subtotal + vat);
+        }
+
+        function collectLineItems() {
+            const items = [];
+            document.querySelectorAll('#lineItems .demo-line-row').forEach(row => {
+                const desc = row.querySelector('.line-desc').value.trim();
+                const qty = parseFloat(row.querySelector('.line-qty').value) || 0;
+                const price = parseFloat(row.querySelector('.line-price').value) || 0;
+                if (desc && qty > 0) items.push({ desc, qty, price });
+            });
+            return items;
+        }
+
+        function invoiceTotal(inv) {
+            const subtotal = inv.items.reduce((s, i) => s + i.qty * i.price, 0);
+            return subtotal * (1 + VAT_RATE);
+        }
+
+        function renderHistory() {
+            const sorted = [...data.invoices].sort((a, b) => b.id - a.id);
+            document.getElementById('historyBody').innerHTML = sorted.map(inv => `
+                <tr>
+                    <td>${inv.number}</td>
+                    <td>${escapeHtml(inv.client)}</td>
+                    <td>${inv.date}</td>
+                    <td>${formatRand(invoiceTotal(inv))}</td>
+                    <td><span class="demo-badge ${inv.status === 'Paid' ? 'paid' : 'unpaid'}" data-toggle-status="${inv.id}">${inv.status}</span></td>
+                    <td>
+                        <button type="button" class="demo-icon-btn" data-view="${inv.id}">View / Print</button>
+                        <button type="button" class="demo-icon-btn danger" data-delete="${inv.id}">Delete</button>
+                    </td>
+                </tr>
+            `).join('') || '<tr><td colspan="6">No invoices yet. Create your first one.</td></tr>';
+        }
+
+        function openPreview(inv) {
+            const subtotal = inv.items.reduce((s, i) => s + i.qty * i.price, 0);
+            const vat = subtotal * VAT_RATE;
+            document.getElementById('invoicePreview').innerHTML = `
+                <div class="demo-invoice-preview-head">
+                    <img src="img/logo/clouduko-logo.png" alt="Cloud UKO">
+                    <div>
+                        <h3>${inv.number}</h3>
+                        <div style="color: var(--text-muted); font-size: 0.9rem;">${inv.date}</div>
+                        <div style="margin-top: 0.4rem;"><span class="demo-badge ${inv.status === 'Paid' ? 'paid' : 'unpaid'}">${inv.status}</span></div>
+                    </div>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em;">Billed to</p>
+                <p style="font-weight: 700; color: var(--text-primary);">${escapeHtml(inv.client)}</p>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">${escapeHtml(inv.email || '')}</p>
+                <div class="demo-table-wrap">
+                    <table class="demo-table">
+                        <thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Line Total</th></tr></thead>
+                        <tbody>
+                            ${inv.items.map(i => `<tr><td class="wrap">${escapeHtml(i.desc)}</td><td>${i.qty}</td><td>${formatRand(i.price)}</td><td>${formatRand(i.qty * i.price)}</td></tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="demo-summary">
+                    <div class="demo-summary-row"><span>Subtotal</span><span>${formatRand(subtotal)}</span></div>
+                    <div class="demo-summary-row"><span>VAT (15%)</span><span>${formatRand(vat)}</span></div>
+                    <div class="demo-summary-row total"><span>Total Due</span><span>${formatRand(subtotal + vat)}</span></div>
+                </div>
+            `;
+            document.getElementById('panel-create').classList.remove('active');
+            document.getElementById('panel-history').classList.remove('active');
+            document.getElementById('panel-preview').style.display = 'block';
+        }
+
+        // Tabs
+        document.querySelectorAll('.demo-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.getElementById('panel-preview').style.display = 'none';
+                document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        document.getElementById('addLineBtn').addEventListener('click', () => addLine());
+
+        document.getElementById('clearFormBtn').addEventListener('click', () => {
+            document.getElementById('clientName').value = '';
+            document.getElementById('clientEmail').value = '';
+            document.getElementById('invoiceDate').value = todayISO();
+            document.getElementById('lineItems').querySelectorAll('.demo-line-row').forEach(r => r.remove());
+            addLine();
+        });
+
+        document.getElementById('saveInvoiceBtn').addEventListener('click', () => {
+            const client = document.getElementById('clientName').value.trim();
+            const email = document.getElementById('clientEmail').value.trim();
+            const date = document.getElementById('invoiceDate').value || todayISO();
+            const items = collectLineItems();
+
+            if (!client) { showToast('Add a client name first'); return; }
+            if (!items.length) { showToast('Add at least one line item'); return; }
+
+            const number = 'INV-' + data.nextNumber;
+            data.invoices.push({
+                id: Date.now(),
+                number, client, email, date,
+                status: 'Unpaid',
+                items
+            });
+            data.nextNumber++;
+            saveData(data);
+            renderHistory();
+            showToast(number + ' saved');
+
+            // Reset the form
+            document.getElementById('clientName').value = '';
+            document.getElementById('clientEmail').value = '';
+            document.getElementById('invoiceDate').value = todayISO();
+            document.getElementById('lineItems').querySelectorAll('.demo-line-row').forEach(r => r.remove());
+            addLine();
+
+            // Jump to history
+            document.querySelector('.demo-tab[data-tab="history"]').click();
+        });
+
+        document.getElementById('historyBody').addEventListener('click', (e) => {
+            const viewId = e.target.getAttribute('data-view');
+            const delId = e.target.getAttribute('data-delete');
+            const toggleId = e.target.getAttribute('data-toggle-status');
+
+            if (viewId) {
+                const inv = data.invoices.find(i => i.id === Number(viewId));
+                if (inv) openPreview(inv);
+            } else if (delId) {
+                if (!confirm('Delete this invoice?')) return;
+                data.invoices = data.invoices.filter(i => i.id !== Number(delId));
+                saveData(data);
+                renderHistory();
+                showToast('Invoice deleted');
+            } else if (toggleId) {
+                const inv = data.invoices.find(i => i.id === Number(toggleId));
+                if (inv) {
+                    inv.status = inv.status === 'Paid' ? 'Unpaid' : 'Paid';
+                    saveData(data);
+                    renderHistory();
+                    showToast(inv.number + ' marked ' + inv.status);
+                }
+            }
+        });
+
+        document.getElementById('closePreviewBtn').addEventListener('click', () => {
+            document.getElementById('panel-preview').style.display = 'none';
+            document.querySelector('.demo-tab[data-tab="history"]').click();
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (!confirm('Reset all demo data back to the sample dataset?')) return;
+            data = seedData();
+            saveData(data);
+            renderHistory();
+            document.getElementById('panel-preview').style.display = 'none';
+            showToast('Demo data reset');
+        });
+
+        // Init
+        document.getElementById('invoiceDate').value = todayISO();
+        addLine('Website design & build', 1, 8500);
+        renderHistory();
+    </script>
+</body>
+</html>

@@ -443,6 +443,12 @@ body {
     overflow: hidden;    /* Hide overflow for effects */
 }
 
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 /* Shimmer effect for buttons */
 .btn::before {
     content: '';         /* Empty content for pseudo-element */

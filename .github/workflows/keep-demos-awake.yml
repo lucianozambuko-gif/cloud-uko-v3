@@ -1,9 +1,11 @@
 name: Keep Demos Awake
 
-# Pings the free-tier hosted demo apps every 10 minutes so Render/Railway
-# don't spin them down from inactivity. Self-expires after ~2 weeks so it
-# doesn't run forever unnoticed - push the cutoff date back (or delete this
-# file) if you need it longer.
+# The ERP and Invoicing demos now run entirely in-site (demo-erp.html,
+# demo-invoice.html - static, no backend, nothing to keep awake). Only
+# the Booking & Marketplace card still links to an external app, so
+# that's all this pings now. Self-expires so it doesn't run forever
+# unnoticed - push the cutoff date back (or delete this file) if you
+# need it longer.
 
 on:
   schedule:
@@ -14,10 +16,10 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Check the 2-week window
+      - name: Check the expiry window
         id: gate
         run: |
-          cutoff="2026-10-09"
+          cutoff="2026-12-08"
           today=$(date -u +%F)
           if [[ "$today" > "$cutoff" ]]; then
             echo "Past $cutoff - skipping pings. Edit the cutoff date in this workflow (or delete .github/workflows/keep-demos-awake.yml) to keep this running."
@@ -30,12 +32,10 @@ jobs:
         if: steps.gate.outputs.expired == 'false'
         run: |
           urls=(
-            "https://school-erp-backend-production-a600.up.railway.app/"
-            "https://clouduko-invoice-system.onrender.com/"
             "https://online-tutor-web.vercel.app/"
           )
           # Best-effort: log status codes but never fail the job. A cold
-          # Render instance can take >25s to wake, which would otherwise
+          # free-tier instance can take >25s to wake, which would otherwise
           # show as a spurious red X every time it happens.
           for url in "${urls[@]}"; do
             code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 25 "$url" || echo "000")

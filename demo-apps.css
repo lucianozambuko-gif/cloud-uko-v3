@@ -1,0 +1,603 @@
+/*
+==========================================
+CLOUD UKO - DEMO APPS STYLESHEET
+==========================================
+Shared styles for the in-site interactive demos (ERP, Invoicing, POS).
+Loaded alongside styles.css, which provides the :root design tokens,
+reset, fonts, and .btn/.btn-primary/.btn-secondary used here.
+==========================================
+*/
+
+body.demo-app-body {
+    background: var(--bg-alt);
+    min-height: 100vh;
+}
+
+/* ---------- Top bar ---------- */
+.demo-app-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.85rem 1.5rem;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+}
+
+.demo-app-logo img {
+    height: 42px;
+    width: auto;
+    display: block;
+}
+
+.demo-app-bar-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    margin-right: auto;
+}
+
+.demo-app-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--brand-gradient);
+    color: #fff;
+}
+
+.demo-app-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.demo-app-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.demo-app-btn-ghost:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.demo-app-note {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* ---------- Page shell ---------- */
+.demo-app-main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* ---------- Tabs ---------- */
+.demo-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.demo-tab {
+    padding: 0.65rem 1.25rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.demo-tab:hover {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.demo-tab.active {
+    background: var(--action-gradient);
+    border-color: transparent;
+    color: #fff;
+}
+
+.demo-panel { display: none; }
+.demo-panel.active { display: block; }
+
+/* ---------- Stat cards ---------- */
+.demo-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.demo-stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+}
+
+.demo-stat-value {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.demo-stat-label {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+}
+
+.demo-stat-card.warn .demo-stat-value { color: #b45309; }
+
+/* ---------- Generic card / panel ---------- */
+.demo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.demo-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.demo-card-header h2 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+}
+
+/* ---------- Tables ---------- */
+.demo-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+}
+
+.demo-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+    font-size: 0.9rem;
+}
+
+.demo-table th,
+.demo-table td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.demo-table th {
+    background: var(--bg-alt);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.demo-table tbody tr:last-child td { border-bottom: none; }
+.demo-table tbody tr:hover { background: var(--surface-tint); }
+
+.demo-table td.wrap, .demo-table th.wrap { white-space: normal; }
+
+.demo-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.demo-badge.low { background: rgba(234, 179, 8, 0.15); color: #a16207; }
+.demo-badge.ok { background: rgba(34, 197, 94, 0.12); color: #15803d; }
+.demo-badge.paid { background: rgba(34, 197, 94, 0.12); color: #15803d; cursor: pointer; }
+.demo-badge.unpaid { background: rgba(239, 68, 68, 0.12); color: #b91c1c; cursor: pointer; }
+
+.demo-icon-btn {
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text-secondary);
+    border-radius: 0.4rem;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-right: 0.35rem;
+}
+
+.demo-icon-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+.demo-icon-btn.danger:hover { border-color: #dc2626; color: #dc2626; }
+
+/* ---------- Forms ---------- */
+.demo-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.demo-field label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.35rem;
+}
+
+.demo-field input,
+.demo-field select {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-alt);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.demo-field input:focus,
+.demo-field select:focus {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 1px;
+}
+
+.demo-form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* ---------- Line-item rows (invoices) ---------- */
+.demo-line-items { margin-bottom: 1rem; }
+
+.demo-line-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 120px 110px 40px;
+    gap: 0.6rem;
+    align-items: center;
+    margin-bottom: 0.6rem;
+}
+
+.demo-line-row input {
+    padding: 0.55rem 0.7rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-alt);
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    width: 100%;
+}
+
+.demo-line-total {
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+.demo-line-remove {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.demo-line-remove:hover { color: #dc2626; }
+
+.demo-line-head {
+    display: grid;
+    grid-template-columns: 1fr 80px 120px 110px 40px;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.demo-summary {
+    max-width: 320px;
+    margin-left: auto;
+    margin-top: 1rem;
+}
+
+.demo-summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+}
+
+.demo-summary-row.total {
+    border-top: 1px solid var(--border-strong);
+    margin-top: 0.4rem;
+    padding-top: 0.6rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* ---------- Invoice print preview ---------- */
+.demo-invoice-preview {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.demo-invoice-preview-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.demo-invoice-preview-head img { height: 48px; }
+
+.demo-invoice-preview h3 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+}
+
+/* ---------- POS layout ---------- */
+.demo-pos-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.demo-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.9rem;
+}
+
+.demo-product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    padding: 1rem 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+}
+
+.demo-product-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-blue);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.12);
+}
+
+.demo-product-emoji {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.demo-product-name {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+}
+
+.demo-product-price {
+    font-size: 0.85rem;
+    color: var(--accent-blue);
+    font-weight: 700;
+    margin-top: 0.2rem;
+}
+
+.demo-category-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.demo-category-btn {
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.demo-category-btn.active {
+    background: var(--brand-gradient);
+    border-color: transparent;
+    color: #fff;
+}
+
+.demo-cart {
+    position: sticky;
+    top: 86px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05);
+}
+
+.demo-cart h3 {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.demo-cart-empty {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+.demo-cart-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.demo-cart-item-name {
+    flex: 1;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.demo-cart-item-price {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.demo-qty-stepper {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.demo-qty-stepper button {
+    width: 24px;
+    height: 24px;
+    border-radius: 0.3rem;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-alt);
+    cursor: pointer;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.demo-receipt {
+    max-width: 420px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px dashed var(--border-strong);
+    border-radius: 1rem;
+    padding: 1.75rem;
+    font-family: 'Courier New', monospace;
+}
+
+.demo-receipt h3 {
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin-bottom: 0.25rem;
+}
+
+.demo-receipt-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    padding: 0.2rem 0;
+}
+
+.demo-receipt-divider {
+    border-top: 1px dashed var(--border-strong);
+    margin: 0.75rem 0;
+}
+
+/* ---------- Toast ---------- */
+.demo-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--text-primary);
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.6rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease;
+    z-index: 999;
+}
+
+.demo-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .demo-pos-layout {
+        grid-template-columns: 1fr;
+    }
+    .demo-cart {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .demo-app-bar-title { font-size: 0.95rem; }
+    .demo-app-main { padding: 1rem; }
+    .demo-line-row,
+    .demo-line-head {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+    }
+    .demo-line-head { display: none; }
+    .demo-line-row {
+        background: var(--bg-alt);
+        border-radius: 0.6rem;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+    }
+    .demo-line-total { text-align: left; }
+    .demo-invoice-preview { padding: 1.25rem; }
+}

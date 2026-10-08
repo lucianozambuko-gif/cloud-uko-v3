@@ -6,25 +6,6 @@
     <title>Live Demos - Cloud UKO</title>
     <meta name="description" content="Try live demos of Cloud UKO's custom-built systems: ERP, Invoicing, and Point of Sale (POS) platforms.">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Small badge shown on cards whose demo link hasn't been added yet */
-        .demo-status {
-            display: inline-block;
-            margin-top: 0.75rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.35rem 0.85rem;
-            border-radius: 999px;
-            background: rgba(234, 179, 8, 0.12);
-            color: #eab308;
-            border: 1px solid rgba(234, 179, 8, 0.35);
-        }
-        .service-button[aria-disabled="true"] {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-    </style>
 </head>
 <body>
 <div class="logo-bg-layer" aria-hidden="true"></div>
@@ -118,8 +99,8 @@
                         <li><span class="check">✓</span> Staff & role management</li>
                         <li><span class="check">✓</span> Real-time reporting dashboard</li>
                     </ul>
-                    <a href="#" class="service-button" data-demo-link="erp" target="_blank" rel="noopener noreferrer">
-                        View Live Demo →
+                    <a href="demo-erp.html" class="service-button">
+                        Try The Demo →
                     </a>
                 </div>
 
@@ -137,8 +118,8 @@
                         <li><span class="check">✓</span> Client & record management</li>
                         <li><span class="check">✓</span> Automated reminders</li>
                     </ul>
-                    <a href="#" class="service-button" data-demo-link="invoice" target="_blank" rel="noopener noreferrer">
-                        View Live Demo →
+                    <a href="demo-invoice.html" class="service-button">
+                        Try The Demo →
                     </a>
                 </div>
 
@@ -156,8 +137,8 @@
                         <li><span class="check">✓</span> Sales & performance analytics</li>
                         <li><span class="check">✓</span> Multi-location support</li>
                     </ul>
-                    <a href="#" class="service-button" data-demo-link="pos" target="_blank" rel="noopener noreferrer">
-                        View Live Demo →
+                    <a href="demo-pos.html" class="service-button">
+                        Try The Demo →
                     </a>
                 </div>
 
@@ -175,7 +156,7 @@
                         <li><span class="check">✓</span> In-app messaging per booking</li>
                         <li><span class="check">✓</span> Verification & ratings</li>
                     </ul>
-                    <a href="#" class="service-button" data-demo-link="booking" target="_blank" rel="noopener noreferrer">
+                    <a href="https://online-tutor-web.vercel.app/" class="service-button" target="_blank" rel="noopener noreferrer">
                         View Live Demo →
                     </a>
                 </div>
@@ -220,18 +201,6 @@
     </footer>
 
     <script>
-        /**
-         * DEMO LINKS CONFIG
-         * Paste each live demo URL here when it's ready. Leave as an empty
-         * string ('') to keep showing the "Demo Coming Soon" state.
-         */
-        const demoLinks = {
-            erp: 'https://school-erp-backend-production-a600.up.railway.app/',
-            invoice: 'https://clouduko-invoice-system.onrender.com/',
-            pos: '',
-            booking: 'https://online-tutor-web.vercel.app/'
-        };
-
         document.addEventListener('DOMContentLoaded', function () {
             // Mobile menu toggle
             const mobileToggle = document.getElementById('mobile-toggle');
@@ -264,29 +233,6 @@
                 });
             });
 
-            // Wire up each demo button from the config above
-            document.querySelectorAll('[data-demo-link]').forEach(function (link) {
-                const key = link.getAttribute('data-demo-link');
-                const url = demoLinks[key];
-                const card = link.closest('[data-demo-card]');
-
-                if (url) {
-                    link.href = url;
-                } else {
-                    link.removeAttribute('target');
-                    link.href = '#';
-                    link.setAttribute('aria-disabled', 'true');
-                    link.textContent = 'Demo Coming Soon';
-                    link.addEventListener('click', function (e) { e.preventDefault(); });
-
-                    if (card) {
-                        const badge = document.createElement('span');
-                        badge.className = 'demo-status';
-                        badge.textContent = 'Link coming soon';
-                        card.querySelector('.service-features').insertAdjacentElement('afterend', badge);
-                    }
-                }
-            });
         });
     </script>
     <script src="parallax.js"></script>

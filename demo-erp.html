@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP System Demo - Cloud UKO</title>
+    <meta name="description" content="Try a live, interactive demo of the ERP system Cloud UKO builds for clients - inventory, stock, and staff management.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="demo-apps.css">
+</head>
+<body class="demo-app-body">
+
+    <header class="demo-app-bar">
+        <a href="index.html" class="demo-app-logo">
+            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO">
+        </a>
+        <div class="demo-app-bar-title">
+            ERP System <span class="demo-app-badge">Live Demo</span>
+        </div>
+        <div class="demo-app-bar-actions">
+            <button type="button" class="demo-app-btn-ghost" id="resetBtn">Reset Demo Data</button>
+            <a href="demos.html" class="demo-app-btn-ghost">← Back to Demos</a>
+        </div>
+    </header>
+    <p class="demo-app-note">This is a self-contained sandbox - everything you add is saved only in your browser, nothing is sent anywhere. Reset it any time.</p>
+
+    <main class="demo-app-main">
+
+        <div class="demo-tabs">
+            <button type="button" class="demo-tab active" data-tab="dashboard">Dashboard</button>
+            <button type="button" class="demo-tab" data-tab="inventory">Inventory</button>
+            <button type="button" class="demo-tab" data-tab="staff">Staff</button>
+        </div>
+
+        <!-- Dashboard -->
+        <section class="demo-panel active" id="panel-dashboard">
+            <div class="demo-stats">
+                <div class="demo-stat-card">
+                    <div class="demo-stat-value" id="statItems">0</div>
+                    <div class="demo-stat-label">Items in Inventory</div>
+                </div>
+                <div class="demo-stat-card">
+                    <div class="demo-stat-value" id="statValue">R 0</div>
+                    <div class="demo-stat-label">Total Stock Value</div>
+                </div>
+                <div class="demo-stat-card warn">
+                    <div class="demo-stat-value" id="statLow">0</div>
+                    <div class="demo-stat-label">Low Stock Items</div>
+                </div>
+                <div class="demo-stat-card">
+                    <div class="demo-stat-value" id="statStaff">0</div>
+                    <div class="demo-stat-label">Staff Members</div>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <h2>Recent Inventory</h2>
+                </div>
+                <div class="demo-table-wrap">
+                    <table class="demo-table">
+                        <thead>
+                            <tr><th>Item</th><th>Category</th><th>Qty</th><th>Price</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="dashboardInventoryBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inventory -->
+        <section class="demo-panel" id="panel-inventory">
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <h2>Inventory &amp; Stock</h2>
+                    <button type="button" class="btn btn-primary" id="toggleAddItem">+ Add Item</button>
+                </div>
+
+                <form id="addItemForm" class="demo-form-grid" style="display:none; margin-bottom: 1.5rem;">
+                    <div class="demo-field">
+                        <label for="itemName">Item name</label>
+                        <input type="text" id="itemName" required placeholder="e.g. Office Chair">
+                    </div>
+                    <div class="demo-field">
+                        <label for="itemCategory">Category</label>
+                        <input type="text" id="itemCategory" required placeholder="e.g. Furniture">
+                    </div>
+                    <div class="demo-field">
+                        <label for="itemQty">Quantity in stock</label>
+                        <input type="number" id="itemQty" min="0" required placeholder="0">
+                    </div>
+                    <div class="demo-field">
+                        <label for="itemPrice">Unit price (R)</label>
+                        <input type="number" id="itemPrice" min="0" step="0.01" required placeholder="0.00">
+                    </div>
+                    <div class="demo-form-actions" style="grid-column: 1 / -1;">
+                        <button type="submit" class="btn btn-primary">Save Item</button>
+                        <button type="button" class="demo-app-btn-ghost" id="cancelAddItem">Cancel</button>
+                    </div>
+                </form>
+
+                <div class="demo-table-wrap">
+                    <table class="demo-table">
+                        <thead>
+                            <tr><th>Item</th><th>Category</th><th>Qty</th><th>Price</th><th>Status</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="inventoryBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Staff -->
+        <section class="demo-panel" id="panel-staff">
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <h2>Staff &amp; Roles</h2>
+                    <button type="button" class="btn btn-primary" id="toggleAddStaff">+ Add Staff Member</button>
+                </div>
+
+                <form id="addStaffForm" class="demo-form-grid" style="display:none; margin-bottom: 1.5rem;">
+                    <div class="demo-field">
+                        <label for="staffName">Full name</label>
+                        <input type="text" id="staffName" required placeholder="e.g. Naledi Mokoena">
+                    </div>
+                    <div class="demo-field">
+                        <label for="staffRole">Role</label>
+                        <input type="text" id="staffRole" required placeholder="e.g. Warehouse Manager">
+                    </div>
+                    <div class="demo-field">
+                        <label for="staffEmail">Email</label>
+                        <input type="email" id="staffEmail" required placeholder="name@company.com">
+                    </div>
+                    <div class="demo-form-actions" style="grid-column: 1 / -1;">
+                        <button type="submit" class="btn btn-primary">Save Staff Member</button>
+                        <button type="button" class="demo-app-btn-ghost" id="cancelAddStaff">Cancel</button>
+                    </div>
+                </form>
+
+                <div class="demo-table-wrap">
+                    <table class="demo-table">
+                        <thead>
+                            <tr><th>Name</th><th>Role</th><th>Email</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="staffBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="demo-toast" id="toast"></div>
+
+    <script>
+        const STORAGE_KEY = 'clouduko_demo_erp';
+        const LOW_STOCK_THRESHOLD = 5;
+
+        function seedData() {
+            return {
+                inventory: [
+                    { id: 1, name: 'Office Chair', category: 'Furniture', qty: 12, price: 1450 },
+                    { id: 2, name: 'Laptop Stand', category: 'Accessories', qty: 4, price: 320 },
+                    { id: 3, name: 'Printer Paper (Box)', category: 'Supplies', qty: 28, price: 185 },
+                    { id: 4, name: '24" Monitor', category: 'Electronics', qty: 3, price: 2899 },
+                    { id: 5, name: 'Whiteboard Markers (Pack)', category: 'Supplies', qty: 2, price: 95 }
+                ],
+                staff: [
+                    { id: 1, name: 'Naledi Mokoena', role: 'Warehouse Manager', email: 'naledi@clouduko.co.za' },
+                    { id: 2, name: 'Sipho Dlamini', role: 'Procurement Officer', email: 'sipho@clouduko.co.za' }
+                ],
+                nextItemId: 6,
+                nextStaffId: 3
+            };
+        }
+
+        function loadData() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) { /* fall through to reseed */ }
+            const seeded = seedData();
+            saveData(seeded);
+            return seeded;
+        }
+
+        function saveData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        let data = loadData();
+
+        function formatRand(n) {
+            return 'R ' + Number(n).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        function statusBadge(qty) {
+            return qty < LOW_STOCK_THRESHOLD
+                ? '<span class="demo-badge low">Low Stock</span>'
+                : '<span class="demo-badge ok">In Stock</span>';
+        }
+
+        function render() {
+            // Stats
+            const totalItems = data.inventory.length;
+            const totalValue = data.inventory.reduce((sum, i) => sum + i.qty * i.price, 0);
+            const lowStock = data.inventory.filter(i => i.qty < LOW_STOCK_THRESHOLD).length;
+            document.getElementById('statItems').textContent = totalItems;
+            document.getElementById('statValue').textContent = formatRand(totalValue);
+            document.getElementById('statLow').textContent = lowStock;
+            document.getElementById('statStaff').textContent = data.staff.length;
+
+            // Dashboard table (most recent 5, highest id first)
+            const recent = [...data.inventory].sort((a, b) => b.id - a.id).slice(0, 5);
+            document.getElementById('dashboardInventoryBody').innerHTML = recent.map(i => `
+                <tr>
+                    <td>${escapeHtml(i.name)}</td>
+                    <td>${escapeHtml(i.category)}</td>
+                    <td>${i.qty}</td>
+                    <td>${formatRand(i.price)}</td>
+                    <td>${statusBadge(i.qty)}</td>
+                </tr>
+            `).join('') || '<tr><td colspan="5">No inventory yet.</td></tr>';
+
+            // Inventory table
+            document.getElementById('inventoryBody').innerHTML = data.inventory.map(i => `
+                <tr>
+                    <td>${escapeHtml(i.name)}</td>
+                    <td>${escapeHtml(i.category)}</td>
+                    <td>${i.qty}</td>
+                    <td>${formatRand(i.price)}</td>
+                    <td>${statusBadge(i.qty)}</td>
+                    <td>
+                        <button type="button" class="demo-icon-btn" data-edit-item="${i.id}">Edit Qty</button>
+                        <button type="button" class="demo-icon-btn danger" data-delete-item="${i.id}">Delete</button>
+                    </td>
+                </tr>
+            `).join('') || '<tr><td colspan="6">No inventory yet. Add your first item above.</td></tr>';
+
+            // Staff table
+            document.getElementById('staffBody').innerHTML = data.staff.map(s => `
+                <tr>
+                    <td>${escapeHtml(s.name)}</td>
+                    <td>${escapeHtml(s.role)}</td>
+                    <td>${escapeHtml(s.email)}</td>
+                    <td><button type="button" class="demo-icon-btn danger" data-delete-staff="${s.id}">Remove</button></td>
+                </tr>
+            `).join('') || '<tr><td colspan="4">No staff yet. Add your first team member above.</td></tr>';
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // Tabs
+        document.querySelectorAll('.demo-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Add item form
+        const addItemForm = document.getElementById('addItemForm');
+        document.getElementById('toggleAddItem').addEventListener('click', () => {
+            addItemForm.style.display = addItemForm.style.display === 'none' ? 'grid' : 'none';
+        });
+        document.getElementById('cancelAddItem').addEventListener('click', () => {
+            addItemForm.reset();
+            addItemForm.style.display = 'none';
+        });
+        addItemForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('itemName').value.trim();
+            const category = document.getElementById('itemCategory').value.trim();
+            const qty = parseInt(document.getElementById('itemQty').value, 10);
+            const price = parseFloat(document.getElementById('itemPrice').value);
+            if (!name || !category || isNaN(qty) || isNaN(price)) return;
+
+            data.inventory.push({ id: data.nextItemId++, name, category, qty, price });
+            saveData(data);
+            render();
+            addItemForm.reset();
+            addItemForm.style.display = 'none';
+            showToast('Item added to inventory');
+        });
+
+        // Add staff form
+        const addStaffForm = document.getElementById('addStaffForm');
+        document.getElementById('toggleAddStaff').addEventListener('click', () => {
+            addStaffForm.style.display = addStaffForm.style.display === 'none' ? 'grid' : 'none';
+        });
+        document.getElementById('cancelAddStaff').addEventListener('click', () => {
+            addStaffForm.reset();
+            addStaffForm.style.display = 'none';
+        });
+        addStaffForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('staffName').value.trim();
+            const role = document.getElementById('staffRole').value.trim();
+            const email = document.getElementById('staffEmail').value.trim();
+            if (!name || !role || !email) return;
+
+            data.staff.push({ id: data.nextStaffId++, name, role, email });
+            saveData(data);
+            render();
+            addStaffForm.reset();
+            addStaffForm.style.display = 'none';
+            showToast('Staff member added');
+        });
+
+        // Table actions (event delegation)
+        document.getElementById('inventoryBody').addEventListener('click', (e) => {
+            const editId = e.target.getAttribute('data-edit-item');
+            const delId = e.target.getAttribute('data-delete-item');
+            if (editId) {
+                const item = data.inventory.find(i => i.id === Number(editId));
+                if (!item) return;
+                const next = prompt('New quantity for "' + item.name + '":', item.qty);
+                if (next === null) return;
+                const n = parseInt(next, 10);
+                if (isNaN(n) || n < 0) return;
+                item.qty = n;
+                saveData(data);
+                render();
+                showToast('Quantity updated');
+            } else if (delId) {
+                if (!confirm('Remove this item from inventory?')) return;
+                data.inventory = data.inventory.filter(i => i.id !== Number(delId));
+                saveData(data);
+                render();
+                showToast('Item removed');
+            }
+        });
+
+        document.getElementById('staffBody').addEventListener('click', (e) => {
+            const delId = e.target.getAttribute('data-delete-staff');
+            if (delId) {
+                if (!confirm('Remove this staff member?')) return;
+                data.staff = data.staff.filter(s => s.id !== Number(delId));
+                saveData(data);
+                render();
+                showToast('Staff member removed');
+            }
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (!confirm('Reset all demo data back to the sample dataset?')) return;
+            data = seedData();
+            saveData(data);
+            render();
+            showToast('Demo data reset');
+        });
+
+        render();
+    </script>
+</body>
+</html>
