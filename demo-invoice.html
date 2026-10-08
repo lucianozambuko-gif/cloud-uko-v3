@@ -29,7 +29,7 @@
             <a href="demos.html" class="demo-app-btn-ghost">← Back to Demos</a>
         </div>
     </header>
-    <p class="demo-app-note">This is a self-contained sandbox - everything you create is saved only in your browser, nothing is sent anywhere. Reset it any time.</p>
+    <p class="demo-app-note">Every invoice you create is saved only in your browser - reset it any time. Your trial account itself is stored securely so your access works across visits.</p>
 
     <main class="demo-app-main">
 
@@ -111,7 +111,14 @@
 
     <div class="demo-toast" id="toast"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="trial-config.js"></script>
+    <script src="trial-auth.js"></script>
     <script>
+      (async function () {
+        const trialStatus = await trialRequireAccess();
+        if (!trialStatus) return; // trialRequireAccess already redirected or rendered the paywall
+
         const STORAGE_KEY = 'clouduko_demo_invoice';
         const VAT_RATE = 0.15;
 
@@ -373,6 +380,7 @@
         document.getElementById('invoiceDate').value = todayISO();
         addLine('Website design & build', 1, 8500);
         renderHistory();
+      })();
     </script>
 </body>
 </html>

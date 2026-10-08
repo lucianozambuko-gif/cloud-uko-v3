@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Trial - Cloud UKO</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="demo-apps.css">
+</head>
+<body class="demo-app-body">
+
+    <header class="demo-app-bar">
+        <a href="index.html" class="demo-app-logo">
+            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO">
+        </a>
+        <div class="demo-app-bar-title">Your Account</div>
+        <div class="demo-app-bar-actions">
+            <button type="button" class="demo-app-btn-ghost" id="signOutBtn">Sign Out</button>
+            <a href="demos.html" class="demo-app-btn-ghost">← Back to Demos</a>
+        </div>
+    </header>
+
+    <main class="demo-app-main" style="max-width: 560px;">
+        <div class="demo-card" id="accountCard">
+            <p>Loading your account…</p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="trial-config.js"></script>
+    <script src="trial-auth.js"></script>
+    <script>
+        document.getElementById('signOutBtn').addEventListener('click', trialSignOut);
+
+        (async () => {
+            const user = await trialGetUser();
+            if (!user) { window.location.href = 'trial-login.html'; return; }
+
+            const status = await trialGetStatus();
+            const card = document.getElementById('accountCard');
+            if (!status) {
+                card.innerHTML = '<p>No trial found on this account.</p>';
+                return;
+            }
+
+            const isActive = status.status === 'active';
+            const expired = !isActive && !status.has_access;
+
+            card.innerHTML = `
+                <div class="demo-card-header"><h2>${status.business_name || 'Your Trial'}</h2></div>
+                <p style="color: var(--text-secondary);">Signed in as ${user.email}</p>
+                <div class="demo-stats" style="margin: 1.5rem 0;">
+                    <div class="demo-stat-card">
+                        <div class="demo-stat-value">${isActive ? '✓' : status.days_remaining}</div>
+                        <div class="demo-stat-label">${isActive ? 'Full Access Active' : (expired ? 'Trial Ended' : 'Days Remaining')}</div>
+                    </div>
+                    <div class="demo-stat-card">
+                        <div class="demo-stat-value" style="font-size:1.3rem;">${trialFormatDate(status.trial_start)}</div>
+                        <div class="demo-stat-label">Trial Started</div>
+                    </div>
+                </div>
+                ${isActive
+                    ? '<p style="color: var(--text-secondary);">You have full ongoing access to the ERP, Invoicing, and POS demos. Thank you!</p>'
+                    : `<div class="demo-form-actions"><button type="button" class="btn btn-primary" id="trialUpgradeBtn">Purchase Access →</button></div>
+                       <p class="trial-gate-note" id="trialUpgradeMsg"></p>`
+                }
+            `;
+
+            if (!isActive) {
+                document.getElementById('trialUpgradeBtn').addEventListener('click', trialStartUpgrade);
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -573,6 +573,63 @@ body.demo-app-body {
     transform: translateX(-50%) translateY(0);
 }
 
+/* ---------- Trial banner ---------- */
+.trial-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.6rem 1.5rem;
+    background: var(--brand-gradient-soft);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.trial-banner.urgent {
+    background: rgba(239, 68, 68, 0.1);
+    color: #b91c1c;
+}
+
+/* ---------- Trial gate (paywall) ---------- */
+.trial-gate {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg-alt);
+}
+
+.trial-gate-card {
+    max-width: 480px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);
+}
+
+.trial-gate-card h1 {
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.trial-gate-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.trial-gate-note {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    min-height: 1.2em;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
     .demo-pos-layout {

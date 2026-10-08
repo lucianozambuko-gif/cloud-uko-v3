@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - Cloud UKO Demo Trial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="demo-apps.css">
+</head>
+<body class="demo-app-body">
+
+    <header class="demo-app-bar">
+        <a href="index.html" class="demo-app-logo">
+            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO">
+        </a>
+        <div class="demo-app-bar-title">Log In</div>
+        <div class="demo-app-bar-actions">
+            <a href="demos.html" class="demo-app-btn-ghost">← Back to Demos</a>
+        </div>
+    </header>
+
+    <main class="demo-app-main" style="max-width: 420px;">
+        <div class="demo-card">
+            <div class="demo-card-header">
+                <h2>Welcome back</h2>
+            </div>
+
+            <form id="loginForm">
+                <div class="demo-field" style="margin-bottom: 1rem;">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="you@company.com">
+                </div>
+                <div class="demo-field" style="margin-bottom: 1.5rem;">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="Your password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="loginBtn" style="width:100%; justify-content:center;">Log In →</button>
+                <p id="loginMsg" style="color: #dc2626; font-size: 0.85rem; margin-top: 0.75rem; min-height: 1.2em;"></p>
+            </form>
+
+            <p style="text-align:center; font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+                Don't have an account? <a href="trial-signup.html" style="color: var(--accent-blue); font-weight: 600;">Start a free trial</a>
+            </p>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="trial-config.js"></script>
+    <script src="trial-auth.js"></script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const nextPage = params.get('next') || 'demos.html';
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const msg = document.getElementById('loginMsg');
+            btn.disabled = true;
+            btn.textContent = 'Logging in…';
+            msg.textContent = '';
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const { error } = await trialSupabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                window.location.href = nextPage.endsWith('.html') ? nextPage : 'demos.html';
+            } catch (err) {
+                msg.textContent = err.message || 'Could not log in. Check your email and password.';
+                btn.disabled = false;
+                btn.textContent = 'Log In →';
+            }
+        });
+    </script>
+</body>
+</html>
