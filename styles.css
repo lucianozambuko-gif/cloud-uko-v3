@@ -512,6 +512,49 @@ drift at their own speed as the page scrolls (see parallax.js).
     pointer-events: none;
 }
 
+/*
+==========================================
+CODE SPARKLES
+==========================================
+Scattered twinkling code glyphs around the hero - same "sparkle"
+pattern as a glitter/star effect (fixed positions, staggered fade +
+scale pulse) but reskinned with code syntax instead, to fit a dev
+brand.
+*/
+.code-sparkles {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.code-sparkle {
+    position: absolute;
+    font-family: 'Courier New', Consolas, monospace;
+    font-weight: 700;
+    opacity: 0;
+    animation: codeTwinkle 3.2s ease-in-out infinite;
+    text-shadow: 0 0 12px currentColor;
+}
+
+.code-sparkle.c-cyan { color: var(--accent-cyan); }
+.code-sparkle.c-blue { color: var(--accent-blue); }
+.code-sparkle.c-purple { color: var(--accent-purple); }
+
+@keyframes codeTwinkle {
+    0%, 100% { opacity: 0; transform: scale(0.6) rotate(-6deg); }
+    50% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .code-sparkle { animation: none; opacity: 0.6; }
+}
+
+@media (max-width: 640px) {
+    .code-sparkles { display: none; } /* keeps mobile hero uncluttered */
+}
+
 /* Soft dot-grid texture for extra depth behind the blobs */
 .hero-bg-shapes::before {
     content: '';
