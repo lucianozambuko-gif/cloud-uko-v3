@@ -151,6 +151,20 @@ directly or serve the repo root with any static file server.
 
 ## Deployment
 
+### Cache busting: bump `?v=` when CSS/JS changes
+
+GitHub Pages tells browsers to cache files for 10 minutes, so after a
+deploy returning visitors can see new HTML with old styles. Every page
+links its local CSS/JS with a version, e.g. `styles.css?v=20261017`.
+When you change `styles.css`, `demo-apps.css` or any local `.js` file,
+change that version on every page to today's date (add `b`, `c`... for
+more deploys on the same day) so browsers fetch the new file at once:
+
+```bash
+# example: replace the old version with a new one across all pages
+sed -i 's/?v=20261017/?v=20261018/g' *.html
+```
+
 This site is optimized for **GitHub Pages** static hosting:
 
 1. Push files to GitHub repository
