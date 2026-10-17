@@ -59,6 +59,28 @@
             margin: 0;
         }
 
+        .service-hero h3 {
+            text-align: left;
+            color: #1e293b;
+            font-size: 1.15rem;
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .service-hero ul {
+            text-align: left;
+            padding-left: 2rem;
+        }
+
+        .service-hero li {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-hero li strong {
+            color: #0f172a;
+        }
+
         .service-details {
             padding: 4rem 2rem;
         }
@@ -156,6 +178,7 @@
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="service.html" class="nav-link active">Services</a></li>
+                <li><a href="projects.html" class="nav-link">Projects</a></li>
                 <li><a href="demos.html" class="nav-link">Demos</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
@@ -175,6 +198,7 @@
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="about.html" class="nav-link">About</a></li>
                 <li><a href="service.html" class="nav-link active">Services</a></li>
+                <li><a href="projects.html" class="nav-link">Projects</a></li>
                 <li><a href="demos.html" class="nav-link">Demos</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
@@ -185,112 +209,81 @@
         <section class="service-hero">
             <div class="service-hero-container">
                 <h1 class="type-target">Smart Automation</h1>
-                <h2>
-                    Small Businesses
-                </h2>
-
-                <p class="Subtitle-s">
-                    (e.g. local shops, salons, freelancers, small online stores)</p> 
-                </p>
                 <p class="lead">
+                    Automation that takes repetitive admin off your team's plate &mdash; bookings, invoicing,
+                    follow-ups, stock and reporting &mdash; built around the tools you already use.
+                </p>
 
-Automation Solutions
-• Client Booking & Follow-up System
-Automate customer bookings, confirmations, and reminders using n8n
-linked with WhatsApp or Gmail.
-Solves: Missed appointments & manual scheduling.
-• Invoice & Payment Tracking
-Automatically send invoices and track payments using Airtable, Google
-Sheets, and PayPal/Stripe.
-Solves: Time wasted on billing and financial errors.
-• Social Media Posting Bot (AI-Powered)
-AI creates and schedules social media posts using business info and
-latest trends.
-Solves: Inconsistent posting, lack of online presence.
-AI Marketing & ROI
-• AI Email Campaigns: AI crafts personalized messages to boost sales.
-• AI Ad Copywriting: Generate ad content that converts faster.
-• ROI: Typically increases monthly sales by 15-25%.
-Example: If sales are R20,000/month → Gain ~R3,000-R5,000 extra
-monthly.
-Estimated Cost Savings
-• Reduce admin time by up to 60%.
-• Save ±R4,000-R6,000/month in manual labor or software subscriptions.</p>
-<h2>
- Medium Businesses
-</h2>
+                <h2>Small Businesses</h2>
+                <p class="Subtitle-s">(e.g. local shops, salons, freelancers, small online stores)</p>
 
-<p class="Subtitle-s">
-    (e.g. agencies, e-commerce stores, logistics, beauty studios)
-</p>
-<p class="lead">
-Automation Solutions
-• CRM & Lead Automation
-Automatically capture leads from forms, WhatsApp, or emails into CRM
-(Airtable/HubSpot).
-Solves: Lost leads & slow response times.
-• Inventory & Order Management
-Use n8n to sync stock between your online store, POS, and supplier
-systems.
-Solves: Out-of-stock issues and double-selling.
-• Employee Workflow Automation
-Auto-assign tasks, update Airtable/Notion when a new order or client
-request comes in.
-Solves: Team communication breakdowns.
-AI Marketing & ROI
-• AI Predictive Marketing: Analyze customer data to find best-selling
-products & top markets.
-• AI Chatbots: Handle FAQs and product recommendations on
-WhatsApp or website.
-• ROI: 20-40% higher conversions.
-Example: Monthly revenue R100,000 → +R20,000-R40,000 per month.
-Estimated Cost Savings
-• Save up to R15,000-R25,000/month by reducing repetitive admin tasks.
-• Improve efficiency by 70%, allowing smaller teams to handle larger
-workloads.
+                <h3>Automation Solutions</h3>
+                <ul>
+                    <li><strong>Client Booking &amp; Follow-up System</strong> &mdash; automate customer bookings, confirmations and reminders using n8n linked with WhatsApp or Gmail. <em>Solves: missed appointments and manual scheduling.</em></li>
+                    <li><strong>Invoice &amp; Payment Tracking</strong> &mdash; automatically send invoices and track payments using Airtable, Google Sheets and PayPal/Stripe. <em>Solves: time wasted on billing and financial errors.</em></li>
+                    <li><strong>Social Media Posting Bot (AI-Powered)</strong> &mdash; AI drafts and schedules social media posts using your business info and current trends. <em>Solves: inconsistent posting and a weak online presence.</em></li>
+                </ul>
 
-<h2>
-    Large Business / Enterprise Automation
-</h2>
+                <h3>AI Marketing</h3>
+                <ul>
+                    <li><strong>AI Email Campaigns</strong> &mdash; personalised messages written for each customer group.</li>
+                    <li><strong>AI Ad Copywriting</strong> &mdash; ad content drafted and tested faster.</li>
+                </ul>
 
-<p class="Subtitle-s">
-    Ideal for: Banks, SaaS companies, corporate retailers, logistics groups, and enterprise clients.
-</p>
+                <h3>What You Save</h3>
+                <ul>
+                    <li>Less time on admin like bookings, reminders and invoicing.</li>
+                    <li>Fewer manual tasks and, in many cases, fewer separate software subscriptions.</li>
+                </ul>
 
-<p>
-Setup (Once-Off)
-R35,000 - R80,000+ (depending on data complexity)
-Includes:
-• Full AI Automation Infrastructure (n8n + API integrations)
-• Custom MCP Server - hosts AI agents securely inside company
-network
-• RAG (Retrieval-Augmented Generation) System - connects the
-company's internal documents, policies, FAQs, and reports to an AI
-assistant that can instantly answer staff or customer queries using
-verified company knowledge
-• Automated Dashboards for analytics and performance tracking
-What the RAG System Does
-• Integrates company data (PDFs, Airtable, CRM, Notion, internal docs)
-into an AI knowledge base.
-• Employees or customers can chat with the data through a chatbot,
-Slack, or web app.
-• Every answer is sourced from internal documents — so it's accurate,
-private, and secure.
- Business Benefits
- Saves Time:
-Staff spend 70% less time searching for internal information.
-→ A team of 50 can save up to R120,000+ monthly in lost time.
- Cuts Support Costs:
-AI answers up to 80% of common questions instantly.
-→ Reduce customer support costs by R50,000-R100,000/month.
- Improves Decision-Making:
-Executives get real-time insights from AI dashboards, eliminating slow
-manual reporting.
- Boosts Efficiency:
-Integrates with n8n to automate workflows directly from answers.
-Example: “Show all unpaid invoices” → AI fetches & automates the task.
+                <h2>Medium Businesses</h2>
+                <p class="Subtitle-s">(e.g. agencies, e-commerce stores, logistics, beauty studios)</p>
 
-</p></p>
+                <h3>Automation Solutions</h3>
+                <ul>
+                    <li><strong>CRM &amp; Lead Automation</strong> &mdash; automatically capture leads from forms, WhatsApp or email into a CRM (Airtable/HubSpot). <em>Solves: lost leads and slow response times.</em></li>
+                    <li><strong>Inventory &amp; Order Management</strong> &mdash; use n8n to sync stock between your online store, POS and supplier systems. <em>Solves: out-of-stock issues and double-selling.</em></li>
+                    <li><strong>Employee Workflow Automation</strong> &mdash; auto-assign tasks and update Airtable/Notion when a new order or client request comes in. <em>Solves: team communication breakdowns.</em></li>
+                </ul>
+
+                <h3>AI Marketing</h3>
+                <ul>
+                    <li><strong>AI Predictive Marketing</strong> &mdash; analyse customer data to find your best-selling products and top markets.</li>
+                    <li><strong>AI Chatbots</strong> &mdash; handle FAQs and product recommendations on WhatsApp or your website.</li>
+                </ul>
+
+                <h3>What You Save</h3>
+                <ul>
+                    <li>Repetitive admin handled automatically, so a smaller team can manage a bigger workload.</li>
+                    <li>Leads and orders followed up the moment they come in, not when someone gets to them.</li>
+                </ul>
+
+                <h2>Large Business / Enterprise Automation</h2>
+                <p class="Subtitle-s">Ideal for: banks, SaaS companies, corporate retailers, logistics groups and enterprise clients.</p>
+
+                <h3>Setup (Once-Off)</h3>
+                <p>R35,000 &ndash; R80,000+ depending on data complexity. Includes:</p>
+                <ul>
+                    <li>Full AI automation infrastructure (n8n + API integrations)</li>
+                    <li>Custom MCP server &mdash; hosts AI agents securely inside the company network</li>
+                    <li>RAG (Retrieval-Augmented Generation) system &mdash; connects your internal documents, policies, FAQs and reports to an AI assistant that answers staff or customer queries from verified company knowledge</li>
+                    <li>Automated dashboards for analytics and performance tracking</li>
+                </ul>
+
+                <h3>What the RAG System Does</h3>
+                <ul>
+                    <li>Brings company data (PDFs, Airtable, CRM, Notion, internal docs) into one AI knowledge base.</li>
+                    <li>Employees or customers can chat with that data through a chatbot, Slack or a web app.</li>
+                    <li>Every answer is sourced from your internal documents, so it stays accurate, private and secure.</li>
+                </ul>
+
+                <h3>Business Benefits</h3>
+                <ul>
+                    <li><strong>Saves time:</strong> staff find internal information in seconds instead of digging through folders and inboxes.</li>
+                    <li><strong>Cuts support load:</strong> common questions are answered instantly, so your team handles the ones that need a person.</li>
+                    <li><strong>Improves decision-making:</strong> real-time AI dashboards replace slow manual reporting.</li>
+                    <li><strong>Boosts efficiency:</strong> connects to n8n so answers can trigger workflows &mdash; e.g. &ldquo;Show all unpaid invoices&rdquo; and the follow-up is automated.</li>
+                </ul>
 <div class="cta-row">
                     <a href="contact.html" class="btn btn-primary">Request Automation Audit →</a>
                     <a href="service.html" class="btn btn-secondary">Back to Services</a>
@@ -321,13 +314,17 @@ Example: “Show all unpaid invoices” → AI fetches & automates the task.
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="service.html">Services</a>
-                <!-- <a href="projects.html">Projects</a> -->
+                <a href="projects.html">Projects</a>
                 <a href="demos.html">Demos</a>
                 <a href="contact.html">Contact</a>
             </div>
             
+            <div class="footer-contact" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.25rem;font-size:0.95rem;margin:1rem 0;">
+                <a href="https://wa.me/27740926666" target="_blank" rel="noopener noreferrer">WhatsApp: 074 092 6666</a>
+                <a href="mailto:antoniozambuko@gmail.com">antoniozambuko@gmail.com</a>
+            </div>
             <p class="footer-text">
-                © 2025 Cloud UKO. Transforming businesses through integrated digital solutions.
+                © 2026 Cloud UKO. Transforming businesses through integrated digital solutions.
             </p>
         </div>
     </footer>

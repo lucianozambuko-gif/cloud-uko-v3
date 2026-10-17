@@ -592,24 +592,58 @@ body.demo-app-body {
     color: #b91c1c;
 }
 
-/* ---------- Trial gate (paywall) ---------- */
+.trial-banner-cta {
+    padding: 0.35rem 0.8rem;
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+/* ---------- Trial gate (signup / contact prompt) ---------- */
 .trial-gate {
-    min-height: 100vh;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
-    background: var(--bg-alt);
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.55);
+    overflow-y: auto;
 }
 
 .trial-gate-card {
     max-width: 480px;
+    width: 100%;
+    margin: auto;
     text-align: center;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 1.25rem;
     padding: 2.5rem;
     box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);
+}
+
+.trial-gate-dismiss {
+    margin-top: 1.25rem;
+    padding: 0.5rem;
+    border: 0;
+    background: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.trial-gate-card .trial-gate-alt {
+    margin: 0.75rem 0 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.trial-gate-alt a {
+    color: var(--accent-blue);
+    font-weight: 600;
 }
 
 .trial-gate-card h1 {
@@ -657,4 +691,5 @@ body.demo-app-body {
     }
     .demo-line-total { text-align: left; }
     .demo-invoice-preview { padding: 1.25rem; }
+    .trial-gate-card { padding: 1.75rem 1.25rem; }
 }

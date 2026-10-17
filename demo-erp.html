@@ -22,7 +22,7 @@
             <a href="demos.html" class="demo-app-btn-ghost">← Back to Demos</a>
         </div>
     </header>
-    <p class="demo-app-note">Everything you add to inventory and staff is saved only in your browser - reset it any time. Your trial account itself is stored securely so your access works across visits.</p>
+    <p class="demo-app-note">Everything you add to inventory and staff is saved only in your browser - reset it any time. If you sign up, your trial account is stored securely so your access works across visits.</p>
 
     <main class="demo-app-main">
 
@@ -157,8 +157,7 @@
     <script src="trial-auth.js"></script>
     <script>
       (async function () {
-        const trialStatus = await trialRequireAccess();
-        if (!trialStatus) return; // trialRequireAccess already redirected or rendered the paywall
+        await trialInitDemo('ERP System');
 
         const STORAGE_KEY = 'clouduko_demo_erp';
         const LOW_STOCK_THRESHOLD = 5;
@@ -170,14 +169,27 @@
                     { id: 2, name: 'Laptop Stand', category: 'Accessories', qty: 4, price: 320 },
                     { id: 3, name: 'Printer Paper (Box)', category: 'Supplies', qty: 28, price: 185 },
                     { id: 4, name: '24" Monitor', category: 'Electronics', qty: 3, price: 2899 },
-                    { id: 5, name: 'Whiteboard Markers (Pack)', category: 'Supplies', qty: 2, price: 95 }
+                    { id: 5, name: 'Whiteboard Markers (Pack)', category: 'Supplies', qty: 2, price: 95 },
+                    { id: 6, name: 'Standing Desk', category: 'Furniture', qty: 6, price: 4250 },
+                    { id: 7, name: 'Wireless Mouse', category: 'Accessories', qty: 34, price: 249 },
+                    { id: 8, name: 'USB-C Docking Station', category: 'Electronics', qty: 9, price: 1899 },
+                    { id: 9, name: 'Toner Cartridge (Black)', category: 'Supplies', qty: 4, price: 1120 },
+                    { id: 10, name: 'Filing Cabinet (4 Drawer)', category: 'Furniture', qty: 7, price: 2380 },
+                    { id: 11, name: 'UPS Battery Backup 1kVA', category: 'Electronics', qty: 11, price: 1650 },
+                    { id: 12, name: 'Network Cable Cat6 (305m)', category: 'Electronics', qty: 5, price: 1495 },
+                    { id: 13, name: 'Hand Sanitiser (5L)', category: 'Supplies', qty: 16, price: 210 },
+                    { id: 14, name: 'Wireless Keyboard', category: 'Accessories', qty: 21, price: 399 }
                 ],
                 staff: [
                     { id: 1, name: 'Naledi Mokoena', role: 'Warehouse Manager', email: 'naledi@clouduko.co.za' },
-                    { id: 2, name: 'Sipho Dlamini', role: 'Procurement Officer', email: 'sipho@clouduko.co.za' }
+                    { id: 2, name: 'Sipho Dlamini', role: 'Procurement Officer', email: 'sipho@clouduko.co.za' },
+                    { id: 3, name: 'Ayesha Patel', role: 'Finance Administrator', email: 'ayesha@clouduko.co.za' },
+                    { id: 4, name: 'Pieter van der Merwe', role: 'Operations Manager', email: 'pieter@clouduko.co.za' },
+                    { id: 5, name: 'Thandiwe Nkosi', role: 'Stock Controller', email: 'thandiwe@clouduko.co.za' },
+                    { id: 6, name: 'Lerato Khumalo', role: 'Sales Consultant', email: 'lerato@clouduko.co.za' }
                 ],
-                nextItemId: 6,
-                nextStaffId: 3
+                nextItemId: 15,
+                nextStaffId: 7
             };
         }
 
@@ -295,6 +307,7 @@
             const qty = parseInt(document.getElementById('itemQty').value, 10);
             const price = parseFloat(document.getElementById('itemPrice').value);
             if (!name || !category || isNaN(qty) || isNaN(price)) return;
+            if (!trialAllow('action')) return;
 
             data.inventory.push({ id: data.nextItemId++, name, category, qty, price });
             saveData(data);
@@ -319,6 +332,7 @@
             const role = document.getElementById('staffRole').value.trim();
             const email = document.getElementById('staffEmail').value.trim();
             if (!name || !role || !email) return;
+            if (!trialAllow('action')) return;
 
             data.staff.push({ id: data.nextStaffId++, name, role, email });
             saveData(data);

@@ -10,32 +10,33 @@ Cloud UKO Version 2 features enhanced design, improved performance, and expanded
 
 Cloud UKO (United Knowledge Operations) provides integrated digital transformation solutions for businesses of all sizes. We specialize in:
 
-- ☁️ **Cloud Infrastructure** - Secure, scalable cloud solutions
-- ⚡ **Smart Automation** - Save 20+ hours weekly
-- 🛡️ **Enterprise Security** - Bank-level encryption
-- 📈 **Growth Analytics** - Real-time insights
-- 👥 **CRM Integration** - Unified customer management
-- ✅ **Proven Results** - Up to 85% cost reduction
+- ☁️ **Web & System Development** - Websites, business systems and integrations
+- 🧾 **ERP, Invoicing & POS Systems** - Custom-built for how the business runs
+- ⚡ **Smart Automation** - Bookings, invoicing, follow-ups and reporting
+- 📈 **Data-Driven Marketing** - Social, SEO, email and analytics
+- 🗂️ **UKO Administration Services** - Admin and operational support
 
-## Digital Transformation Packages
+## Packages & Pricing (Growth Kit)
 
-### 🔴 Small Business - R 23,000
-Perfect for freelancers, start-ups, and small shops
-- Monthly upkeep: R 4,800/mo
-- ROI: +773%
-- Savings: R 502,500
+Most packages pair a once-off setup fee with a monthly fee. Prices are
+shown on `index.html` (full cards) and `service.html` (compact cards);
+update both if they change.
 
-### 🔵 Medium Business - R 45,000 ⭐ **Featured**
-Ideal for growing companies and agencies
-- Monthly upkeep: R 11,500/mo  
-- ROI: +503%
-- Savings: R 1,001,000
+| Package | Who it's for | Once-off (ZAR) | Monthly (ZAR) |
+| --- | --- | --- | --- |
+| Brand Starter | New small businesses | R 1,200 | - |
+| Starter Website | Caterers, cleaners, salons, trades | R 3,500 | R 2,200/year domain + hosting; optional R 150/mo edits & support |
+| Business Website | Service businesses taking bookings | R 8,500 | R 450 |
+| Invoice & Quote System | Businesses still invoicing in Word | R 4,500 | R 350 |
+| School ERP | Independent schools, ECD centres, TVET colleges | R 7,500 setup + training | R 18 per learner (min R 1,500) |
+| Farm ERP | Farms and agri businesses | R 10,000 | R 950 |
 
-### 🟣 Enterprise - R 830,000
-High-performance automation for large organizations
-- Monthly upkeep: Contact us
-- ROI: +141-381%
-- Savings: R 1.17M - 3.17M
+Terms shown on the site: 50% deposit before work starts, 50% on launch;
+monthly fees by debit order or EFT on the 1st; hosting billed yearly in
+advance; quotes valid 30 days.
+
+Each pricing card's button links to `contact.html?package=<slug>`, which
+preselects that package in the enquiry form.
 
 ## Website Structure
 
@@ -46,7 +47,8 @@ High-performance automation for large organizations
 - `demos.html` - Live demo hub (ERP, Invoicing, POS, Booking)
 - `contact.html` - Contact form and information
 - `demo-erp.html`, `demo-invoice.html`, `demo-pos.html` - Interactive
-  demo apps, gated by the trial system below
+  demo apps, open in preview mode with a free-account prompt (see the
+  trial system below)
 - `trial-signup.html`, `trial-login.html`, `trial-account.html`,
   `trial-upgrade-success.html`, `trial-upgrade-cancelled.html` - Trial
   signup/login/account/payment-return pages
@@ -57,9 +59,21 @@ High-performance automation for large organizations
 ## Demo Trial System
 
 The three interactive demos (`demo-erp.html`, `demo-invoice.html`,
-`demo-pos.html`) are gated behind a 7-day free trial: visitors sign up
-once to unlock all three, and after 7 days they're prompted to
-purchase (via PayFast) to keep access.
+`demo-pos.html`) open instantly in **preview mode** - no account
+needed - with sample data already loaded. A visitor gets a few key
+actions for free (checkout, save invoice, add item/staff -
+`TRIAL_PREVIEW_FREE_ACTIONS` in `trial-auth.js`); after that, or when
+they try to print / export, they're asked to create a free account,
+which unlocks unlimited use of all three for 7 days.
+
+The banner under each demo's app bar and the prompt shown once a trial
+has ended both point to WhatsApp / the contact page ("Want this built
+for your business?") rather than to payment. Purchasing ongoing demo
+access via PayFast is still available from `trial-account.html`.
+
+Because the demos are static pages, this prompt is lead capture, not
+access control - only the trial clock and payment status are enforced
+server-side.
 
 **Why this needs more than the static site**: GitHub Pages can't run a
 server, but real PayFast payments require a server-side webhook
@@ -73,8 +87,8 @@ alone. So this feature has two parts:
 | **`server/`** | Builds signed PayFast payment requests, and verifies PayFast's ITN webhook (signature + source host + PayFast's own validate callback + amount check) before flipping a user's status to `active` in Supabase. | Render (separate Web Service from the static site) |
 
 The demo pages' own data (inventory, invoices, cart) still lives only
-in the visitor's browser via `localStorage`, same as before - only
-*access to the page itself* is gated by a real account now.
+in the visitor's browser via `localStorage` - only the trial account
+itself is stored in Supabase.
 
 ### One-time setup
 

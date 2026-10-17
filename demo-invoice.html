@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="demo-apps.css">
     <style>
         @media print {
-            .demo-app-bar, .demo-app-note, .demo-tabs, #panel-history { display: none !important; }
+            .demo-app-bar, .demo-app-note, .demo-tabs, #panel-history, #invoiceStats, .trial-banner, .trial-gate { display: none !important; }
             body.demo-app-body { background: #fff; }
             .demo-app-main { padding: 0; }
         }
@@ -29,9 +29,24 @@
             <a href="demos.html" class="demo-app-btn-ghost">← Back to Demos</a>
         </div>
     </header>
-    <p class="demo-app-note">Every invoice you create is saved only in your browser - reset it any time. Your trial account itself is stored securely so your access works across visits.</p>
+    <p class="demo-app-note">Every invoice you create is saved only in your browser - reset it any time. If you sign up, your trial account is stored securely so your access works across visits.</p>
 
     <main class="demo-app-main">
+
+        <div class="demo-stats" id="invoiceStats">
+            <div class="demo-stat-card">
+                <div class="demo-stat-value" id="statInvoices">0</div>
+                <div class="demo-stat-label">Invoices</div>
+            </div>
+            <div class="demo-stat-card">
+                <div class="demo-stat-value" id="statPaid">R 0.00</div>
+                <div class="demo-stat-label">Paid</div>
+            </div>
+            <div class="demo-stat-card warn">
+                <div class="demo-stat-value" id="statOutstanding">R 0.00</div>
+                <div class="demo-stat-label">Outstanding</div>
+            </div>
+        </div>
 
         <div class="demo-tabs">
             <button type="button" class="demo-tab active" data-tab="create">Create Invoice</button>
@@ -101,7 +116,7 @@
         <!-- Print-friendly preview (shown when "View" is clicked) -->
         <section id="panel-preview" style="display:none;">
             <div class="demo-form-actions" style="margin-bottom: 1.25rem;">
-                <button type="button" class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+                <button type="button" class="btn btn-primary" id="printBtn">Print / Save as PDF</button>
                 <button type="button" class="demo-app-btn-ghost" id="closePreviewBtn">← Back to History</button>
             </div>
             <div class="demo-invoice-preview" id="invoicePreview"></div>
@@ -116,8 +131,7 @@
     <script src="trial-auth.js"></script>
     <script>
       (async function () {
-        const trialStatus = await trialRequireAccess();
-        if (!trialStatus) return; // trialRequireAccess already redirected or rendered the paywall
+        await trialInitDemo('Invoicing System');
 
         const STORAGE_KEY = 'clouduko_demo_invoice';
         const VAT_RATE = 0.15;
@@ -126,22 +140,63 @@
             return new Date().toISOString().slice(0, 10);
         }
 
+        // Dates are relative to today so the sample history always looks current.
+        function daysAgoISO(days) {
+            const d = new Date();
+            d.setDate(d.getDate() - days);
+            return d.toISOString().slice(0, 10);
+        }
+
         function seedData() {
             return {
-                nextNumber: 1003,
+                nextNumber: 1008,
                 invoices: [
                     {
                         id: 1, number: 'INV-1001', client: 'Aurora Studio', email: 'accounts@aurora-studio.co.za',
-                        date: '2026-09-18', status: 'Paid',
-                        items: [{ desc: 'Website maintenance - September', qty: 1, price: 2500 }]
+                        date: daysAgoISO(41), status: 'Paid',
+                        items: [{ desc: 'Website maintenance - monthly retainer', qty: 1, price: 2500 }]
                     },
                     {
                         id: 2, number: 'INV-1002', client: 'Lavish Bites', email: 'hello@lavishbites.co.za',
-                        date: '2026-09-29', status: 'Unpaid',
+                        date: daysAgoISO(33), status: 'Paid',
                         items: [
                             { desc: 'POS system - monthly upkeep', qty: 1, price: 1500 },
                             { desc: 'Additional till setup', qty: 2, price: 650 }
                         ]
+                    },
+                    {
+                        id: 3, number: 'INV-1003', client: 'Mzansi Hardware', email: 'accounts@mzansihardware.co.za',
+                        date: daysAgoISO(24), status: 'Paid',
+                        items: [
+                            { desc: 'Stock management system - phase 1', qty: 1, price: 18500 },
+                            { desc: 'Staff training session', qty: 2, price: 1200 }
+                        ]
+                    },
+                    {
+                        id: 4, number: 'INV-1004', client: 'Khanya Dental Practice', email: 'admin@khanyadental.co.za',
+                        date: daysAgoISO(16), status: 'Unpaid',
+                        items: [
+                            { desc: 'Patient booking portal', qty: 1, price: 12800 },
+                            { desc: 'SMS reminder bundle (500)', qty: 1, price: 450 }
+                        ]
+                    },
+                    {
+                        id: 5, number: 'INV-1005', client: 'Aurora Studio', email: 'accounts@aurora-studio.co.za',
+                        date: daysAgoISO(11), status: 'Paid',
+                        items: [{ desc: 'Website maintenance - monthly retainer', qty: 1, price: 2500 }]
+                    },
+                    {
+                        id: 6, number: 'INV-1006', client: 'Bokamoso Logistics', email: 'finance@bokamosologistics.co.za',
+                        date: daysAgoISO(5), status: 'Unpaid',
+                        items: [
+                            { desc: 'Fleet tracking dashboard', qty: 1, price: 24000 },
+                            { desc: 'Driver app licences', qty: 8, price: 180 }
+                        ]
+                    },
+                    {
+                        id: 7, number: 'INV-1007', client: 'Lavish Bites', email: 'hello@lavishbites.co.za',
+                        date: daysAgoISO(2), status: 'Unpaid',
+                        items: [{ desc: 'POS system - monthly upkeep', qty: 1, price: 1500 }]
                     }
                 ]
             };
@@ -234,6 +289,12 @@
         }
 
         function renderHistory() {
+            const paid = data.invoices.filter(i => i.status === 'Paid').reduce((s, i) => s + invoiceTotal(i), 0);
+            const outstanding = data.invoices.filter(i => i.status !== 'Paid').reduce((s, i) => s + invoiceTotal(i), 0);
+            document.getElementById('statInvoices').textContent = data.invoices.length;
+            document.getElementById('statPaid').textContent = formatRand(paid);
+            document.getElementById('statOutstanding').textContent = formatRand(outstanding);
+
             const sorted = [...data.invoices].sort((a, b) => b.id - a.id);
             document.getElementById('historyBody').innerHTML = sorted.map(inv => `
                 <tr>
@@ -313,6 +374,7 @@
 
             if (!client) { showToast('Add a client name first'); return; }
             if (!items.length) { showToast('Add at least one line item'); return; }
+            if (!trialAllow('action')) return;
 
             const number = 'INV-' + data.nextNumber;
             data.invoices.push({
@@ -360,6 +422,10 @@
                     showToast(inv.number + ' marked ' + inv.status);
                 }
             }
+        });
+
+        document.getElementById('printBtn').addEventListener('click', () => {
+            if (trialAllow('export')) window.print();
         });
 
         document.getElementById('closePreviewBtn').addEventListener('click', () => {

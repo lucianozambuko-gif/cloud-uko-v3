@@ -1707,7 +1707,8 @@ SCROLL-TRIGGERED TYPEWRITER HEADLINES
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    /* min() keeps the 400px card minimum from overflowing phones narrower than 400px */
+    grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
     gap: 2rem;
 }
 
