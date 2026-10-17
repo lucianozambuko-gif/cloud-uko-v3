@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="demo-apps.css">
     <style>
         @media print {
+            /* Print only the invoice itself: hide the app chrome, the stats
+               cards, and the trial banner/prompt so they don't end up on the PDF */
             .demo-app-bar, .demo-app-note, .demo-tabs, #panel-history, #invoiceStats, .trial-banner, .trial-gate { display: none !important; }
             body.demo-app-body { background: #fff; }
             .demo-app-main { padding: 0; }
@@ -33,6 +35,9 @@
 
     <main class="demo-app-main">
 
+        <!-- Summary cards: filled by renderHistory() so they update whenever an
+             invoice is saved, deleted or marked paid. They also make the sample
+             data visible straight away, since the history tab starts hidden. -->
         <div class="demo-stats" id="invoiceStats">
             <div class="demo-stat-card">
                 <div class="demo-stat-value" id="statInvoices">0</div>
@@ -116,6 +121,7 @@
         <!-- Print-friendly preview (shown when "View" is clicked) -->
         <section id="panel-preview" style="display:none;">
             <div class="demo-form-actions" style="margin-bottom: 1.25rem;">
+                <!-- Wired up in the script below: printing is gated behind a free account -->
                 <button type="button" class="btn btn-primary" id="printBtn">Print / Save as PDF</button>
                 <button type="button" class="demo-app-btn-ghost" id="closePreviewBtn">← Back to History</button>
             </div>
@@ -131,6 +137,8 @@
     <script src="trial-auth.js"></script>
     <script>
       (async function () {
+        // Works out preview / trial / active / expired and draws the banner.
+        // It never blocks the page - everyone gets to use the demo (see trial-auth.js).
         await trialInitDemo('Invoicing System');
 
         const STORAGE_KEY = 'clouduko_demo_invoice';
@@ -140,13 +148,19 @@
             return new Date().toISOString().slice(0, 10);
         }
 
-        // Dates are relative to today so the sample history always looks current.
+        // Dates are relative to today so the sample history always looks current
+        // (fixed dates would look months out of date before long).
+        // Returns YYYY-MM-DD, the format the date input and table use.
         function daysAgoISO(days) {
             const d = new Date();
             d.setDate(d.getDate() - days);
             return d.toISOString().slice(0, 10);
         }
 
+        // Sample invoice history: a mix of paid and unpaid invoices for
+        // typical South African small-business clients, so the stats cards
+        // and history table look like a business in use. nextNumber carries
+        // on from the last sample invoice (INV-1007).
         function seedData() {
             return {
                 nextNumber: 1008,
@@ -289,6 +303,8 @@
         }
 
         function renderHistory() {
+            // Stats cards: totals include VAT (invoiceTotal adds it), matching
+            // the "Total" column in the table below.
             const paid = data.invoices.filter(i => i.status === 'Paid').reduce((s, i) => s + invoiceTotal(i), 0);
             const outstanding = data.invoices.filter(i => i.status !== 'Paid').reduce((s, i) => s + invoiceTotal(i), 0);
             document.getElementById('statInvoices').textContent = data.invoices.length;
@@ -374,6 +390,8 @@
 
             if (!client) { showToast('Add a client name first'); return; }
             if (!items.length) { showToast('Add at least one line item'); return; }
+            // Saving an invoice is a "key action". Checked after validation so a
+            // form with missing details doesn't use up a free action.
             if (!trialAllow('action')) return;
 
             const number = 'INV-' + data.nextNumber;
@@ -424,6 +442,8 @@
             }
         });
 
+        // Print / PDF is a take-away, so it's an 'export': preview visitors are
+        // always asked to create a free account first (no free allowance).
         document.getElementById('printBtn').addEventListener('click', () => {
             if (trialAllow('export')) window.print();
         });

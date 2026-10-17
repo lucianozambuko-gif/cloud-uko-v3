@@ -198,12 +198,17 @@
 </footer>
 
 <script>
+    // Navigation behaviour - same as the other pages on the site.
+    // The hamburger button (#mobile-toggle) only shows on small screens
+    // (styles.css hides .nav-links there), so without this phone visitors
+    // would have no way to move between pages.
     document.addEventListener('DOMContentLoaded', function() {
         const navbar = document.getElementById('navbar');
         const mobileToggle = document.getElementById('mobile-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        // Mobile menu toggle
+        // Mobile menu toggle: the "active" class opens the menu panel and
+        // turns the hamburger into an X (both handled in styles.css)
         if (mobileToggle && mobileMenu) {
             mobileToggle.addEventListener('click', function() {
                 mobileToggle.classList.toggle('active');
@@ -211,7 +216,8 @@
             });
         }
 
-        // Navbar scroll effect
+        // Navbar scroll effect: adds a shadow/solid background once the
+        // visitor scrolls past the top of the page
         window.addEventListener('scroll', function() {
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');

@@ -143,7 +143,7 @@ BODY SECTION - MAIN WEBSITE CONTENT
             </div>
 
             <!-- Main company title with gradient text effect -->
-            <h1 class="hero-title type-target">Cloud UKO</h1>
+            <h1 class="hero-title hero-title--lava type-target">Cloud UKO</h1>
 
             <!-- Subtitle describing main service -->
             <p class="hero-subtitle">Websites &amp; Business Systems for South African Organisations</p>
@@ -287,7 +287,18 @@ BODY SECTION - MAIN WEBSITE CONTENT
                 </p>
             </div>
 
+            <!--
+                Growth Kit packages. Each card shows:
+                  - package-price  : the once-off setup fee
+                  - package-upkeep : the monthly / yearly fee underneath it
+                The highlighted card (class "featured") is Starter Website, the
+                main entry point at R 3,500. Each "Get Started" button links to
+                contact.html?package=<slug>, which preselects that package in the
+                enquiry form. The same prices appear as compact cards on
+                service.html and in README.md - update all three together.
+            -->
             <div class="packages-grid">
+                <!-- Brand Starter -->
                 <div class="package-card">
                     <div class="package-icon">
                         <div class="service-icon">
@@ -305,6 +316,7 @@ BODY SECTION - MAIN WEBSITE CONTENT
                     </ul>
                     <a href="contact.html?package=brand-starter" class="package-button">Get Started</a>
                 </div>
+                <!-- Starter Website (featured) -->
                 <div class="package-card featured">
                     <div class="package-icon">
                         <div class="service-icon">
@@ -323,6 +335,7 @@ BODY SECTION - MAIN WEBSITE CONTENT
                     </ul>
                     <a href="contact.html?package=starter-website" class="package-button">Get Started</a>
                 </div>
+                <!-- Business Website -->
                 <div class="package-card">
                     <div class="package-icon">
                         <div class="service-icon">
@@ -341,6 +354,7 @@ BODY SECTION - MAIN WEBSITE CONTENT
                     </ul>
                     <a href="contact.html?package=business-website" class="package-button">Get Started</a>
                 </div>
+                <!-- Invoice & Quote System -->
                 <div class="package-card">
                     <div class="package-icon">
                         <div class="service-icon">
@@ -359,6 +373,7 @@ BODY SECTION - MAIN WEBSITE CONTENT
                     </ul>
                     <a href="contact.html?package=invoice-system" class="package-button">Get Started</a>
                 </div>
+                <!-- School ERP -->
                 <div class="package-card">
                     <div class="package-icon">
                         <div class="service-icon">
@@ -378,6 +393,7 @@ BODY SECTION - MAIN WEBSITE CONTENT
                     </ul>
                     <a href="contact.html?package=school-erp" class="package-button">Get Started</a>
                 </div>
+                <!-- Farm ERP -->
                 <div class="package-card">
                     <div class="package-icon">
                         <div class="service-icon">
@@ -396,6 +412,7 @@ BODY SECTION - MAIN WEBSITE CONTENT
                     <a href="contact.html?package=farm-erp" class="package-button">Get Started</a>
                 </div>
             </div>
+            <!-- Payment terms shown under the cards (from the Growth Kit terms) -->
             <p class="packages-subtitle" style="font-size:0.9rem; margin-top:2rem; text-align:center;">
                 All prices in ZAR. 50% deposit before work starts, 50% on launch. Monthly fees by debit order or EFT on the 1st; hosting is billed yearly in advance. Quotes are valid for 30 days.
             </p>

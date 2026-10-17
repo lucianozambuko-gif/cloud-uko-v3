@@ -391,6 +391,71 @@ body {
     animation: slideInLeft 1s ease 0.2s both; /* Slide in from left */
 }
 
+/*
+ * Homepage "Cloud UKO" title: logo-coloured blobs drifting through the
+ * letters like a lava lamp. The box shrinks to the text (fit-content) so
+ * the colours land on the letters instead of being spread across the
+ * full page width, which left a short title showing only the blue middle.
+ *
+ * How it works:
+ *  - .hero-title already paints its background *through* the letters
+ *    (background-clip: text + transparent text fill), so whatever
+ *    background we give the title is what the letters show.
+ *  - That background is a stack of soft radial-gradient "blobs", one per
+ *    logo colour, over a full-width linear gradient so no part of a
+ *    letter is ever empty between blobs.
+ *  - Each blob layer is smaller than the title in width but taller than
+ *    it (e.g. 75% x 170%), so moving its background-position slides the
+ *    blob across and up/down through the letters.
+ *  - The lavaFlow keyframes move every blob along its own path at once;
+ *    because the blobs overlap and fade out (transparent at 62%), their
+ *    colours blend as they pass each other - the lava lamp look.
+ * Only used on index.html (class added next to .hero-title there).
+ */
+.hero-title--lava {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 0.05em 0.08em; /* Room for glyph edges/descenders so the clip doesn't trim them */
+    background-color: #5b6cf0; /* Base between the logo's blue and violet */
+    background-image:
+        radial-gradient(circle, #22d3ee 0%, rgba(34, 211, 238, 0) 62%),  /* cyan */
+        radial-gradient(circle, #c84ef0 0%, rgba(200, 78, 240, 0) 62%),  /* magenta */
+        radial-gradient(circle, #2dd4bf 0%, rgba(45, 212, 191, 0) 62%),  /* aqua */
+        radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 62%),  /* violet */
+        radial-gradient(circle, #3b82f6 0%, rgba(59, 130, 246, 0) 62%),  /* blue */
+        linear-gradient(110deg, #22d3ee, #3b82f6 45%, #8b5cf6 75%, #c84ef0);
+    /* One size/position per layer above, in the same order. Different sizes
+       make the blobs feel organic rather than identical circles. */
+    background-size: 75% 170%, 65% 160%, 55% 150%, 80% 180%, 60% 150%, 100% 100%;
+    background-repeat: no-repeat; /* One blob per colour, not a tiled pattern */
+    background-position: 0% 30%, 100% 70%, 40% 100%, 70% 0%, 20% 80%, 0 0;
+    /* Keep the existing slide-in, plus the slow 16s drift. "alternate"
+       plays it forwards then backwards, so it never jumps back to the start. */
+    animation:
+        slideInLeft 1s ease 0.2s both,
+        lavaFlow 16s ease-in-out infinite alternate;
+}
+
+/* Each layer follows its own path; alternate playback keeps it flowing back and forth smoothly.
+   Every stop lists six positions in layer order:
+   cyan, magenta, aqua, violet, blue, base gradient (base stays put at 0 0). */
+@keyframes lavaFlow {
+    0%   { background-position: 0% 30%,   100% 70%, 40% 100%, 70% 0%,   20% 80%, 0 0; }
+    20%  { background-position: 35% 0%,   80% 100%, 0% 60%,   100% 40%, 60% 20%, 0 0; }
+    40%  { background-position: 75% 60%,  30% 20%,  25% 0%,   55% 100%, 95% 70%, 0 0; }
+    60%  { background-position: 100% 100%, 0% 50%, 70% 30%,  15% 70%,  45% 0%,  0 0; }
+    80%  { background-position: 55% 20%,  45% 90%,  100% 80%, 0% 10%,   10% 50%, 0 0; }
+    100% { background-position: 10% 70%,  90% 10%,  50% 50%,  85% 85%,  75% 100%, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-title--lava {
+        animation: none; /* Keep the logo colours, drop the movement */
+    }
+}
+
 /* Hero subtitle - "Integrated Digital Transformation" */
 .hero-subtitle {
     font-size: clamp(1rem, 2vw, 1.25rem);

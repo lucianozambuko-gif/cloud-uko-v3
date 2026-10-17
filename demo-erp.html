@@ -157,11 +157,18 @@
     <script src="trial-auth.js"></script>
     <script>
       (async function () {
+        // Works out preview / trial / active / expired and draws the banner.
+        // It never blocks the page - everyone gets to use the demo (see trial-auth.js).
         await trialInitDemo('ERP System');
 
         const STORAGE_KEY = 'clouduko_demo_erp';
         const LOW_STOCK_THRESHOLD = 5;
 
+        // Sample company data so the dashboard looks like a real business on
+        // first load. A few items are deliberately under LOW_STOCK_THRESHOLD
+        // so the "Low Stock" card and red badges have something to show.
+        // Only used on a visitor's first visit or after "Reset Demo Data";
+        // anything they add is saved in their own browser.
         function seedData() {
             return {
                 inventory: [
@@ -188,6 +195,7 @@
                     { id: 5, name: 'Thandiwe Nkosi', role: 'Stock Controller', email: 'thandiwe@clouduko.co.za' },
                     { id: 6, name: 'Lerato Khumalo', role: 'Sales Consultant', email: 'lerato@clouduko.co.za' }
                 ],
+                // Next ids continue after the seeded rows so new entries never clash
                 nextItemId: 15,
                 nextStaffId: 7
             };
@@ -307,6 +315,8 @@
             const qty = parseInt(document.getElementById('itemQty').value, 10);
             const price = parseFloat(document.getElementById('itemPrice').value);
             if (!name || !category || isNaN(qty) || isNaN(price)) return;
+            // Adding an item is a "key action". Checked after validation so a
+            // half-filled form doesn't use up one of the visitor's free actions.
             if (!trialAllow('action')) return;
 
             data.inventory.push({ id: data.nextItemId++, name, category, qty, price });
@@ -332,6 +342,7 @@
             const role = document.getElementById('staffRole').value.trim();
             const email = document.getElementById('staffEmail').value.trim();
             if (!name || !role || !email) return;
+            // Adding a staff member is a "key action" too (see trial-auth.js).
             if (!trialAllow('action')) return;
 
             data.staff.push({ id: data.nextStaffId++, name, role, email });

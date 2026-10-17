@@ -169,6 +169,10 @@
 
                         <div class="form-group1">
                             <label class="form-label">Interested Package</label>
+                            <!-- One option per Growth Kit package on the homepage / services page.
+                                 data-package must match the ?package= slug the pricing cards link
+                                 with, so clicking "Get Started" on a card preselects it here.
+                                 The visible text is what gets sent in the WhatsApp enquiry. -->
                             <div class="package-options">
                                 <div class="package-option" data-package="brand-starter">Brand Starter</div>
                                 <div class="package-option" data-package="starter-website">Starter Website</div>
@@ -182,6 +186,8 @@
 
                         <div class="form-group1">
                             <label class="form-label" for="budget">Estimated Budget Range</label>
+                            <!-- Ranges follow the Growth Kit prices (R 1,200 - R 10,000 setup).
+                                 Only the option text is used: it goes into the WhatsApp message. -->
                             <select id="budget" class="form-select">
                                 <option value="">Select budget range</option>
                                 <option value="under-2k">Under R 2,000</option>
@@ -396,12 +402,16 @@
                     messageField.value = `Hi, I'm interested in your service for ${serviceName}. Please send more details.`;
                 }
 
-                // Mark the matching package option if the service name is one
+                // If ?service= is also one of the package names (e.g. "Farm ERP"),
+                // select that package too. Matching is case-insensitive.
                 const match = [...packageOptions].find(opt => opt.textContent.trim().toLowerCase() === serviceName.toLowerCase());
                 if (match) match.classList.add('selected');
             }
 
-            // Preselect a package when arriving from a pricing card (?package=school-erp)
+            // Preselect a package when arriving from a pricing card (?package=school-erp).
+            // Each card's "Get Started" button on index.html / service.html links here
+            // with its slug, so the visitor doesn't have to pick the package again.
+            // Unknown slugs are simply ignored.
             if (urlParams.has('package')) {
                 const match = [...packageOptions].find(opt => opt.dataset.package === urlParams.get('package'));
                 if (match) {

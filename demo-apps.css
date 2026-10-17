@@ -592,13 +592,23 @@ body.demo-app-body {
     color: #b91c1c;
 }
 
+/* "Want this built for your business?" WhatsApp button in the banner.
+   Smaller than a normal ghost button so the strip stays slim, and blue
+   so it reads as the banner's main call to action. */
 .trial-banner-cta {
     padding: 0.35rem 0.8rem;
     border-color: var(--accent-blue);
     color: var(--accent-blue);
 }
 
-/* ---------- Trial gate (signup / contact prompt) ---------- */
+/* ---------- Trial gate (signup / contact prompt) ----------
+   Built by renderTrialGate() in trial-auth.js. It's a dismissible overlay
+   on top of the demo rather than a replacement page, so closing it puts
+   the visitor back exactly where they were (cart, form, etc. intact). */
+
+/* Full-screen dimmed backdrop. z-index sits above the sticky app bar
+   (100) and the toast (999). overflow-y lets the card scroll on short
+   phone screens instead of being cut off. */
 .trial-gate {
     position: fixed;
     inset: 0;
@@ -611,6 +621,8 @@ body.demo-app-body {
     overflow-y: auto;
 }
 
+/* The prompt card. width: 100% + max-width keeps it full-width on phones
+   and capped on desktop; margin: auto centres it inside the backdrop. */
 .trial-gate-card {
     max-width: 480px;
     width: 100%;
@@ -623,6 +635,8 @@ body.demo-app-body {
     box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1);
 }
 
+/* "Keep looking around" - styled as a quiet text link so it doesn't
+   compete with the signup / WhatsApp buttons, but still easy to tap. */
 .trial-gate-dismiss {
     margin-top: 1.25rem;
     padding: 0.5rem;
@@ -635,6 +649,8 @@ body.demo-app-body {
     cursor: pointer;
 }
 
+/* Small secondary line under the buttons ("Rather talk to a person?").
+   Scoped under .trial-gate-card to beat the card's general p styling. */
 .trial-gate-card .trial-gate-alt {
     margin: 0.75rem 0 0;
     font-size: 0.8rem;
@@ -691,5 +707,5 @@ body.demo-app-body {
     }
     .demo-line-total { text-align: left; }
     .demo-invoice-preview { padding: 1.25rem; }
-    .trial-gate-card { padding: 1.75rem 1.25rem; }
+    .trial-gate-card { padding: 1.75rem 1.25rem; } /* Less padding so the prompt fits small phones */
 }
