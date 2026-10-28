@@ -34,9 +34,9 @@ Sections:
     <!-- Game-style heading font (one family, two weights) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oxanium:wght@500;600;700;800&family=Share+Tech+Mono&display=swap">
 
-    <link rel="stylesheet" href="game.css?v=20261028b">
+    <link rel="stylesheet" href="game.css?v=20261028c">
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -136,14 +136,10 @@ Sections:
         <section class="section" id="stats" style="padding-top: 0;">
             <div class="container">
                 <!-- data-count = number to count up to; text shown before JS runs is the final value -->
-                <div class="panel stats-panel reveal">
+                <div class="panel stats-panel stats-3 reveal">
                     <div class="stat">
                         <div class="stat-value" data-count="2018">2018</div>
                         <div class="stat-label">Building for clients since</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" data-count="4">4</div>
-                        <div class="stat-label">Live systems you can test</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value">1:1</div>
@@ -190,21 +186,21 @@ Sections:
                 <div class="section-head reveal">
                     <div class="eyebrow">Level select</div>
                     <h2 class="section-title lava-text" data-decode>Real Systems, Not Mockups</h2>
-                    <p class="section-sub">Every level below is a live, working system we built &mdash; jump in and try it yourself.</p>
+                    <p class="section-sub">Every level below is a real, working system we built &mdash; jump into the live ones, or request a demo of the systems that sit behind a login.</p>
                 </div>
 
                 <div class="levels" data-stagger>
-                    <!-- School ERP demo deployment (made-up "CloudUko School") -->
-                    <a class="panel level reveal" data-tilt data-demo-link href="https://clouduko-erp.onrender.com/" target="_blank" rel="noopener noreferrer">
+                    <!-- School ERP: staff/parent portals need a login, so this opens a WhatsApp demo request -->
+                    <a class="panel level reveal" data-tilt data-demo-link href="https://wa.me/27740926666?text=Hi%20Cloud%20UKO%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20the%20School%20ERP." target="_blank" rel="noopener noreferrer">
                         <div class="level-shot">
                             <img src="img/showcase/erp.png" alt="CloudUko School ERP system" loading="lazy">
-                            <span class="level-badge"><span class="live-dot"></span> LIVE</span>
+                            <span class="level-badge request">DEMO ON REQUEST</span>
                         </div>
                         <div class="level-body">
                             <span class="level-num">LEVEL 01</span>
                             <h3 class="level-title">School ERP</h3>
                             <p class="level-desc">School website, online enrolment, staff &amp; parent portals.</p>
-                            <span class="level-play">▶ PLAY LIVE DEMO</span>
+                            <span class="level-play">▶ REQUEST A DEMO</span>
                         </div>
                     </a>
 
@@ -226,7 +222,7 @@ Sections:
                             <div class="level-more-icon">＋</div>
                             <span class="level-num">MORE LEVELS</span>
                             <h3 class="level-title" style="margin-top: 0.4rem;">See All Live Demos</h3>
-                            <p class="level-desc">ERP &middot; Invoicing &middot; POS &middot; Booking</p>
+                            <p class="level-desc">POS &middot; Booking &middot; Client websites</p>
                         </div>
                     </a>
                 </div>

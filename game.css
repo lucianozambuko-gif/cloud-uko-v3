@@ -54,8 +54,11 @@ Layout of this file:
     --glow-cyan: 0 0 18px rgba(34, 211, 238, 0.45);
     --glow-violet: 0 0 22px rgba(139, 92, 246, 0.45);
 
-    --font-display: 'Chakra Petch', 'Segoe UI', system-ui, sans-serif;
-    --font-body: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* Cyberpunk type: angular display face, terminal mono for HUD readouts,
+       a clean sans for body copy so long text stays readable on phones */
+    --font-display: 'Oxanium', 'Segoe UI', system-ui, sans-serif;
+    --font-mono: 'Share Tech Mono', ui-monospace, Consolas, 'Courier New', monospace;
+    --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
 
     --radius: 14px;
     --gutter: 16px;
@@ -604,6 +607,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     overflow: hidden;
     background: var(--line);
 }
+.stats-panel.stats-3 { grid-template-columns: repeat(3, 1fr); }   /* 3 stats: one row at every width, no orphan cell */
 
 .stat {
     background: var(--panel-solid);
@@ -1282,7 +1286,6 @@ main, .hud, footer { position: relative; z-index: 2; }
    with a shockwave ring appears over the screen.
    ========================================================= */
 .arcade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
-.arcade-2 { grid-template-columns: repeat(2, 1fr); max-width: 54rem; }   /* "Live systems" row: 2 wide cabinets instead of a gap */
 
 .cabinet {
     position: relative;
@@ -1409,6 +1412,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     border: 1px solid rgba(52, 211, 153, 0.5);
 }
 .cab-tag.in-site, .cab-tag.app { color: var(--cyan); border-color: rgba(34, 211, 238, 0.5); }
+.cab-tag.request, .level-badge.request { color: var(--gold); border-color: rgba(251, 191, 36, 0.55); }   /* "Demo on request" systems behind a login */
 
 .cab-body { padding: 1.15rem 1.25rem 1.3rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
 .cab-title { font-size: 1.35rem; transition: text-shadow 0.2s ease; }
@@ -1493,6 +1497,21 @@ main, .hud, footer { position: relative; z-index: 2; }
 .comm-icon { flex: none; width: 46px; height: 46px; display: grid; place-items: center; border-radius: 12px; background: rgba(34, 211, 238, 0.12); font-size: 1.3rem; }
 .comm h3 { font-size: 1rem; }
 .comm p { color: var(--muted); font-size: 0.92rem; overflow-wrap: anywhere; }
+
+/* =========================================================
+   21. CYBER READOUTS - small HUD labels, tags and kickers use
+   the terminal mono instead of the display face. Kept as one
+   override here so the look can be switched back in one place.
+   Share Tech Mono only has a 400 weight, so don't fake-bold it.
+   ========================================================= */
+.loader-text, .xp-label, .eyebrow, .hero-chip, .press-start,
+.level-badge, .level-num, .level-play, .rarity, .pack-ribbon,
+.achievement-kicker, .chapter-num, .chapter-map a, .card-kicker,
+.quest-status, .quest-more summary, .cab-tag, .coin-strip,
+.field label, .field .label {
+    font-family: var(--font-mono);
+    font-weight: 400;
+}
 
 /* ---------- 16. Responsive + reduced motion ---------- */
 @media (max-width: 1024px) {
