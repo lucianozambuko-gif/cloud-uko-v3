@@ -1,11 +1,12 @@
 name: Keep Demos Awake
 
-# The ERP and Invoicing demos now run entirely in-site (demo-erp.html,
-# demo-invoice.html - static, no backend, nothing to keep awake). Only
-# the Booking & Marketplace card still links to an external app, so
-# that's all this pings now. Self-expires so it doesn't run forever
-# unnoticed - push the cutoff date back (or delete this file) if you
-# need it longer.
+# The in-site ERP, Invoicing and POS demos (demo-*.html) are static, so
+# there's nothing to keep awake for them. This pings the external apps
+# the site links to - the Booking & Marketplace app and the live School
+# ERP demo on Render's free tier, which otherwise sleeps after ~15 min
+# idle and takes 30s+ to wake when a prospect clicks through.
+# Self-expires so it doesn't run forever unnoticed - push the cutoff
+# date back (or delete this file) if you need it longer.
 
 on:
   schedule:
@@ -33,6 +34,7 @@ jobs:
         run: |
           urls=(
             "https://online-tutor-web.vercel.app/"
+            "https://clouduko-erp.onrender.com/"
           )
           # Best-effort: log status codes but never fail the job. A cold
           # free-tier instance can take >25s to wake, which would otherwise
