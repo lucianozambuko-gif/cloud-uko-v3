@@ -1282,6 +1282,7 @@ main, .hud, footer { position: relative; z-index: 2; }
    with a shockwave ring appears over the screen.
    ========================================================= */
 .arcade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+.arcade-2 { grid-template-columns: repeat(2, 1fr); max-width: 54rem; }   /* "Live systems" row: 2 wide cabinets instead of a gap */
 
 .cabinet {
     position: relative;
@@ -1407,7 +1408,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     color: var(--green);
     border: 1px solid rgba(52, 211, 153, 0.5);
 }
-.cab-tag.in-site { color: var(--cyan); border-color: rgba(34, 211, 238, 0.5); }
+.cab-tag.in-site, .cab-tag.app { color: var(--cyan); border-color: rgba(34, 211, 238, 0.5); }
 
 .cab-body { padding: 1.15rem 1.25rem 1.3rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
 .cab-title { font-size: 1.35rem; transition: text-shadow 0.2s ease; }
@@ -1415,6 +1416,8 @@ main, .hud, footer { position: relative; z-index: 2; }
 .cab-desc { color: var(--muted); font-size: 0.92rem; }
 .cab-body .pack-stats { margin: 0.4rem 0 0.8rem; }
 .cab-body .btn { margin-top: auto; width: 100%; }
+.arcade-group { margin: 2.2rem 0 1rem; }   /* "Live systems" / "Client sites" labels above each arcade grid */
+
 .cab-note { font-size: 0.82rem; color: var(--dim); margin-top: 0.4rem; }
 .cab-note a { color: var(--cyan); font-weight: 600; }
 
@@ -1497,7 +1500,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     .grid-4 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
-    .quests, .arcade, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .quests, .arcade, .arcade-2, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .field-row { grid-template-columns: 1fr; }
     /* Touch screens can't hover: show the PLAY badge on demo screens all the time */
     .cab-play { opacity: 1; background: transparent; }

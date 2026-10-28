@@ -44,8 +44,20 @@ preselects that package in the enquiry form.
 - `about.html` - Company information
 - `service.html` - Detailed services and pricing
 - `projects.html` - Portfolio and case studies
-- `demos.html` - Live demo hub (ERP, Invoicing, POS, Booking)
+- `demos.html` - Live demo hub: links to real projects from our GitHub
+  (School ERP, Lumen booking marketplace, and live client sites). The
+  cabinet screenshots are in `img/showcase/` - retake one when that
+  site's homepage changes
 - `contact.html` - Contact form and information
+
+### Archived: in-browser demos + trial system (not linked)
+
+`demo-erp.html`, `demo-invoice.html`, `demo-pos.html`, `demo-apps.css`,
+`trial-*.html`, `trial-auth.js` and `server/` are kept in the repo but
+**no page links to them** any more - the demos page now shows real
+projects instead. Note they're still reachable by direct URL on GitHub
+Pages. To bring them back, re-add cabinets for them in `demos.html`.
+
 - `demo-erp.html`, `demo-invoice.html`, `demo-pos.html` - Interactive
   demo apps, open in preview mode with a free-account prompt (see the
   trial system below)
@@ -56,7 +68,7 @@ preselects that package in the enquiry form.
   payments + webhook) - deployed separately on Render, not part of
   the static GitHub Pages site
 
-## Demo Trial System
+## Demo Trial System (archived)
 
 The three interactive demos (`demo-erp.html`, `demo-invoice.html`,
 `demo-pos.html`) open instantly in **preview mode** - no account

@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap">
-    <link rel="stylesheet" href="game.css?v=20261028">
+    <link rel="stylesheet" href="game.css?v=20261028b">
 </head>
 <body data-chapter="4" data-chapter-name="The Arcade" data-chapter-sub="Live Demos" data-page="demos">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -81,7 +81,7 @@
             <div class="container">
                 <div class="eyebrow reveal">Chapter 04 · The Arcade</div>
                 <h1 class="page-title lava-text reveal">See Our Systems in Action</h1>
-                <p class="page-lead reveal">Explore live, working versions of the custom systems we build &mdash; from ERP and invoicing to point-of-sale &mdash; before you commit to a project.</p>
+                <p class="page-lead reveal">Every cabinet here is a real project we built and launched &mdash; live systems and client websites you can open and click through right now.</p>
                 <!-- Chapter map: current chapter lit, visited ones dimmer (game.js) -->
                 <nav class="chapter-map reveal" aria-label="Chapters">
                     <a href="about.html" data-page="about">01 Origin</a>
@@ -97,52 +97,17 @@
             <div class="container">
                 <div class="panel coin-strip reveal">
                     <span class="coin">🪙 Insert coin</span>
-                    <span>Open any demo instantly &mdash; no signup needed. A free account unlocks 7 days of unlimited use of the ERP, Invoicing, and POS demos, with no credit card required.</span>
+                    <span>Every demo is a real, live project from our GitHub &mdash; no signup needed. Each one opens in a new tab. Some run on free hosting, so the first click can take up to 30 seconds to wake the server.</span>
                 </div>
-                <!-- Arcade cabinets: a different hover from the projects page (see "ARCADE" in game.css) -->
-                <div class="arcade" data-stagger>
-                    <article class="cabinet reveal">
-                        <a class="cab-screen" href="demo-erp.html" tabindex="-1" aria-hidden="true" data-demo-link>
-                            <span class="cab-tag in-site">● IN-BROWSER</span>
-                            <span class="cab-emoji">🏢</span>
-                            <span class="cab-play"><span>▶</span></span>
-                        </a>
-                        <div class="cab-body">
-                            <h3 class="cab-title">ERP System</h3>
-                            <p class="cab-desc">A unified enterprise resource planning platform for managing inventory, procurement, staff, and day-to-day operations from one dashboard.</p>
-                            <ul class="pack-stats"><li>Inventory &amp; stock management</li><li>Order &amp; procurement tracking</li><li>Staff &amp; role management</li><li>Real-time reporting dashboard</li></ul>
-                            <a href="demo-erp.html" class="btn btn-primary" data-demo-link>▶ Play the demo</a>
-                        </div>
-                    </article>
-                    <article class="cabinet reveal">
-                        <a class="cab-screen" href="demo-invoice.html" tabindex="-1" aria-hidden="true" data-demo-link>
-                            <span class="cab-tag in-site">● IN-BROWSER</span>
-                            <span class="cab-emoji">🧾</span>
-                            <span class="cab-play"><span>▶</span></span>
-                        </a>
-                        <div class="cab-body">
-                            <h3 class="cab-title">Invoicing System</h3>
-                            <p class="cab-desc">A fast, professional invoicing tool for creating quotes, sending invoices, and tracking payments without the paperwork.</p>
-                            <ul class="pack-stats"><li>Quotes &amp; invoice generation</li><li>Payment status tracking</li><li>Client &amp; record management</li><li>Automated reminders</li></ul>
-                            <a href="demo-invoice.html" class="btn btn-primary" data-demo-link>▶ Play the demo</a>
-                        </div>
-                    </article>
-                    <article class="cabinet reveal">
-                        <a class="cab-screen" href="demo-pos.html" tabindex="-1" aria-hidden="true" data-demo-link>
-                            <span class="cab-tag in-site">● IN-BROWSER</span>
-                            <span class="cab-emoji">🛒</span>
-                            <span class="cab-play"><span>▶</span></span>
-                        </a>
-                        <div class="cab-body">
-                            <h3 class="cab-title">POS System</h3>
-                            <p class="cab-desc">A point-of-sale system built for retail and hospitality &mdash; fast checkout, live stock sync, and sales insights in one place.</p>
-                            <ul class="pack-stats"><li>Fast, touch-friendly checkout</li><li>Real-time stock synchronization</li><li>Sales &amp; performance analytics</li><li>Multi-location support</li></ul>
-                            <a href="demo-pos.html" class="btn btn-primary" data-demo-link>▶ Play the demo</a>
-                        </div>
-                    </article>
+
+                <!-- Arcade cabinets: a different hover from the projects page (see "ARCADE" in game.css).
+                     Screenshots in img/showcase/ are 1280x800 captures of each live site - retake them
+                     when a site's homepage changes. -->
+                <div class="eyebrow reveal arcade-group">Live systems</div>
+                <div class="arcade arcade-2" data-stagger>
                     <article class="cabinet reveal">
                         <a class="cab-screen" href="https://online-tutor-web.vercel.app/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
-                            <span class="cab-tag ">● LIVE SITE</span>
+                            <span class="cab-tag app">● LIVE APP</span>
                             <img src="img/showcase/booking.png" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
@@ -155,7 +120,7 @@
                     </article>
                     <article class="cabinet reveal">
                         <a class="cab-screen" href="https://clouduko-erp.onrender.com/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
-                            <span class="cab-tag ">● LIVE SITE</span>
+                            <span class="cab-tag app">● LIVE APP</span>
                             <img src="img/showcase/erp.png" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
@@ -168,6 +133,88 @@
                         </div>
                     </article>
                 </div>
+
+                <div class="eyebrow reveal arcade-group">Client sites</div>
+                <div class="arcade" data-stagger>
+                    <article class="cabinet reveal">
+                        <a class="cab-screen" href="https://mullers-delights.onrender.com/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
+                            <span class="cab-tag ">● LIVE SITE</span>
+                            <img src="img/showcase/mullers-delights.jpg" alt="" loading="lazy">
+                            <span class="cab-play"><span>▶</span></span>
+                        </a>
+                        <div class="cab-body">
+                            <h3 class="cab-title">Muller's Delights Catering</h3>
+                            <p class="cab-desc">A catering business site for Chef Muller &mdash; weddings, marooro, graduations, parties and business events.</p>
+                            <ul class="pack-stats"><li>Catering packages &amp; events</li><li>Online event booking</li><li>WhatsApp enquiries</li></ul>
+                            <a href="https://mullers-delights.onrender.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
+                        </div>
+                    </article>
+                    <article class="cabinet reveal">
+                        <a class="cab-screen" href="https://vees-sparkles.onrender.com/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
+                            <span class="cab-tag ">● LIVE SITE</span>
+                            <img src="img/showcase/vees-sparkles.jpg" alt="" loading="lazy">
+                            <span class="cab-play"><span>▶</span></span>
+                        </a>
+                        <div class="cab-body">
+                            <h3 class="cab-title">Vee's Sparkles Cleaning</h3>
+                            <p class="cab-desc">A multi-page site for a South African cleaning company serving homes and businesses.</p>
+                            <ul class="pack-stats"><li>Services &amp; gallery</li><li>Online booking &amp; free quotes</li><li>Customer login &amp; registration</li></ul>
+                            <a href="https://vees-sparkles.onrender.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
+                        </div>
+                    </article>
+                    <article class="cabinet reveal">
+                        <a class="cab-screen" href="https://teacakes.vercel.app/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
+                            <span class="cab-tag ">● LIVE SITE</span>
+                            <img src="img/showcase/tea-cakes.jpg" alt="" loading="lazy">
+                            <span class="cab-play"><span>▶</span></span>
+                        </a>
+                        <div class="cab-body">
+                            <h3 class="cab-title">TC Tea Cakes</h3>
+                            <p class="cab-desc">An online storefront for a small-batch bakery &mdash; celebration cakes, giant muffins, scones and donuts.</p>
+                            <ul class="pack-stats"><li>Menu with category filters</li><li>Cart &amp; online ordering</li><li>Customer accounts</li></ul>
+                            <a href="https://teacakes.vercel.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
+                        </div>
+                    </article>
+                    <article class="cabinet reveal">
+                        <a class="cab-screen" href="https://lucianozambuko-gif.github.io/lavish-life/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
+                            <span class="cab-tag ">● LIVE SITE</span>
+                            <img src="img/showcase/lavish-bites.jpg" alt="" loading="lazy">
+                            <span class="cab-play"><span>▶</span></span>
+                        </a>
+                        <div class="cab-body">
+                            <h3 class="cab-title">Lavish Bites</h3>
+                            <p class="cab-desc">A food-ordering site for a fire-cooked braai brand &mdash; family-focused and flavour-filled.</p>
+                            <ul class="pack-stats"><li>Menu &amp; online ordering</li><li>Cart &amp; customer sign-up</li><li>Hire-a-chef bookings</li></ul>
+                            <a href="https://lucianozambuko-gif.github.io/lavish-life/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
+                        </div>
+                    </article>
+                    <article class="cabinet reveal">
+                        <a class="cab-screen" href="https://lucianozambuko-gif.github.io/S.I.C/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
+                            <span class="cab-tag ">● LIVE SITE</span>
+                            <img src="img/showcase/sic.jpg" alt="" loading="lazy">
+                            <span class="cab-play"><span>▶</span></span>
+                        </a>
+                        <div class="cab-body">
+                            <h3 class="cab-title">S.I.C</h3>
+                            <p class="cab-desc">A bold agency site for a content &amp; growth partner working with South African artists, athletes and brands since 2016.</p>
+                            <ul class="pack-stats"><li>Packages &amp; process</li><li>Project showcase</li><li>Project booking</li></ul>
+                            <a href="https://lucianozambuko-gif.github.io/S.I.C/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
+                        </div>
+                    </article>
+                    <article class="cabinet reveal">
+                        <a class="cab-screen" href="https://lucianozambuko-gif.github.io/Unako/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
+                            <span class="cab-tag ">● LIVE SITE</span>
+                            <img src="img/showcase/unako.jpg" alt="" loading="lazy">
+                            <span class="cab-play"><span>▶</span></span>
+                        </a>
+                        <div class="cab-body">
+                            <h3 class="cab-title">Unako GBV Foundation</h3>
+                            <p class="cab-desc">A non-profit site for a youth development and GBV support centre being built in Mount Frere, Eastern Cape.</p>
+                            <ul class="pack-stats"><li>Support &amp; helpline information</li><li>Ways to get involved</li><li>Fundraising for the centre</li></ul>
+                            <a href="https://lucianozambuko-gif.github.io/Unako/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
 
@@ -176,7 +223,7 @@
                 <div class="panel final reveal">
                     <div class="eyebrow">End of chapter 04</div>
                     <h2 class="section-title" data-decode>Want a System Built for Your Business?</h2>
-                    <p>These demos are a starting point &mdash; every system we build is tailored to how your business actually operates.</p>
+                    <p>Every project above was built around how that business actually operates &mdash; yours will be too.</p>
                     <div class="hero-buttons">
                         <a href="contact.html" class="btn btn-primary">▶ Talk To Us</a>
                         <a href="contact.html" class="btn btn-ghost">Next chapter: Start Your Quest →</a>
