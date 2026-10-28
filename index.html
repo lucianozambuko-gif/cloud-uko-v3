@@ -1,699 +1,447 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <!--
 ==========================================
-CLOUD UKO - DIGITAL TRANSFORMATION WEBSITE
+CLOUD UKO - HOMEPAGE ("game" theme)
 ==========================================
-Author: Cloud UKO Development Team
-Description: Main homepage for Cloud UKO digital transformation services
-Version: 1.0
-Last Updated: November 2025
-Features: Responsive design, modern animations, accessibility optimized
+Dark neon HUD design. Styles: game.css. Interactivity: game.js
+(particles, loader, XP bar, achievements, sounds, reveals, tilt).
+The old theme (styles.css) is NOT loaded on this page.
+
+Game metaphors are only presentation - every section keeps plain,
+readable business content (prices, services, contact details).
+
+Sections:
+  HUD nav + XP bar
+  1. Title screen (hero)
+  2. Player stats
+  3. Skill tree (what we do)
+  4. Level select (live systems)
+  5. Choose your loadout (packages & pricing)
+  6. Power-ups (why choose us)
+  7. Final level (call to action)
+  Footer
 ==========================================
 -->
 <head>
-    <!-- Character encoding for proper text display -->
     <meta charset="UTF-8">
-    
-    <!-- Responsive viewport meta tag for mobile optimization -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Page title for browser tab and SEO -->
-    <title>Cloud UKO - Digital Transformation Solutions</title>
-    
-    <!-- Meta description for search engines and social sharing -->
+    <title>Cloud UKO - Websites & Business Systems for South Africa</title>
     <meta name="description" content="Cloud UKO builds websites and business systems for South African schools, farms and small businesses: ERP, invoicing, POS and booking. Try our live demos.">
-    
-    <!-- Link to external CSS stylesheet with comprehensive styling -->
-    <link rel="stylesheet" href="styles.css?v=20261017">
+    <meta name="theme-color" content="#05060f">
+    <link rel="icon" type="image/png" href="img/logo/clouduko-icon.png">
+
+    <!-- Game-style heading font (one family, two weights) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap">
+
+    <link rel="stylesheet" href="game.css?v=20261028">
 </head>
-
-<!-- 
-==========================================
-BODY SECTION - MAIN WEBSITE CONTENT
-==========================================
--->
 <body>
-<div class="logo-bg-layer" aria-hidden="true"></div>
-<div class="mouse-glow" aria-hidden="true"></div>
-<a href="https://wa.me/27740926666" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.94 9.94 0 0 0 4.84 1.23h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm5.83 14.25c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.14.07.14.11.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.31Z"/></svg>
-</a>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!--
-    ==========================================
-    NAVIGATION BAR
-    ==========================================
-    Fixed navigation bar that stays at top of page when scrolling.
-    Includes logo, navigation links, and call-to-action button.
-    Features mobile-responsive hamburger menu for smaller screens.
-    ==========================================
-    -->
-    <nav class="navbar" id="navbar">
-        <!-- Navigation container to center content and set max width -->
-        <div class="nav-container">
-            <!-- Logo section with icon and text -->
-            <a href="index.html" class="logo">
-                <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" class="logo-img">
+    <!-- Loading screen: removed by game.js (once per session, never for reduced motion) -->
+    <div class="loader" aria-hidden="true">
+        <div class="loader-inner">
+            <img src="img/logo/clouduko-logo.png" alt="" class="loader-logo">
+            <div class="loader-text">BOOTING SYSTEMS 0%</div>
+            <div class="loader-bar"><span></span></div>
+            <div class="loader-skip">CLICK OR PRESS ANY KEY TO SKIP</div>
+        </div>
+    </div>
+
+    <!-- Background layers (decorative) -->
+    <div class="bg-nebula" aria-hidden="true"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <canvas id="fx-canvas" aria-hidden="true"></canvas>
+    <div class="bg-scanlines" aria-hidden="true"></div>
+
+    <a href="https://wa.me/27740926666" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.94 9.94 0 0 0 4.84 1.23h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm5.83 14.25c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.14.07.14.11.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.31Z"/></svg>
+    </a>
+
+    <!-- ==================== HUD (navigation) ==================== -->
+    <header class="hud">
+        <div class="container hud-inner">
+            <a href="index.html" class="hud-logo" aria-label="Cloud UKO home">
+                <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations">
             </a>
 
-            <!-- Desktop navigation links -->
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="service.html" class="nav-link">Services</a></li>
-                <li><a href="projects.html" class="nav-link">Projects</a></li>
-                <li><a href="demos.html" class="nav-link">Demos</a></li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
-            </ul>
+            <nav aria-label="Main">
+                <ul class="hud-links">
+                    <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="service.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="demos.html">Demos</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
 
-            <!-- Call-to-action button -->
-            <a href="contact.html" class="get-started">Get Started</a>
-
-            <!-- Mobile menu toggle button (hamburger) -->
-            <button class="mobile-menu-toggle" id="mobile-toggle">
-                <span></span><!-- Top line of hamburger -->
-                <span></span><!-- Middle line of hamburger -->
-                <span></span><!-- Bottom line of hamburger -->
-            </button>
-        </div>
-
-        <!-- Mobile navigation menu (hidden by default) -->
-        <div class="mobile-menu" id="mobile-menu">
-            <ul class="mobile-nav-links">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="service.html" class="nav-link">Services</a></li>
-                <li><a href="projects.html" class="nav-link">Projects</a></li>
-                <li><a href="demos.html" class="nav-link">Demos</a></li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!--
-    ==========================================
-    AI CHAT ASSISTANT - CLOUDY
-    ==========================================
-    Floating AI chat assistant positioned in bottom-right corner.
-    Features interactive hover effects and toggle functionality.
-    Provides quick access to customer support and information.
-    ==========================================
-    -->
-    <!-- Floating AI Assistant Button -->
-    <!-- Floating AI assistant removed -->
-
-    <!--
-    ==========================================
-    HERO SECTION
-    ==========================================
-    Main landing section with company name, tagline, and call-to-action.
-    Features animated elements, gradient backgrounds, and responsive design.
-    Includes scroll indicator to guide users to next section.
-    ==========================================
-    -->
-        </div>
-
-    <section class="hero">
-        <!-- Decorative background shapes that drift at scroll time (parallax) -->
-        <div class="hero-bg-shapes" aria-hidden="true">
-            <div class="parallax-shape shape-cyan" data-speed="0.15"></div>
-            <div class="parallax-shape shape-blue" data-speed="0.3"></div>
-            <div class="parallax-shape shape-purple" data-speed="0.22"></div>
-        </div>
-
-        <!-- Twinkling code glyphs scattered around the hero -->
-        <div class="code-sparkles" aria-hidden="true">
-            <span class="code-sparkle c-cyan" style="top:16%; left:9%; font-size:1.6rem;">&lt;/&gt;</span>
-            <span class="code-sparkle c-purple" style="top:62%; left:5%; font-size:1.1rem; animation-delay:0.6s;">{ }</span>
-            <span class="code-sparkle c-blue" style="top:26%; right:11%; font-size:1.8rem; animation-delay:1.1s;">;</span>
-            <span class="code-sparkle c-cyan" style="top:72%; right:16%; font-size:1.3rem; animation-delay:1.7s;">01</span>
-            <span class="code-sparkle c-purple" style="top:45%; left:3%; font-size:1.4rem; animation-delay:2.2s;">=&gt;</span>
-            <span class="code-sparkle c-blue" style="top:12%; right:22%; font-size:1.2rem; animation-delay:0.3s;">#</span>
-        </div>
-
-        <!-- Hero content container -->
-        <div class="hero-content">
-            <!-- Company status badge -->
-            <div class="hero-badge">
-                <!-- Animated dot indicator -->
-                <div class="hero-badge-dot"></div>
-                <!-- Badge text -->
-                <span class="hero-badge-text">United Knowledge Operations</span>
-            </div>
-
-            <!-- Main company title with gradient text effect -->
-            <h1 class="hero-title lava-text type-target">Cloud UKO</h1>
-
-            <!-- Subtitle describing main service -->
-            <p class="hero-subtitle">Websites &amp; Business Systems for South African Organisations</p>
-
-            <!-- Detailed description of services -->
-            <p class="hero-description">
-                We build websites, ERPs, invoicing, POS and booking systems for schools, farms
-                and small businesses. Test our live systems today, and work directly with your developer.
-            </p>
-
-            <!-- Call-to-action buttons -->
-            <div class="hero-buttons">
-                <!-- Primary action button -->
-                <a href="service.html" class="btn btn-primary">
-                    Explore Solutions →
-                </a>
-                <!-- Secondary action button -->
-                <a href="demos.html" class="btn btn-secondary">
-                    Try a Live Demo
-                </a>
+            <div class="hud-actions">
+                <!-- Sound effects: off by default, game.js remembers the choice -->
+                <button type="button" class="sound-toggle" aria-pressed="false" aria-label="Turn sound effects on">🔈</button>
+                <a href="contact.html" class="btn btn-primary btn-sm">▶ Play</a>
+                <button type="button" class="hud-burger" aria-expanded="false" aria-controls="hud-mobile" aria-label="Open menu">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
-    </section>
 
-    
-
-
-
-    <!--
-    ==========================================
-    STATISTICS SECTION
-    ==========================================
-    Key metrics and achievements displayed in an attractive grid.
-    Shows verifiable facts about Cloud UKO.
-    Uses animated counters for engaging user experience.
-    ==========================================
-    -->
-    <section class="stats" id="stats">
-        <!-- Stats content container -->
-        <div class="stats-container">
-            <!-- Stats grid layout -->
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">2018</div>
-                    <div class="stat-label">Building for Clients Since</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">Live Systems You Can Test</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">1:1</div>
-                    <div class="stat-label">Direct Line to Your Developer</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">100%</div>
-                    <div class="stat-label">Custom-Built for You</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!--
-    ==========================================
-    SERVICES OVERVIEW VIDEO SECTION
-    ==========================================-->
-    <section class="services-overview">
-        <div class="services-overview-container">
-
-            <div class="services-content">
-                <h2 class="services-title type-target">What We Do</h2>
-                <p class="services-subtitle">
-                  We deliver end-to-end digital solutions that help businesses establish a strong online presence, streamline operations, and scale with confidence. From high-performance websites and custom systems to automation, branding, and digital marketing, we build technology that works for your business and supports long-term growth in a competitive digital landscape.
-                </p>
-
-                <div class="services-list">
-                    <button type="button" class="service-option" data-service="Web Development">Web Development</button>
-                    <button type="button" class="service-option" data-service="System & Platform Development">System &amp; Platform Development</button>
-                    <button type="button" class="service-option" data-service="AI Automation">AI Automation</button>
-                    <button type="button" class="service-option" data-service="Marketing Strategy & Automation">Marketing Strategy &amp; Automation</button>
-                    <button type="button" class="service-option" data-service="Branding & Identity Development">Branding &amp; Identity Development</button>
-                    <button type="button" class="service-option" data-service="Business Process Optimisation">Business Process Optimisation</button>
-                    <button type="button" class="service-option" data-service="Technical Support & Maintenance">Technical Support &amp; Maintenance</button>
-                    <button type="button" class="service-option" data-service="Analytics, Reporting & Integrations">Analytics, Reporting &amp; Integrations</button>
-                </div>
-            </div>
-
-            <div class="showcase-header">
-                <h3 class="showcase-title type-target">Real Systems, Not Mockups</h3>
-                <p class="showcase-subtitle">Every card below is a live, working system we built &mdash; click through and try it yourself.</p>
-            </div>
-
-            <div class="showcase-grid">
-                <!-- Links to the School ERP demo deployment (made-up "CloudUko School").
-                     The old Railway backend URL only served the API and returned 404. -->
-                <a class="showcase-card" href="https://clouduko-erp.onrender.com/" target="_blank" rel="noopener noreferrer">
-                    <div class="showcase-browser-bar"><span></span><span></span><span></span></div>
-                    <img src="img/showcase/erp.png" alt="CloudUko School ERP system dashboard" class="showcase-image" loading="lazy">
-                    <div class="showcase-caption">
-                        <span class="showcase-caption-title">School ERP</span>
-                        <span class="showcase-caption-link">Visit live demo →</span>
-                    </div>
-                </a>
-
-                <a class="showcase-card" href="https://online-tutor-web.vercel.app/" target="_blank" rel="noopener noreferrer">
-                    <div class="showcase-browser-bar"><span></span><span></span><span></span></div>
-                    <img src="img/showcase/booking.png" alt="Lumen tutor booking platform homepage" class="showcase-image" loading="lazy">
-                    <div class="showcase-caption">
-                        <span class="showcase-caption-title">Booking & Marketplace Platform</span>
-                        <span class="showcase-caption-link">Visit live demo →</span>
-                    </div>
-                </a>
-
-                <a class="showcase-card showcase-card-more" href="demos.html">
-                    <div class="showcase-more-icon">→</div>
-                    <div class="showcase-caption">
-                        <span class="showcase-caption-title">See All Live Demos</span>
-                        <span class="showcase-caption-link">ERP &middot; Invoicing &middot; POS &middot; Booking</span>
-                    </div>
-                </a>
-            </div>
-
-        </div>
-    </section>
-
-
-    <!--
-    ==========================================
-    PACKAGES SECTION
-    ==========================================
-    Growth Kit packages: once-off setup fee + monthly fee.
-    ==========================================
-    -->
-    <section class="packages">
-        <!-- Packages content container -->
-        <div class="packages-container">
-            <!-- Section header -->
-            <div class="packages-header">
-                <h2 class="packages-title lava-text type-target">Packages &amp; Pricing</h2>
-                <p class="packages-subtitle">
-                    Clear starting prices for South African small businesses. Most packages pair a once-off
-                    setup fee with a small monthly fee that keeps your system hosted, supported and up to date.
-                </p>
-            </div>
-
-            <!--
-                Growth Kit packages. Each card shows:
-                  - package-price  : the once-off setup fee
-                  - package-upkeep : the monthly / yearly fee underneath it
-                The highlighted card (class "featured") is Starter Website, the
-                main entry point at R 3,500. Each "Get Started" button links to
-                contact.html?package=<slug>, which preselects that package in the
-                enquiry form. The same prices appear as compact cards on
-                service.html and in README.md - update all three together.
-            -->
-            <div class="packages-grid">
-                <!-- Brand Starter -->
-                <div class="package-card">
-                    <div class="package-icon">
-                        <div class="service-icon">
-                            <img src="img/icons/Wavy_Check.svg" alt="" />
-                        </div>
-                    </div>
-                    <h3 class="package-name">Brand Starter</h3>
-                    <p class="package-description">For new small businesses that need to look professional from day one.</p>
-                    <div class="package-price">R 1,200</div>
-                    <p class="package-upkeep">Once-off &middot; no monthly fee</p>
-                    <ul class="package-features">
-                        <li><span class="check">✓</span> Logo design</li>
-                        <li><span class="check">✓</span> Flyer design</li>
-                        <li><span class="check">✓</span> WhatsApp Business setup</li>
-                    </ul>
-                    <a href="contact.html?package=brand-starter" class="package-button">Get Started</a>
-                </div>
-                <!-- Starter Website (featured) -->
-                <div class="package-card featured">
-                    <div class="package-icon">
-                        <div class="service-icon">
-                            <img src="img/icons/Cloud.svg" alt="" />
-                        </div>
-                    </div>
-                    <h3 class="package-name">Starter Website</h3>
-                    <p class="package-description">For caterers, cleaners, salons and trades who need to be found online.</p>
-                    <div class="package-price">R 3,500</div>
-                    <p class="package-upkeep">+ R 2,200/year domain &amp; hosting<br>Optional R 150/mo edits &amp; support</p>
-                    <ul class="package-features">
-                        <li><span class="check">✓</span> 1&ndash;5 page website</li>
-                        <li><span class="check">✓</span> WhatsApp chat button</li>
-                        <li><span class="check">✓</span> Google Business Profile setup</li>
-                        <li><span class="check">✓</span> Domain setup</li>
-                    </ul>
-                    <a href="contact.html?package=starter-website" class="package-button">Get Started</a>
-                </div>
-                <!-- Business Website -->
-                <div class="package-card">
-                    <div class="package-icon">
-                        <div class="service-icon">
-                            <img src="img/icons/Trending_Up.svg" alt="" />
-                        </div>
-                    </div>
-                    <h3 class="package-name">Business Website</h3>
-                    <p class="package-description">For service businesses that take bookings.</p>
-                    <div class="package-price">R 8,500</div>
-                    <p class="package-upkeep">+ R 450/mo</p>
-                    <ul class="package-features">
-                        <li><span class="check">✓</span> Everything in Starter Website</li>
-                        <li><span class="check">✓</span> Online booking form</li>
-                        <li><span class="check">✓</span> PayFast online payments</li>
-                        <li><span class="check">✓</span> Admin page to manage bookings</li>
-                    </ul>
-                    <a href="contact.html?package=business-website" class="package-button">Get Started</a>
-                </div>
-                <!-- Invoice & Quote System -->
-                <div class="package-card">
-                    <div class="package-icon">
-                        <div class="service-icon">
-                            <img src="img/icons/Mail.svg" alt="" />
-                        </div>
-                    </div>
-                    <h3 class="package-name">Invoice &amp; Quote System</h3>
-                    <p class="package-description">For any business still invoicing in Word.</p>
-                    <div class="package-price">R 4,500</div>
-                    <p class="package-upkeep">+ R 350/mo</p>
-                    <ul class="package-features">
-                        <li><span class="check">✓</span> Client records</li>
-                        <li><span class="check">✓</span> Quotes &amp; invoices</li>
-                        <li><span class="check">✓</span> PDF + email sending</li>
-                        <li><span class="check">✓</span> Payment tracking</li>
-                    </ul>
-                    <a href="contact.html?package=invoice-system" class="package-button">Get Started</a>
-                </div>
-                <!-- School ERP -->
-                <div class="package-card">
-                    <div class="package-icon">
-                        <div class="service-icon">
-                            <img src="img/icons/Users_Group.svg" alt="" />
-                        </div>
-                    </div>
-                    <h3 class="package-name">School ERP</h3>
-                    <p class="package-description">For independent schools, ECD centres and TVET colleges.</p>
-                    <div class="package-price">R 7,500</div>
-                    <p class="package-upkeep">Setup + training<br>+ R 18 per learner/mo (min R 1,500/mo)</p>
-                    <ul class="package-features">
-                        <li><span class="check">✓</span> Learner records</li>
-                        <li><span class="check">✓</span> Fees</li>
-                        <li><span class="check">✓</span> Attendance</li>
-                        <li><span class="check">✓</span> Reports</li>
-                        <li><span class="check">✓</span> Parent communication</li>
-                    </ul>
-                    <a href="contact.html?package=school-erp" class="package-button">Get Started</a>
-                </div>
-                <!-- Farm ERP -->
-                <div class="package-card">
-                    <div class="package-icon">
-                        <div class="service-icon">
-                            <img src="img/icons/Data.svg" alt="" />
-                        </div>
-                    </div>
-                    <h3 class="package-name">Farm ERP</h3>
-                    <p class="package-description">For farms and agri businesses.</p>
-                    <div class="package-price">R 10,000</div>
-                    <p class="package-upkeep">+ R 950/mo</p>
-                    <ul class="package-features">
-                        <li><span class="check">✓</span> Operations</li>
-                        <li><span class="check">✓</span> Payroll</li>
-                        <li><span class="check">✓</span> SARS tracking: VAT201, diesel refund, EMP201/501, provisional tax</li>
-                    </ul>
-                    <a href="contact.html?package=farm-erp" class="package-button">Get Started</a>
-                </div>
-            </div>
-            <!-- Payment terms shown under the cards (from the Growth Kit terms) -->
-            <p class="packages-subtitle" style="font-size:0.9rem; margin-top:2rem; text-align:center;">
-                All prices in ZAR. 50% deposit before work starts, 50% on launch. Monthly fees by debit order or EFT on the 1st; hosting is billed yearly in advance. Quotes are valid for 30 days.
-            </p>
-        </div>
-    </section>
-
-    <!--
-    ==========================================
-    FEATURES SECTION
-    ==========================================
-    Key features and capabilities of the Cloud UKO platform.
-    Highlights automation, integration, and analytics capabilities.
-    Uses interactive cards with hover effects and icons.
-    ==========================================
-    -->
-    <section class="features">
-        <!-- Features content container -->
-        <div class="features-container">
-            <!-- Section header -->
-            <div class="features-header">
-                <h2 class="features-title lava-text type-target">Why Choose Cloud UKO?</h2>
-                <p class="features-subtitle">
-                    Our integrated platform combines the best tools and methodologies 
-                    to deliver exceptional results for your digital transformation.
-                </p>
-            </div>
-
-            <!-- Features grid layout -->
-            <div class="features-grid">
-                <!-- Automation Feature -->
-                <div class="feature-card">
-                    <!-- Feature title -->
-                    <h3 class="feature-title">Advanced Automation</h3>
-                    <!-- Feature description -->
-                    <p class="feature-description">
-                        Streamline your workflows with intelligent automation that learns and adapts 
-                        to your business processes, saving time and reducing errors.
-                    </p>
-                </div>
-
-                <!-- Integration Feature -->
-                <div class="feature-card">
-                    <!-- Feature title -->
-                    <h3 class="feature-title">Seamless Integration</h3>
-                    <!-- Feature description -->
-                    <p class="feature-description">
-                        Connect all your existing tools and systems into one unified platform 
-                        for better data flow and operational efficiency.
-                    </p>
-                </div>
-
-                <!-- Analytics Feature -->
-                <div class="feature-card">
-                    <!-- Feature title -->
-                    <h3 class="feature-title">Predictive Analytics</h3>
-                    <!-- Feature description -->
-                    <p class="feature-description">
-                        Make data-driven decisions with advanced analytics and machine learning 
-                        that predict trends and optimize your business performance.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!--
-    ==========================================
-    CALL TO ACTION SECTION
-    ==========================================
-    Final conversion section encouraging users to take action.
-    Includes compelling headline and multiple action options.
-    Features gradient background and prominent buttons.
-    ==========================================
-    -->
-    <section class="cta">
-        <!-- CTA content container -->
-        <div class="cta-container">
-            <!-- CTA headline -->
-            <h2 class="cta-title">Ready to Transform Your Business?</h2>
-            <!-- CTA description -->
-            <p class="cta-description">
-                Tell us how your business works and we'll show you what a system built
-                around it could look like. Free consultation, no obligation.
-            </p>
-            
-            <!-- CTA buttons -->
-            <div class="cta-buttons">
-                <!-- Primary CTA button -->
-                <a href="contact.html" class="btn btn-cta-primary">
-                    Start Your Transformation
-                </a>
-                <!-- Secondary CTA button -->
-                <a href="projects.html" class="btn btn-cta-secondary">
-                    See Our Work
-                </a>
-            </div>
-        </div>
-    </section>
-    
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-logo">
-            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" style="width: 200px; height: auto; object-fit: contain;">
-        </div>
-        
-        <div class="footer-links">
-            <a href="index.html">Home</a>
+        <nav class="hud-mobile" id="hud-mobile" aria-label="Main (mobile)">
+            <a href="index.html" class="active" aria-current="page">Home</a>
             <a href="about.html">About</a>
             <a href="service.html">Services</a>
             <a href="projects.html">Projects</a>
             <a href="demos.html">Demos</a>
             <a href="contact.html">Contact</a>
+        </nav>
+
+        <!-- XP bar: scroll progress, filled in by game.js -->
+        <div class="xp" aria-hidden="true">
+            <div class="xp-fill"></div>
+            <div class="xp-label">LVL 1 · 0% EXPLORED</div>
         </div>
+    </header>
 
-        <div class="footer-contact" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.25rem;font-size:0.95rem;">
-            <a href="https://wa.me/27740926666" target="_blank" rel="noopener noreferrer">WhatsApp: 074 092 6666</a>
-            <a href="mailto:antoniozambuko@gmail.com">antoniozambuko@gmail.com</a>
+    <main id="main">
+
+        <!-- ==================== 1. TITLE SCREEN ==================== -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-chip reveal"><span class="live-dot"></span> United Knowledge Operations</div>
+
+                <div class="glitch-wrap reveal">
+                    <h1 class="hero-title lava-text">Cloud UKO</h1>
+                </div>
+
+                <p class="hero-subtitle reveal">Websites &amp; Business Systems for South African Organisations</p>
+
+                <p class="hero-desc reveal">
+                    We build websites, ERPs, invoicing, POS and booking systems for schools, farms
+                    and small businesses. Test our live systems today, and work directly with your developer.
+                </p>
+
+                <div class="hero-buttons reveal">
+                    <a href="contact.html" class="btn btn-primary">▶ Start Your Project</a>
+                    <a href="demos.html" class="btn btn-ghost" data-demo-link>⚡ Try a Live Demo</a>
+                </div>
+
+                <a href="#stats" class="press-start">▼ PRESS START ▼</a>
+            </div>
+        </section>
+
+        <!-- ==================== 2. PLAYER STATS ==================== -->
+        <section class="section" id="stats" style="padding-top: 0;">
+            <div class="container">
+                <!-- data-count = number to count up to; text shown before JS runs is the final value -->
+                <div class="panel stats-panel reveal">
+                    <div class="stat">
+                        <div class="stat-value" data-count="2018">2018</div>
+                        <div class="stat-label">Building for clients since</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" data-count="4">4</div>
+                        <div class="stat-label">Live systems you can test</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">1:1</div>
+                        <div class="stat-label">Direct line to your developer</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" data-count="100" data-suffix="%">100%</div>
+                        <div class="stat-label">Custom-built for you</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 3. SKILL TREE (what we do) ==================== -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="eyebrow">Skill tree</div>
+                    <h2 class="section-title" data-decode>What We Do</h2>
+                    <p class="section-sub">
+                        End-to-end digital work that helps businesses get found online, run smoother and scale:
+                        high-performance websites, custom systems, automation, branding and marketing.
+                    </p>
+                </div>
+
+                <!-- Each skill opens the contact form with that service prefilled (game.js) -->
+                <div class="skills" data-stagger>
+                    <button type="button" class="skill reveal" data-service="Web Development"><span class="skill-icon">🌐</span>Web Development</button>
+                    <button type="button" class="skill reveal" data-service="System & Platform Development"><span class="skill-icon">🧩</span>System &amp; Platform Development</button>
+                    <button type="button" class="skill reveal" data-service="AI Automation"><span class="skill-icon">🤖</span>AI Automation</button>
+                    <button type="button" class="skill reveal" data-service="Marketing Strategy & Automation"><span class="skill-icon">📣</span>Marketing Strategy &amp; Automation</button>
+                    <button type="button" class="skill reveal" data-service="Branding & Identity Development"><span class="skill-icon">🎨</span>Branding &amp; Identity</button>
+                    <button type="button" class="skill reveal" data-service="Business Process Optimisation"><span class="skill-icon">⚙️</span>Business Process Optimisation</button>
+                    <button type="button" class="skill reveal" data-service="Technical Support & Maintenance"><span class="skill-icon">🛠️</span>Support &amp; Maintenance</button>
+                    <button type="button" class="skill reveal" data-service="Analytics, Reporting & Integrations"><span class="skill-icon">📊</span>Analytics &amp; Integrations</button>
+                </div>
+                <p class="skill-hint">Pick a skill to start a conversation about it.</p>
+            </div>
+        </section>
+
+        <!-- ==================== 4. LEVEL SELECT (live systems) ==================== -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="eyebrow">Level select</div>
+                    <h2 class="section-title lava-text" data-decode>Real Systems, Not Mockups</h2>
+                    <p class="section-sub">Every level below is a live, working system we built &mdash; jump in and try it yourself.</p>
+                </div>
+
+                <div class="levels" data-stagger>
+                    <!-- School ERP demo deployment (made-up "CloudUko School") -->
+                    <a class="panel level reveal" data-tilt data-demo-link href="https://clouduko-erp.onrender.com/" target="_blank" rel="noopener noreferrer">
+                        <div class="level-shot">
+                            <img src="img/showcase/erp.png" alt="CloudUko School ERP system" loading="lazy">
+                            <span class="level-badge"><span class="live-dot"></span> LIVE</span>
+                        </div>
+                        <div class="level-body">
+                            <span class="level-num">LEVEL 01</span>
+                            <h3 class="level-title">School ERP</h3>
+                            <p class="level-desc">School website, online enrolment, staff &amp; parent portals.</p>
+                            <span class="level-play">▶ PLAY LIVE DEMO</span>
+                        </div>
+                    </a>
+
+                    <a class="panel level reveal" data-tilt data-demo-link href="https://online-tutor-web.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        <div class="level-shot">
+                            <img src="img/showcase/booking.png" alt="Lumen tutor booking platform" loading="lazy">
+                            <span class="level-badge"><span class="live-dot"></span> LIVE</span>
+                        </div>
+                        <div class="level-body">
+                            <span class="level-num">LEVEL 02</span>
+                            <h3 class="level-title">Booking &amp; Marketplace</h3>
+                            <p class="level-desc">Find providers, book and pay securely, message in-app.</p>
+                            <span class="level-play">▶ PLAY LIVE DEMO</span>
+                        </div>
+                    </a>
+
+                    <a class="panel level level-more reveal" data-tilt data-demo-link href="demos.html">
+                        <div>
+                            <div class="level-more-icon">＋</div>
+                            <span class="level-num">MORE LEVELS</span>
+                            <h3 class="level-title" style="margin-top: 0.4rem;">See All Live Demos</h3>
+                            <p class="level-desc">ERP &middot; Invoicing &middot; POS &middot; Booking</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 5. LOADOUT (packages & pricing) ==================== -->
+        <!--
+            Growth Kit packages. Prices are the once-off setup fee; the line under
+            each price is the monthly/yearly fee. Keep in sync with service.html
+            and README.md. Buttons preselect the package on contact.html.
+            Rarity is just colour-coding: common < rare < epic < legendary.
+        -->
+        <section class="section" id="pricing">
+            <div class="container">
+                <div class="section-head reveal" data-unlock="shopper">
+                    <div class="eyebrow">Choose your loadout</div>
+                    <h2 class="section-title lava-text" data-decode>Packages &amp; Pricing</h2>
+                    <p class="section-sub">
+                        Clear starting prices for South African small businesses. Most packages pair a once-off
+                        setup fee with a small monthly fee that keeps your system hosted, supported and up to date.
+                    </p>
+                </div>
+
+                <div class="loadout" data-stagger>
+                    <article class="panel pack reveal" data-tilt data-rarity="common">
+                        <div class="pack-top"><span class="rarity">Common</span><span class="pack-icon">✨</span></div>
+                        <h3 class="pack-name">Brand Starter</h3>
+                        <p class="pack-for">For new small businesses that need to look professional from day one.</p>
+                        <div class="pack-price">R 1,200<small>ONCE-OFF</small></div>
+                        <p class="pack-upkeep">No monthly fee</p>
+                        <ul class="pack-stats">
+                            <li>Logo design</li>
+                            <li>Flyer design</li>
+                            <li>WhatsApp Business setup</li>
+                        </ul>
+                        <a href="contact.html?package=brand-starter" class="btn btn-ghost">Select →</a>
+                    </article>
+
+                    <article class="panel pack featured reveal" data-tilt data-rarity="rare">
+                        <span class="pack-ribbon">★ BEST START</span>
+                        <div class="pack-top"><span class="rarity">Rare</span><span class="pack-icon">🌐</span></div>
+                        <h3 class="pack-name">Starter Website</h3>
+                        <p class="pack-for">For caterers, cleaners, salons and trades who need to be found online.</p>
+                        <div class="pack-price">R 3,500<small>ONCE-OFF</small></div>
+                        <p class="pack-upkeep">+ R 2,200/year domain &amp; hosting<br>Optional R 150/mo edits &amp; support</p>
+                        <ul class="pack-stats">
+                            <li>1&ndash;5 page website</li>
+                            <li>WhatsApp chat button</li>
+                            <li>Google Business Profile setup</li>
+                            <li>Domain setup</li>
+                        </ul>
+                        <a href="contact.html?package=starter-website" class="btn btn-primary">Select →</a>
+                    </article>
+
+                    <article class="panel pack reveal" data-tilt data-rarity="epic">
+                        <div class="pack-top"><span class="rarity">Epic</span><span class="pack-icon">📅</span></div>
+                        <h3 class="pack-name">Business Website</h3>
+                        <p class="pack-for">For service businesses that take bookings.</p>
+                        <div class="pack-price">R 8,500<small>ONCE-OFF</small></div>
+                        <p class="pack-upkeep">+ R 450/mo</p>
+                        <ul class="pack-stats">
+                            <li>Everything in Starter Website</li>
+                            <li>Online booking form</li>
+                            <li>PayFast online payments</li>
+                            <li>Admin page to manage bookings</li>
+                        </ul>
+                        <a href="contact.html?package=business-website" class="btn btn-ghost">Select →</a>
+                    </article>
+
+                    <article class="panel pack reveal" data-tilt data-rarity="rare">
+                        <div class="pack-top"><span class="rarity">Rare</span><span class="pack-icon">🧾</span></div>
+                        <h3 class="pack-name">Invoice &amp; Quote System</h3>
+                        <p class="pack-for">For any business still invoicing in Word.</p>
+                        <div class="pack-price">R 4,500<small>ONCE-OFF</small></div>
+                        <p class="pack-upkeep">+ R 350/mo</p>
+                        <ul class="pack-stats">
+                            <li>Client records</li>
+                            <li>Quotes &amp; invoices</li>
+                            <li>PDF + email sending</li>
+                            <li>Payment tracking</li>
+                        </ul>
+                        <a href="contact.html?package=invoice-system" class="btn btn-ghost">Select →</a>
+                    </article>
+
+                    <article class="panel pack reveal" data-tilt data-rarity="legendary">
+                        <div class="pack-top"><span class="rarity">Legendary</span><span class="pack-icon">🏫</span></div>
+                        <h3 class="pack-name">School ERP</h3>
+                        <p class="pack-for">For independent schools, ECD centres and TVET colleges.</p>
+                        <div class="pack-price">R 7,500<small>SETUP + TRAINING</small></div>
+                        <p class="pack-upkeep">+ R 18 per learner/mo (min R 1,500/mo)</p>
+                        <ul class="pack-stats">
+                            <li>Learner records</li>
+                            <li>Fees</li>
+                            <li>Attendance</li>
+                            <li>Reports</li>
+                            <li>Parent communication</li>
+                        </ul>
+                        <a href="contact.html?package=school-erp" class="btn btn-ghost">Select →</a>
+                    </article>
+
+                    <article class="panel pack reveal" data-tilt data-rarity="legendary">
+                        <div class="pack-top"><span class="rarity">Legendary</span><span class="pack-icon">🚜</span></div>
+                        <h3 class="pack-name">Farm ERP</h3>
+                        <p class="pack-for">For farms and agri businesses.</p>
+                        <div class="pack-price">R 10,000<small>ONCE-OFF</small></div>
+                        <p class="pack-upkeep">+ R 950/mo</p>
+                        <ul class="pack-stats">
+                            <li>Operations</li>
+                            <li>Payroll</li>
+                            <li>SARS tracking: VAT201, diesel refund, EMP201/501, provisional tax</li>
+                        </ul>
+                        <a href="contact.html?package=farm-erp" class="btn btn-ghost">Select →</a>
+                    </article>
+                </div>
+
+                <!-- Payment terms (from the Growth Kit terms) -->
+                <p class="terms">
+                    All prices in ZAR. 50% deposit before work starts, 50% on launch. Monthly fees by debit order or
+                    EFT on the 1st; hosting is billed yearly in advance. Quotes are valid for 30 days.
+                </p>
+            </div>
+        </section>
+
+        <!-- ==================== 6. POWER-UPS (why choose us) ==================== -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="eyebrow">Power-ups</div>
+                    <h2 class="section-title lava-text" data-decode>Why Choose Cloud UKO?</h2>
+                    <p class="section-sub">
+                        Our integrated approach combines the right tools and methods to deliver results for your
+                        digital transformation.
+                    </p>
+                </div>
+
+                <!-- --charge = how full the decorative charge bar gets -->
+                <div class="powerups" data-stagger>
+                    <div class="panel powerup reveal" data-tilt style="--charge: 92%;">
+                        <div class="powerup-icon">⚡</div>
+                        <h3>Advanced Automation</h3>
+                        <p>Streamline your workflows with automation that adapts to your business processes, saving time and reducing errors.</p>
+                        <div class="charge" aria-hidden="true"><span></span></div>
+                    </div>
+                    <div class="panel powerup reveal" data-tilt style="--charge: 86%;">
+                        <div class="powerup-icon">🔗</div>
+                        <h3>Seamless Integration</h3>
+                        <p>Connect your existing tools and systems into one platform for better data flow and operational efficiency.</p>
+                        <div class="charge" aria-hidden="true"><span></span></div>
+                    </div>
+                    <div class="panel powerup reveal" data-tilt style="--charge: 80%;">
+                        <div class="powerup-icon">📈</div>
+                        <h3>Predictive Analytics</h3>
+                        <p>Make data-driven decisions with analytics that spot trends and help optimise your business performance.</p>
+                        <div class="charge" aria-hidden="true"><span></span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 7. FINAL LEVEL (call to action) ==================== -->
+        <section class="section">
+            <div class="container">
+                <div class="panel final reveal">
+                    <div class="eyebrow">Final level</div>
+                    <h2 class="section-title" data-decode>Ready to Transform Your Business?</h2>
+                    <p>
+                        Tell us how your business works and we'll show you what a system built around it
+                        could look like. Free consultation, no obligation.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="contact.html" class="btn btn-primary">▶ Start Your Quest</a>
+                        <a href="projects.html" class="btn btn-ghost">See Our Work</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" class="footer-logo" loading="lazy">
+
+            <nav class="footer-links" aria-label="Footer">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="service.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="demos.html">Demos</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="footer-contact">
+                <a href="https://wa.me/27740926666" target="_blank" rel="noopener noreferrer">WhatsApp: 074 092 6666</a>
+                <a href="mailto:antoniozambuko@gmail.com">antoniozambuko@gmail.com</a>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/company/cloud-uko" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/clouduko" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.86c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/clouduko" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+                </a>
+            </div>
+
+            <p class="footer-text">© 2026 Cloud UKO. Transforming businesses through integrated digital solutions.</p>
+            <p class="footer-text" style="opacity: 0.6;">Psst&hellip; gamers know a certain code. ↑↑↓↓←→←→BA</p>
         </div>
+    </footer>
 
-        <div class="footer-socials">
-            <a href="https://www.linkedin.com/company/cloud-uko" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
-            <a href="https://www.facebook.com/clouduko" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.86c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
-            </a>
-            <a href="https://www.instagram.com/clouduko" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
-            </a>
-        </div>
-
-        
-        <p class="footer-text">
-            © 2026 Cloud UKO. Transforming businesses through integrated digital solutions.
-        </p>
-    </div>
-</footer>
-
-    <!--
-    ==========================================
-    JAVASCRIPT SECTION
-{{ ... }}
-    Interactive functionality for the website including:
-    - Mobile menu toggle
-    - Smooth scrolling
-    - Navbar scroll effects
-    - Animation triggers
-    ==========================================
-    -->
-    <script>
-        /**
-         * Mobile Menu Toggle Functionality
-         * Handles the hamburger menu for mobile devices
-         */
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get mobile menu elements
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            // Add click event listener to mobile toggle button
-            if (mobileToggle && mobileMenu) {
-                mobileToggle.addEventListener('click', function() {
-                    // Toggle active class on both button and menu
-                    mobileToggle.classList.toggle('active');
-                    mobileMenu.classList.toggle('active');
-                });
-            }
-
-            /* Floating AI chat behavior removed */
-
-            /**
-             * Get Started AI Character Animation
-             * Shows vintage purple AI character when hovering over Get Started button
-             */
-            const getStartedBtn = document.getElementById('get-started-btn');
-            const aiCharacter = document.getElementById('ai-character');
-            let aiTimeout;
-
-            if (getStartedBtn && aiCharacter) {
-                // Show AI character on hover
-                getStartedBtn.addEventListener('mouseenter', function() {
-                    aiCharacter.classList.add('show');
-                    // Auto-hide after 4 seconds
-                    aiTimeout = setTimeout(() => {
-                        aiCharacter.classList.remove('show');
-                    }, 4000);
-                });
-
-                // Hide AI character when leaving the container area
-                const getStartedContainer = document.querySelector('.get-started-container');
-                if (getStartedContainer) {
-                    getStartedContainer.addEventListener('mouseleave', function() {
-                        clearTimeout(aiTimeout);
-                        setTimeout(() => {
-                            aiCharacter.classList.remove('show');
-                        }, 500); // Small delay to allow moving to AI character
-                    });
-                }
-
-                // Keep AI visible when hovering over the AI character itself
-                aiCharacter.addEventListener('mouseenter', function() {
-                    clearTimeout(aiTimeout);
-                    aiCharacter.classList.add('show');
-                });
-
-                aiCharacter.addEventListener('mouseleave', function() {
-                    setTimeout(() => {
-                        aiCharacter.classList.remove('show');
-                    }, 500);
-                });
-            }
-
-            /**
-             * Navbar Scroll Effect
-             * Adds scrolled class to navbar when user scrolls down
-             */
-            const navbar = document.getElementById('navbar');
-            
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-        });
-
-        /**
-         * Animation on Scroll Observer
-         * Triggers animations when elements come into view
-         */
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all animated elements
-        const animatedElements = document.querySelectorAll('.stat-item, .package-card, .feature-card');
-        animatedElements.forEach(el => {
-            observer.observe(el);
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Service Option Button Handler
-            const options = document.querySelectorAll('.service-option');
-            options.forEach(opt => {
-                opt.addEventListener('click', function (e) {
-                    // Remove selected class from all options
-                    options.forEach(o => o.classList.remove('selected'));
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    // Preferred behavior: navigate to contact page with service query
-                    const service = this.getAttribute('data-service');
-                    if (service) {
-                        const url = 'contact.html?service=' + encodeURIComponent(service);
-                        window.location.href = url;
-                        return;
-                    }
-                    // Fallback: open mailto if provided
-                    const mailto = this.getAttribute('data-mailto');
-                    if (mailto) {
-                        window.location.href = mailto;
-                    }
-                });
-            });
-        });
-
-    
-    </script>
-    <script src="parallax.js?v=20261017"></script>
+    <script src="game.js?v=20261028"></script>
 </body>
 </html>

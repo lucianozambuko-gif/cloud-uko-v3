@@ -1,245 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
+<!--
+  About Us - Cloud UKO - "game" theme page. Styles: game.css. Interactivity: game.js.
+  Shared parts (menu, background, footer) are identical on every page -
+  change them on all pages together.
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Cloud UKO</title>
-    <link rel="stylesheet" href="styles.css?v=20261017">
+    <meta name="description" content="About Cloud UKO: websites and business systems for South African organisations, built since 2018.">
+    <meta name="theme-color" content="#05060f">
+    <link rel="icon" type="image/png" href="img/logo/clouduko-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap">
+    <link rel="stylesheet" href="game.css?v=20261028">
 </head>
-<body>
-    <div class="logo-bg-layer" aria-hidden="true"></div>
-    <div class="mouse-glow" aria-hidden="true"></div>
+<body data-chapter="1" data-chapter-name="Origin Story" data-chapter-sub="About Cloud UKO" data-page="about">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Boot screen: only shown on the first page of a visit (game.js) -->
+    <div class="loader" aria-hidden="true">
+        <div class="loader-inner">
+            <img src="img/logo/clouduko-logo.png" alt="" class="loader-logo">
+            <div class="loader-text">BOOTING SYSTEMS 0%</div>
+            <div class="loader-bar"><span></span></div>
+            <div class="loader-skip">CLICK OR PRESS ANY KEY TO SKIP</div>
+        </div>
+    </div>
+
+    <div class="bg-nebula" aria-hidden="true"></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <canvas id="fx-canvas" aria-hidden="true"></canvas>
+    <div class="bg-scanlines" aria-hidden="true"></div>
+
     <a href="https://wa.me/27740926666" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.94 9.94 0 0 0 4.84 1.23h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm5.83 14.25c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.14.07.14.11.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.31Z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.48 1.34 5L2 22l5.2-1.36a9.94 9.94 0 0 0 4.84 1.23h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm5.83 14.25c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.14.07.14.11.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.07.11.07.63-.17 1.31Z"/></svg>
     </a>
 
-    <!-- Enhanced Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" class="logo-img">
+    <header class="hud">
+        <div class="container hud-inner">
+            <a href="index.html" class="hud-logo" aria-label="Cloud UKO home">
+                <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations">
             </a>
-            
-            <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="about.html" class="nav-link active">About</a></li>
-                <li><a href="service.html" class="nav-link">Services</a></li>
-                <li><a href="projects.html" class="nav-link">Projects</a></li>
-                <li><a href="demos.html" class="nav-link">Demos</a></li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
-            </ul>
-            
-            <a href="contact.html" class="get-started">Get Started</a>
-
-            <!-- Mobile menu toggle button (hamburger) -->
-            <button class="mobile-menu-toggle" id="mobile-toggle">
-                <span></span><!-- Top line of hamburger -->
-                <span></span><!-- Middle line of hamburger -->
-                <span></span><!-- Bottom line of hamburger -->
-            </button>
-        </div>
-
-        <!-- Mobile navigation menu (hidden by default) -->
-        <div class="mobile-menu" id="mobile-menu">
-            <ul class="mobile-nav-links">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="about.html" class="nav-link active">About</a></li>
-                <li><a href="service.html" class="nav-link">Services</a></li>
-                <li><a href="projects.html" class="nav-link">Projects</a></li>
-                <li><a href="demos.html" class="nav-link">Demos</a></li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
-            </ul>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg-shapes" aria-hidden="true">
-            <div class="parallax-shape shape-cyan" data-speed="0.15"></div>
-            <div class="parallax-shape shape-blue" data-speed="0.3"></div>
-            <div class="parallax-shape shape-purple" data-speed="0.22"></div>
-        </div>
-
-        <!-- Twinkling code glyphs scattered around the hero -->
-        <div class="code-sparkles" aria-hidden="true">
-            <span class="code-sparkle c-cyan" style="top:16%; left:9%; font-size:1.6rem;">&lt;/&gt;</span>
-            <span class="code-sparkle c-purple" style="top:62%; left:5%; font-size:1.1rem; animation-delay:0.6s;">{ }</span>
-            <span class="code-sparkle c-blue" style="top:26%; right:11%; font-size:1.8rem; animation-delay:1.1s;">;</span>
-            <span class="code-sparkle c-cyan" style="top:72%; right:16%; font-size:1.3rem; animation-delay:1.7s;">01</span>
-            <span class="code-sparkle c-purple" style="top:45%; left:3%; font-size:1.4rem; animation-delay:2.2s;">=&gt;</span>
-            <span class="code-sparkle c-blue" style="top:12%; right:22%; font-size:1.2rem; animation-delay:0.3s;">#</span>
-        </div>
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span>About Cloud UKO</span>
-            </div>
-
-            <h1 class="hero-title lava-text type-target">Transforming Businesses Through Innovation</h1>
-
-            <p class="hero-subtitle">
-                We empower organizations with integrated digital solutions that drive measurable growth, 
-                operational excellence, and sustainable competitive advantage in the digital age.
-            </p>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value">2018</div>
-                    <div class="stat-label">Building for Clients Since</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">5+</div>
-                    <div class="stat-label">Industries Served</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">Live Demo Systems</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">1:1</div>
-                    <div class="stat-label">Direct Developer Contact</div>
-                </div>
+            <nav aria-label="Main">
+                <ul class="hud-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html" class="active" aria-current="page">About</a></li>
+                    <li><a href="service.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="demos.html">Demos</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hud-actions">
+                <button type="button" class="sound-toggle" aria-pressed="false" aria-label="Turn sound effects on"></button>
+                <a href="contact.html" class="btn btn-primary btn-sm">▶ Play</a>
+                <button type="button" class="hud-burger" aria-expanded="false" aria-controls="hud-mobile" aria-label="Open menu">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
-    </section>
+        <nav class="hud-mobile" id="hud-mobile" aria-label="Main (mobile)">
+            <a href="index.html">Home</a>
+            <a href="about.html" class="active" aria-current="page">About</a>
+            <a href="service.html">Services</a>
+            <a href="projects.html">Projects</a>
+            <a href="demos.html">Demos</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="xp" aria-hidden="true">
+            <div class="xp-fill"></div>
+            <div class="xp-label">LVL 1 · 0% EXPLORED</div>
+        </div>
+    </header>
 
-    <!-- Values Section -->
-    <section class="values">
-        <div class="values-container">
-            <div class="values-header">
-                <h2 class="values-title lava-text type-target">Our Core Values</h2>
-                <p class="values-subtitle">
-                    The principles that guide our mission to deliver exceptional digital transformation solutions
-                </p>
+    <main id="main">
+        <section class="page-hero">
+            <div class="container">
+                <div class="eyebrow reveal">Chapter 01 · Origin Story</div>
+                <h1 class="page-title lava-text reveal">Transforming Businesses Through Innovation</h1>
+                <p class="page-lead reveal">We empower organizations with integrated digital solutions that drive measurable growth, operational excellence, and sustainable competitive advantage in the digital age.</p>
+                <!-- Chapter map: current chapter lit, visited ones dimmer (game.js) -->
+                <nav class="chapter-map reveal" aria-label="Chapters">
+                    <a href="about.html" data-page="about">01 Origin</a>
+                    <a href="service.html" data-page="service">02 Skills</a>
+                    <a href="projects.html" data-page="projects">03 Quests</a>
+                    <a href="demos.html" data-page="demos">04 Arcade</a>
+                    <a href="contact.html" data-page="contact">05 Contact</a>
+                </nav>
             </div>
+        </section>
 
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon bg-blue">
-                        <div class="service-icon">
-                        <img src="img/icons/Triangle_Check.svg" alt="Cloud icon" />
-                    </div>
-                    </div>
-                    <h3 class="value-title">Our Mission</h3>
-                    <p class="value-description">
-                        To empower businesses with integrated digital solutions that drive measurable growth and operational excellence.
-                    </p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="service-icon">
-                        <img src="img/icons/Trending_Up.svg" alt="Cloud icon" />
-                    </div>
-                    <h3 class="value-title">Innovation First</h3>
-                    <p class="value-description">
-                        We leverage cutting-edge AI and automation technologies to keep your business ahead of the curve.
-                    </p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="service-icon">
-                        <img src="img/icons/Wavy_Check.svg" alt="Cloud icon" />
-                    </div>
-                    <h3 class="value-title">Client Success</h3>
-                    <p class="value-description">
-                        Your success is our priority. We're committed to delivering solutions that exceed expectations.
-                    </p>
-                </div>
-                
-                <div class="value-card">
-                    <div class="service-icon">
-                        <img src="img/icons/Users_Group.svg" alt="Cloud icon" />
-                    </div>
-                    <h3 class="value-title">Proof, Not Promises</h3>
-                    <p class="value-description">
-                        Every system we sell has a live demo you can test before you commit, so you see exactly what you're getting.
-                    </p>
+        <section class="section" style="padding-top: 0;">
+            <div class="container">
+                <div class="panel stats-panel reveal">
+                    <div class="stat"><div class="stat-value" data-count="2018">2018</div><div class="stat-label">Building for clients since</div></div>
+                    <div class="stat"><div class="stat-value" data-count="5" data-suffix="+">5+</div><div class="stat-label">Industries served</div></div>
+                    <div class="stat"><div class="stat-value" data-count="4">4</div><div class="stat-label">Live demo systems</div></div>
+                    <div class="stat"><div class="stat-value">1:1</div><div class="stat-label">Direct developer contact</div></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="cta-container">
-            <h2 class="cta-title">Ready to Transform Your Business?</h2>
-            <p class="cta-description">
-                Partner with Cloud UKO and experience the power of integrated digital transformation
-            </p>
-            <a href="contact.html" class="btn btn-primary">
-                Get Started Today →
-            </a>
-        </div>
-    </section>
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="eyebrow">Guild code</div>
+                    <h2 class="section-title lava-text" data-decode>Our Core Values</h2>
+                    <p class="section-sub">The principles that guide our mission to deliver exceptional digital transformation solutions.</p>
+                </div>
+                <div class="grid-4" data-stagger>
+                    <div class="panel card reveal" data-tilt><div class="card-icon">🎯</div><h3>Our Mission</h3><p>To empower businesses with integrated digital solutions that drive measurable growth and operational excellence.</p></div>
+                    <div class="panel card reveal" data-tilt><div class="card-icon">🚀</div><h3>Innovation First</h3><p>We leverage cutting-edge AI and automation technologies to keep your business ahead of the curve.</p></div>
+                    <div class="panel card reveal" data-tilt><div class="card-icon">🏆</div><h3>Client Success</h3><p>Your success is our priority. We're committed to delivering solutions that exceed expectations.</p></div>
+                    <div class="panel card reveal" data-tilt><div class="card-icon">🔍</div><h3>Proof, Not Promises</h3><p>Every system we sell has a live demo you can test before you commit, so you see exactly what you're getting.</p></div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Footer -->
+        <section class="section">
+            <div class="container">
+                <div class="panel final reveal">
+                    <div class="eyebrow">End of chapter 01</div>
+                    <h2 class="section-title" data-decode>Ready to Transform Your Business?</h2>
+                    <p>Partner with Cloud UKO and experience the power of integrated digital transformation.</p>
+                    <div class="hero-buttons">
+                        <a href="contact.html" class="btn btn-primary">▶ Get Started Today</a>
+                        <a href="service.html" class="btn btn-ghost">Next chapter: Skill Tree →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-logo">
-                <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" style="width: 200px; height: auto; object-fit: contain;">
-            </div>
-            
-            <div class="footer-links">
+        <div class="container">
+            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" class="footer-logo" loading="lazy">
+
+            <nav class="footer-links" aria-label="Footer">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="service.html">Services</a>
                 <a href="projects.html">Projects</a>
                 <a href="demos.html">Demos</a>
                 <a href="contact.html">Contact</a>
-            </div>
-            
-            <div class="footer-contact" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem 1.25rem;font-size:0.95rem;margin:1rem 0;">
+            </nav>
+
+            <div class="footer-contact">
                 <a href="https://wa.me/27740926666" target="_blank" rel="noopener noreferrer">WhatsApp: 074 092 6666</a>
                 <a href="mailto:antoniozambuko@gmail.com">antoniozambuko@gmail.com</a>
             </div>
-            <p class="footer-text">
-                © 2026 Cloud UKO. Transforming businesses through integrated digital solutions.
-            </p>
+
+            <div class="footer-socials">
+                <a href="https://www.linkedin.com/company/cloud-uko" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/clouduko" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.86c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94Z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/clouduko" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+                </a>
+            </div>
+
+            <p class="footer-text">© 2026 Cloud UKO. Transforming businesses through integrated digital solutions.</p>
         </div>
     </footer>
 
-    <script>
-        // Enhanced Navigation Functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const navbar = document.getElementById('navbar');
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-
-            // Mobile menu toggle
-            if (mobileToggle && mobileMenu) {
-                mobileToggle.addEventListener('click', function() {
-                    mobileToggle.classList.toggle('active');
-                    mobileMenu.classList.toggle('active');
-                });
-            }
-
-            // Navbar scroll effect
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-
-            // Smooth scrolling for internal links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-    <script src="parallax.js?v=20261017"></script>
+    <script src="game.js?v=20261028"></script>
 </body>
 </html>

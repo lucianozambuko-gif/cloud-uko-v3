@@ -1,0 +1,1546 @@
+/*
+==========================================
+CLOUD UKO - "GAME" THEME
+==========================================
+Dark neon HUD look for the whole site, built from the logo's colours
+(cyan -> aqua -> blue -> violet -> magenta). Pairs with game.js, which
+adds the moving parts: particle background, loading screen, XP bar,
+achievements, sounds, card tilt, scroll reveals and counters.
+
+Pages using this theme load ONLY game.css (not the old styles.css).
+
+Layout of this file:
+  1. Tokens (colours, fonts, spacing)
+  2. Base + background layers
+  3. Loading screen
+  4. HUD navigation + XP bar + mobile menu
+  5. Buttons
+  6. Panels, section headers, reveal animation
+  7. Hero ("title screen")
+  8. Player stats
+  9. Skill tree (services)
+ 10. Level select (live systems)
+ 11. Loadout (packages)
+ 12. Power-ups (features)
+ 13. Final level (CTA) + footer
+ 14. Achievements, sound toggle, WhatsApp, cursor glow
+ 15. Lava-lamp text
+ 16. Responsive + reduced motion
+==========================================
+*/
+
+/* ---------- 1. Tokens ---------- */
+:root {
+    --bg: #05060f;
+    --bg-2: #0a0c1d;
+    --panel: rgba(14, 18, 42, 0.72);
+    --panel-solid: #0e122a;
+    --line: rgba(130, 150, 255, 0.18);
+    --line-strong: rgba(130, 150, 255, 0.38);
+    --text: #e9edff;
+    --muted: #a3acd3;
+    --dim: #6c759c;
+
+    /* Logo colours */
+    --cyan: #22d3ee;
+    --aqua: #2dd4bf;
+    --blue: #3b82f6;
+    --violet: #8b5cf6;
+    --magenta: #c84ef0;
+    --gold: #fbbf24;
+    --green: #34d399;
+
+    --neon-gradient: linear-gradient(110deg, var(--cyan), var(--blue) 45%, var(--violet) 75%, var(--magenta));
+    --glow-cyan: 0 0 18px rgba(34, 211, 238, 0.45);
+    --glow-violet: 0 0 22px rgba(139, 92, 246, 0.45);
+
+    --font-display: 'Chakra Petch', 'Segoe UI', system-ui, sans-serif;
+    --font-body: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+    --radius: 14px;
+    --gutter: 16px;
+    --max: 1200px;
+    --nav-h: 68px;
+}
+
+/* ---------- 2. Base + background layers ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: 0.01em;
+}
+
+p { margin: 0; }
+
+/* Keyboard focus that's visible on the dark background */
+:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 8px;
+    z-index: 2000;
+    background: var(--cyan);
+    color: #001018;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+.skip-link:focus { left: 8px; }
+
+/* Particle canvas drawn by game.js, fixed behind everything */
+#fx-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Soft colour nebulas + a faint perspective grid "floor" (pure CSS) */
+.bg-nebula {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(40vmax 40vmax at 10% 10%, rgba(34, 211, 238, 0.12), transparent 60%),
+        radial-gradient(45vmax 45vmax at 90% 20%, rgba(139, 92, 246, 0.14), transparent 60%),
+        radial-gradient(50vmax 40vmax at 50% 100%, rgba(200, 78, 240, 0.10), transparent 60%);
+}
+
+.bg-grid {
+    position: fixed;
+    left: -50%;
+    right: -50%;
+    bottom: -10vh;
+    height: 55vh;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(34, 211, 238, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.14) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(500px) rotateX(62deg);
+    transform-origin: bottom;
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 85%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 85%);
+    animation: gridScroll 6s linear infinite;
+}
+
+@keyframes gridScroll {
+    from { background-position: 0 0, 0 0; }
+    to   { background-position: 0 60px, 0 0; }
+}
+
+/* Thin CRT scanlines over the whole screen - very faint */
+.bg-scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px);
+    mix-blend-mode: overlay;
+}
+
+/* Everything real sits above the background layers */
+main, .hud, footer { position: relative; z-index: 2; }
+
+.container {
+    width: 100%;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+}
+
+/* ---------- 3. Loading screen ---------- */
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: grid;
+    place-items: center;
+    background: var(--bg);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loader.done { opacity: 0; visibility: hidden; }
+
+.loader-inner { width: min(360px, 80vw); text-align: center; }
+
+.loader-logo {
+    width: 96px;
+    margin: 0 auto 1.25rem;
+    filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.6));
+    animation: loaderPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes loaderPulse {
+    from { transform: scale(0.96); opacity: 0.8; }
+    to   { transform: scale(1.04); opacity: 1; }
+}
+
+.loader-text {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+}
+
+.loader-bar {
+    height: 6px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.loader-bar span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--neon-gradient);
+    box-shadow: var(--glow-cyan);
+    transition: width 0.15s linear;
+}
+
+.loader-skip {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+}
+
+/* ---------- 4. HUD navigation + XP bar + mobile menu ---------- */
+.hud {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5, 6, 15, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+}
+
+.hud-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: var(--nav-h);
+}
+
+.hud-logo img { height: 46px; width: auto; }
+
+/* The <nav> takes the space between logo and actions, so the links sit
+   centred and the Play button stays at the right edge */
+.hud-inner > nav { flex: 1; }
+
+.hud-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.hud-links a {
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.85rem;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.2s ease;
+}
+
+.hud-links a::after {
+    content: '';
+    position: absolute;
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: 0.2rem;
+    height: 2px;
+    background: var(--neon-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+
+.hud-links a:hover,
+.hud-links a.active { color: var(--text); }
+.hud-links a:hover::after,
+.hud-links a.active::after { transform: scaleX(1); }
+
+.hud-actions { display: flex; align-items: center; gap: 0.6rem; }
+
+/* XP bar: fills as you scroll; label shows level + % explored */
+.xp {
+    position: relative;
+    height: 18px;
+    border-top: 1px solid var(--line);
+}
+
+.xp-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    background: var(--neon-gradient);
+    opacity: 0.85;
+    box-shadow: var(--glow-cyan);
+}
+
+.xp-label {
+    position: absolute;
+    right: var(--gutter);
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    color: var(--text);
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+}
+
+.xp.level-up .xp-fill { animation: xpFlash 0.6s ease; }
+
+@keyframes xpFlash {
+    0%, 100% { filter: none; }
+    40% { filter: brightness(1.8) saturate(1.4); }
+}
+
+.hud-burger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+.hud-burger span {
+    position: absolute;
+    left: 11px;
+    right: 11px;
+    height: 2px;
+    background: var(--text);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.hud-burger span:nth-child(1) { top: 14px; }
+.hud-burger span:nth-child(2) { top: 21px; }
+.hud-burger span:nth-child(3) { top: 28px; }
+.hud-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hud-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.hud-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.hud-mobile {
+    display: none;
+    border-top: 1px solid var(--line);
+    padding: 0.5rem var(--gutter) 1rem;
+}
+.hud-mobile.open { display: block; }
+.hud-mobile a {
+    display: block;
+    padding: 0.85rem 0.25rem;
+    font-family: var(--font-display);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+}
+.hud-mobile a.active { color: var(--cyan); }
+
+/* ---------- 5. Buttons ---------- */
+.btn {
+    --btn-glow: rgba(34, 211, 238, 0.5);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0.8rem 1.5rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    /* Angled "game button" corners */
+    clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    will-change: transform;
+}
+
+.btn-primary {
+    background: var(--neon-gradient);
+    color: #fff;
+    box-shadow: 0 0 24px rgba(59, 130, 246, 0.35);
+}
+.btn-primary:hover { filter: brightness(1.15); box-shadow: 0 0 34px var(--btn-glow); }
+
+.btn-ghost {
+    background: rgba(34, 211, 238, 0.06);
+    border-color: var(--line-strong);
+    color: var(--cyan);
+}
+.btn-ghost:hover { background: rgba(34, 211, 238, 0.14); box-shadow: 0 0 24px rgba(34, 211, 238, 0.25); }
+
+.btn:active { transform: scale(0.97); }
+
+.btn-sm { min-height: 40px; padding: 0.5rem 1rem; font-size: 0.85rem; }
+
+/* Shine that sweeps across the primary button on hover */
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+}
+.btn-primary:hover::after { left: 120%; }
+
+/* ---------- 6. Panels, section headers, reveals ---------- */
+.section { padding: clamp(4rem, 9vw, 7rem) 0; }
+
+.section-head { text-align: center; max-width: 760px; margin: 0 auto clamp(2rem, 5vw, 3.5rem); }
+
+/* Small "LEVEL 02" style tag above section titles */
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 0.9rem;
+}
+.eyebrow::before, .eyebrow::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+}
+
+.section-title {
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.section-sub { color: var(--muted); font-size: clamp(1rem, 2vw, 1.12rem); }
+
+/* HUD panel: glassy box with neon corner brackets */
+.panel {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.panel::before,
+.panel::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--cyan);
+    opacity: 0.75;
+    pointer-events: none;
+    transition: opacity 0.25s ease, width 0.25s ease, height 0.25s ease;
+}
+.panel::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; border-top-left-radius: var(--radius); }
+.panel::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; border-bottom-right-radius: var(--radius); border-color: var(--magenta); }
+.panel:hover::before, .panel:hover::after { opacity: 1; width: 30px; height: 30px; }
+
+/* Scroll reveal: game.js adds .in when the element comes into view.
+   --d lets a group stagger (set per element by game.js). */
+.reveal {
+    opacity: 0;
+    transform: translateY(26px) scale(0.98);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: var(--d, 0s);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* No-JS safety: if game.js never runs, show everything */
+.no-js .reveal { opacity: 1; transform: none; }
+
+/* ---------- 7. Hero ("title screen") ---------- */
+.hero {
+    min-height: calc(100svh - var(--nav-h) - 18px);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 3rem 0 4rem;
+}
+
+.hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 99px;
+    background: rgba(34, 211, 238, 0.06);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 1.5rem;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+    animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 50% { opacity: 0.25; } }
+
+.hero-title {
+    font-size: clamp(3.2rem, 13vw, 8.5rem);
+    font-weight: 700;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.25rem;
+    /* Neon glow around the lava-coloured letters */
+    filter: drop-shadow(0 0 22px rgba(139, 92, 246, 0.45)) drop-shadow(0 0 6px rgba(34, 211, 238, 0.35));
+}
+
+/* Occasional glitch jolt on the title. game.js toggles .glitch on the
+   WRAPPER, not the h1: the h1's own animation is the lava flow, and
+   swapping it out would make the colours jump back to the start. */
+.glitch-wrap.glitch { animation: glitch 0.35s steps(2) 1; }
+@keyframes glitch {
+    0%   { transform: translate(0); }
+    20%  { transform: translate(-3px, 1px) skewX(-6deg); filter: hue-rotate(40deg) drop-shadow(-4px 0 0 rgba(34, 211, 238, 0.7)); }
+    40%  { transform: translate(3px, -1px) skewX(5deg);  filter: hue-rotate(-40deg) drop-shadow(4px 0 0 rgba(200, 78, 240, 0.7)); }
+    60%  { transform: translate(-1px, 0); }
+    100% { transform: translate(0); }
+}
+
+.hero-subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 3vw, 1.6rem);
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.hero-desc {
+    max-width: 640px;
+    margin: 0 auto 2rem;
+    color: var(--muted);
+    font-size: clamp(1rem, 2.2vw, 1.12rem);
+}
+
+.hero-buttons { display: flex; flex-wrap: wrap; gap: 0.9rem; justify-content: center; }
+
+.press-start {
+    margin-top: 2.5rem;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.35em;
+    color: var(--dim);
+    text-decoration: none;
+    display: inline-block;
+    animation: blink 1.6s steps(2) infinite;
+}
+
+/* ---------- 8. Player stats ---------- */
+.stats-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    padding: 0;
+    overflow: hidden;
+    background: var(--line);
+}
+
+.stat {
+    background: var(--panel-solid);
+    padding: 1.6rem 1rem;
+    text-align: center;
+}
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    font-weight: 700;
+    background: var(--neon-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    margin-top: 0.35rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+/* ---------- 9. Skill tree (services) ---------- */
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.skill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    background: var(--panel);
+    color: var(--text);
+    font: 600 0.95rem var(--font-body);
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.skill-icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(34, 211, 238, 0.12);
+    color: var(--cyan);
+    font-size: 0.95rem;
+}
+
+.skill:hover {
+    transform: translateY(-3px);
+    border-color: var(--cyan);
+    background: rgba(34, 211, 238, 0.08);
+    box-shadow: var(--glow-cyan);
+}
+
+.skill-hint { text-align: center; margin-top: 1.25rem; color: var(--dim); font-size: 0.85rem; }
+
+/* ---------- 10. Level select (live systems) ---------- */
+.levels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.level {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.level:hover { box-shadow: 0 0 40px rgba(139, 92, 246, 0.3); }
+
+.level-shot {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+}
+
+.level-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    filter: saturate(0.9) brightness(0.85);
+    transition: transform 0.6s ease, filter 0.3s ease;
+}
+.level:hover .level-shot img { transform: scale(1.06); filter: none; }
+
+/* Moving scan line across the screenshot on hover */
+.level-shot::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -30%;
+    height: 30%;
+    background: linear-gradient(to bottom, transparent, rgba(34, 211, 238, 0.25), transparent);
+    opacity: 0;
+}
+.level:hover .level-shot::after { opacity: 1; animation: scan 1.4s linear infinite; }
+@keyframes scan { to { top: 110%; } }
+
+.level-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    background: rgba(5, 6, 15, 0.8);
+    border: 1px solid rgba(52, 211, 153, 0.5);
+    color: var(--green);
+    font: 700 0.7rem var(--font-display);
+    letter-spacing: 0.15em;
+}
+
+.level-body { padding: 1.1rem 1.2rem 1.3rem; display: flex; flex-direction: column; gap: 0.35rem; flex: 1; }
+.level-num { font: 700 0.72rem var(--font-display); letter-spacing: 0.25em; color: var(--dim); }
+.level-title { font-size: 1.3rem; color: var(--text); }
+.level-desc { color: var(--muted); font-size: 0.92rem; }
+.level-play { margin-top: auto; padding-top: 0.6rem; font: 700 0.85rem var(--font-display); letter-spacing: 0.15em; color: var(--cyan); }
+
+.level-more {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 2rem 1.2rem;
+    text-decoration: none;
+    min-height: 260px;
+}
+.level-more-icon {
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    font-size: 1.8rem;
+    color: var(--cyan);
+    margin: 0 auto 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.level-more:hover .level-more-icon { transform: rotate(90deg) scale(1.05); box-shadow: var(--glow-cyan); }
+
+/* ---------- 11. Loadout (packages) ---------- */
+.loadout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.pack {
+    --rarity: var(--muted);
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 1.4rem 1.4rem;
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.pack:hover { border-color: var(--rarity); box-shadow: 0 0 34px color-mix(in srgb, var(--rarity) 35%, transparent); }
+
+/* Rarity tiers colour the tag, border glow and price */
+.pack[data-rarity="common"]    { --rarity: #9fb3c8; }
+.pack[data-rarity="rare"]      { --rarity: var(--cyan); }
+.pack[data-rarity="epic"]      { --rarity: var(--violet); }
+.pack[data-rarity="legendary"] { --rarity: var(--gold); }
+
+.pack-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 1rem; }
+
+.rarity {
+    font: 700 0.68rem var(--font-display);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rarity);
+    padding: 0.25rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--rarity) 55%, transparent);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--rarity) 10%, transparent);
+}
+
+.pack-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--rarity) 14%, transparent);
+    font-size: 1.4rem;
+}
+
+.pack-name { font-size: 1.45rem; margin-bottom: 0.35rem; }
+.pack-for { color: var(--muted); font-size: 0.92rem; margin-bottom: 1.1rem; }
+
+.pack-price {
+    font-family: var(--font-display);
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--text);
+    text-shadow: 0 0 18px color-mix(in srgb, var(--rarity) 45%, transparent);
+}
+.pack-price small { font-size: 0.8rem; color: var(--dim); letter-spacing: 0.1em; margin-left: 0.3rem; }
+
+.pack-upkeep { color: var(--muted); font-size: 0.85rem; min-height: 2.6em; margin: 0.2rem 0 1rem; }
+
+.pack-stats { list-style: none; padding: 0; margin: 0 0 1.4rem; display: grid; gap: 0.55rem; }
+.pack-stats li { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.92rem; color: var(--text); }
+.pack-stats li::before {
+    content: '';
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-top: 0.5em;
+    background: var(--rarity);
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px var(--rarity);
+}
+
+.pack .btn { margin-top: auto; width: 100%; }
+
+/* Featured pack: animated gradient border + "best start" ribbon */
+.pack.featured { border-color: transparent; }
+.pack.featured::after { display: none; }
+.pack-ribbon {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.8rem;
+    border-radius: 6px;
+    background: var(--neon-gradient);
+    color: #fff;
+    font: 700 0.7rem var(--font-display);
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+    box-shadow: var(--glow-violet);
+}
+.pack.featured {
+    background:
+        linear-gradient(var(--panel-solid), var(--panel-solid)) padding-box,
+        conic-gradient(from var(--spin, 0deg), var(--cyan), var(--violet), var(--magenta), var(--blue), var(--cyan)) border-box;
+    border: 2px solid transparent;
+    animation: spinBorder 5s linear infinite;
+}
+@property --spin { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes spinBorder { to { --spin: 360deg; } }
+
+.terms { margin-top: 2rem; text-align: center; color: var(--dim); font-size: 0.85rem; max-width: 760px; margin-left: auto; margin-right: auto; }
+
+/* ---------- 12. Power-ups (features) ---------- */
+.powerups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+
+.powerup { padding: 1.6rem 1.4rem; }
+.powerup-icon {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.18), rgba(139, 92, 246, 0.18));
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+.powerup h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.powerup p { color: var(--muted); font-size: 0.95rem; }
+
+/* "Charge" bar that fills when the card is revealed */
+.charge { margin-top: 1.2rem; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.charge span { display: block; height: 100%; width: 0; background: var(--neon-gradient); transition: width 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s; }
+.powerup.in .charge span { width: var(--charge, 90%); }
+
+/* ---------- 13. Final level (CTA) + footer ---------- */
+.final { text-align: center; padding: clamp(2.5rem, 6vw, 4rem) 1.25rem; overflow: hidden; }
+.final .section-title { margin-bottom: 1rem; }
+.final p { color: var(--muted); max-width: 620px; margin: 0 auto 2rem; }
+.final .hero-buttons { margin-top: 0; }
+
+.footer { border-top: 1px solid var(--line); padding: 3rem 0 2rem; background: rgba(5, 6, 15, 0.8); text-align: center; }
+.footer-logo { width: 150px; margin: 0 auto 1.25rem; }
+.footer-links, .footer-contact, .footer-socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.4rem; margin-bottom: 1rem; }
+.footer a { color: var(--muted); text-decoration: none; transition: color 0.2s ease; }
+.footer a:hover { color: var(--cyan); }
+.footer-socials a { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 10px; }
+.footer-socials svg { width: 20px; height: 20px; }
+.footer-text { color: var(--dim); font-size: 0.85rem; margin-top: 0.5rem; }
+
+/* ---------- 14. Achievements, sound toggle, WhatsApp, cursor glow ---------- */
+.achievements {
+    position: fixed;
+    top: calc(var(--nav-h) + 30px);
+    right: 16px;
+    z-index: 1500;
+    display: grid;
+    gap: 0.6rem;
+    pointer-events: none;
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    width: min(320px, calc(100vw - 32px));
+    padding: 0.8rem 1rem;
+    background: rgba(14, 18, 42, 0.95);
+    border: 1px solid rgba(251, 191, 36, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 0 28px rgba(251, 191, 36, 0.2);
+    transform: translateX(120%);
+    animation: toastIn 0.5s cubic-bezier(0.2, 0.9, 0.2, 1.2) forwards, toastOut 0.4s ease 4.2s forwards;
+}
+@keyframes toastIn { to { transform: translateX(0); } }
+@keyframes toastOut { to { transform: translateX(120%); opacity: 0; } }
+
+.achievement-icon {
+    flex: none;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(251, 191, 36, 0.15);
+    font-size: 1.3rem;
+}
+.achievement-kicker { font: 700 0.65rem var(--font-display); letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; }
+.achievement-title { font: 700 1rem var(--font-display); color: var(--text); }
+.achievement-desc { font-size: 0.8rem; color: var(--muted); }
+
+.sound-toggle {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+}
+.sound-toggle svg { width: 22px; height: 22px; }
+.sound-toggle[aria-pressed="true"] { color: var(--cyan); border-color: var(--cyan); box-shadow: var(--glow-cyan); }
+
+.whatsapp-float {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 900;
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+    animation: waPulse 2.4s ease-out infinite;
+}
+.whatsapp-float svg { width: 28px; height: 28px; }
+@keyframes waPulse { 70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+/* Soft light that follows the mouse (desktop only, set by game.js) */
+.cursor-glow {
+    position: fixed;
+    z-index: 1;
+    width: 420px;
+    height: 420px;
+    margin: -210px 0 0 -210px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.10), rgba(139, 92, 246, 0.06) 40%, transparent 70%);
+    transform: translate3d(-999px, -999px, 0);
+}
+
+/* Confetti pieces for the secret code (spawned by game.js) */
+.confetti {
+    position: fixed;
+    top: -12px;
+    z-index: 2500;
+    width: 8px;
+    height: 14px;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+@keyframes fall { to { transform: translateY(110vh) rotate(720deg); } }
+
+/* ---------- 15. Lava-lamp text ----------
+   Same effect as the current site: logo-coloured blobs drifting through
+   the letters. See the long explanation in styles.css ("LAVA-LAMP TITLES"). */
+.lava-text {
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 0.05em 0.08em;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-color: #5b6cf0;
+    background-image:
+        radial-gradient(circle, #22d3ee 0%, rgba(34, 211, 238, 0) 62%),
+        radial-gradient(circle, #c84ef0 0%, rgba(200, 78, 240, 0) 62%),
+        radial-gradient(circle, #2dd4bf 0%, rgba(45, 212, 191, 0) 62%),
+        radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 62%),
+        radial-gradient(circle, #3b82f6 0%, rgba(59, 130, 246, 0) 62%),
+        linear-gradient(110deg, #22d3ee, #3b82f6 45%, #8b5cf6 75%, #c84ef0);
+    background-size: 75% 170%, 65% 160%, 55% 150%, 80% 180%, 60% 150%, 100% 100%;
+    background-repeat: no-repeat;
+    background-position: 0% 30%, 100% 70%, 40% 100%, 70% 0%, 20% 80%, 0 0;
+    animation: lavaFlow 16s ease-in-out infinite alternate;
+}
+
+@keyframes lavaFlow {
+    0%   { background-position: 0% 30%,   100% 70%, 40% 100%, 70% 0%,   20% 80%, 0 0; }
+    20%  { background-position: 35% 0%,   80% 100%, 0% 60%,   100% 40%, 60% 20%, 0 0; }
+    40%  { background-position: 75% 60%,  30% 20%,  25% 0%,   55% 100%, 95% 70%, 0 0; }
+    60%  { background-position: 100% 100%, 0% 50%, 70% 30%,  15% 70%,  45% 0%,  0 0; }
+    80%  { background-position: 55% 20%,  45% 90%,  100% 80%, 0% 10%,   10% 50%, 0 0; }
+    100% { background-position: 10% 70%,  90% 10%,  50% 50%,  85% 85%,  75% 100%, 0 0; }
+}
+
+/* =========================================================
+   17. CHAPTERS - every inner page is a "chapter" of the story.
+   game.js shows a title card when a chapter opens and plays a wipe
+   when you leave a page, so moving around feels like turning pages.
+   ========================================================= */
+
+/* Full-screen chapter title card */
+.chapter-card {
+    position: fixed;
+    inset: 0;
+    z-index: 2900;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    background: radial-gradient(80vmax 60vmax at 50% 50%, #0d1030, var(--bg) 70%);
+    animation: chapterOut 0.6s ease 1.5s forwards;
+    cursor: pointer;
+}
+.chapter-card-inner { padding: 0 var(--gutter); }
+.chapter-num {
+    font: 700 clamp(0.85rem, 2vw, 1rem) var(--font-display);
+    letter-spacing: 0.6em;
+    color: var(--cyan);
+    opacity: 0;
+    animation: chapterRise 0.6s ease 0.1s forwards;
+}
+.chapter-name {
+    font: 700 clamp(2.4rem, 9vw, 5.5rem) var(--font-display);
+    text-transform: uppercase;
+    margin: 0.6rem 0;
+    opacity: 0;
+    animation: chapterRise 0.7s ease 0.3s forwards;
+}
+.chapter-line {
+    width: 0;
+    height: 2px;
+    margin: 0 auto;
+    background: var(--neon-gradient);
+    box-shadow: var(--glow-cyan);
+    animation: chapterLine 0.8s ease 0.55s forwards;
+}
+.chapter-sub {
+    margin-top: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    opacity: 0;
+    animation: chapterRise 0.6s ease 0.75s forwards;
+}
+@keyframes chapterRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes chapterLine { to { width: min(320px, 70vw); } }
+@keyframes chapterOut { to { opacity: 0; visibility: hidden; transform: scale(1.04); } }
+
+/* Wipe that covers the screen when leaving a page (game.js adds .on) */
+.page-wipe {
+    position: fixed;
+    inset: 0;
+    z-index: 2950;
+    pointer-events: none;
+    background: var(--neon-gradient);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.32s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.page-wipe::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.32s cubic-bezier(0.7, 0, 0.3, 1) 0.08s;
+}
+.page-wipe.on, .page-wipe.on::after { clip-path: inset(0 0 0 0); }
+
+/* ---------- Inner-page hero (shorter than the homepage title screen) ---------- */
+.page-hero { padding: clamp(3.5rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); text-align: center; }
+.page-hero .eyebrow { margin-bottom: 1rem; }
+.page-title {
+    font-size: clamp(2.4rem, 8vw, 5rem);
+    font-weight: 700;
+    line-height: 1.02;
+    margin-bottom: 1.1rem;
+    filter: drop-shadow(0 0 18px rgba(139, 92, 246, 0.4));
+}
+.page-lead { max-width: 720px; margin: 0 auto; color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.15rem); }
+
+/* Chapter map: the 5 chapters as dots, current one lit */
+.chapter-map { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.8rem; flex-wrap: wrap; }
+.chapter-map a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    font: 700 0.68rem var(--font-display);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dim);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+.chapter-map a::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.chapter-map a:hover { color: var(--text); border-color: var(--line-strong); }
+.chapter-map a.current { color: var(--cyan); border-color: var(--cyan); box-shadow: var(--glow-cyan); }
+.chapter-map a.visited:not(.current) { color: var(--muted); }
+
+/* Generic grid of simple panels (values, services, benefits...) */
+.grid-2, .grid-3, .grid-4 { display: grid; gap: 1.25rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.card { padding: 1.5rem 1.35rem; display: flex; flex-direction: column; }
+/* Bullet diamonds (.pack-stats) take their colour from --rarity; give
+   non-package cards a default so the markers don't disappear */
+.card, .cabinet { --rarity: var(--cyan); }
+.card-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.18), rgba(139, 92, 246, 0.18));
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.card p { color: var(--muted); font-size: 0.95rem; }
+.card .btn { margin-top: auto; }
+.card .pack-stats { margin: 1rem 0 1.4rem; }
+.card-kicker { font: 700 0.7rem var(--font-display); letter-spacing: 0.22em; color: var(--dim); text-transform: uppercase; margin-bottom: 0.4rem; }
+
+/* ---------- Side-quest pages (service details): readable long content ---------- */
+.quest-body { padding: clamp(1.5rem, 4vw, 2.6rem); max-width: 900px; margin: 0 auto; }
+.quest-body h2 {
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    margin: 2.2rem 0 0.6rem;
+    padding-left: 0.9rem;
+    border-left: 3px solid var(--cyan);
+}
+.quest-body h2:first-child { margin-top: 0; }
+.quest-body h3 { font-size: 1.15rem; margin: 1.4rem 0 0.5rem; color: var(--text); }
+.quest-body p { color: var(--muted); margin-bottom: 0.8rem; }
+.quest-body ul { list-style: none; padding: 0; margin: 0.6rem 0 1rem; display: grid; gap: 0.5rem; }
+.quest-body li { display: flex; gap: 0.6rem; color: var(--text); }
+.quest-body li::before {
+    content: '';
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-top: 0.55em;
+    background: var(--cyan);
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px var(--cyan);
+}
+.quest-body strong { color: var(--text); }
+.quest-body em { color: var(--muted); }
+.quest-body .subtle { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.75rem; color: var(--dim); margin: 0.4rem 0 0; }
+
+/* =========================================================
+   18. QUEST LOG (projects) - same "level select" feel as the
+   homepage: 3D tilt + scan line across the image on hover.
+   ========================================================= */
+.filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-bottom: 2rem; }
+.filter {
+    min-height: 44px;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    background: var(--panel);
+    color: var(--muted);
+    font: 700 0.8rem var(--font-display);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.filter:hover { color: var(--text); }
+.filter[aria-pressed="true"] { color: var(--cyan); border-color: var(--cyan); box-shadow: var(--glow-cyan); }
+
+.quests { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: start; }
+.quest { display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.3s ease, opacity 0.3s ease; }
+.quest:hover { box-shadow: 0 0 40px rgba(139, 92, 246, 0.3); }
+.quest[hidden] { display: none; }
+
+.quest .level-shot { aspect-ratio: 16 / 9; background: #0b0e22; }
+.quest .level-shot img.contain { object-fit: contain; padding: 1.25rem; filter: none; }
+.quest-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    background: rgba(5, 6, 15, 0.82);
+    border: 1px solid rgba(251, 191, 36, 0.55);
+    color: var(--gold);
+    font: 700 0.66rem var(--font-display);
+    letter-spacing: 0.15em;
+}
+.quest-body-wrap { padding: 1.1rem 1.2rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.quest-title { font-size: 1.3rem; }
+.quest-link { color: var(--cyan); font-size: 0.88rem; text-decoration: none; font-weight: 600; }
+.quest-link:hover { text-decoration: underline; }
+.quest-desc { color: var(--muted); font-size: 0.92rem; }
+
+/* "Loot" = the results stats */
+.loot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin: 0.3rem 0; }
+.loot div { padding: 0.5rem 0.4rem; text-align: center; border: 1px solid var(--line); border-radius: 8px; background: rgba(255, 255, 255, 0.02); }
+.loot b { display: block; font: 700 0.85rem var(--font-display); color: var(--text); overflow-wrap: anywhere; }
+.loot span { font-size: 0.68rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tags span { padding: 0.18rem 0.55rem; border-radius: 6px; font-size: 0.72rem; color: var(--muted); border: 1px solid var(--line); }
+
+/* "Read more" uses <details>, so it works even without JavaScript */
+.quest-more summary {
+    list-style: none;
+    cursor: pointer;
+    margin-top: 0.3rem;
+    font: 700 0.8rem var(--font-display);
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    text-transform: uppercase;
+}
+.quest-more summary::-webkit-details-marker { display: none; }
+.quest-more summary::after { content: ' ▾'; }
+.quest-more[open] summary::after { content: ' ▴'; }
+.quest-more h4 { font: 700 0.95rem var(--font-display); margin: 0.9rem 0 0.35rem; color: var(--text); }
+.quest-more p, .quest-more li { color: var(--muted); font-size: 0.9rem; }
+.quest-more ul { padding-left: 1.1rem; margin: 0.3rem 0; }
+
+/* =========================================================
+   19. ARCADE (live demos) - a DIFFERENT hover from projects:
+   no tilt. Instead the card "powers on" like an arcade machine:
+   a neon border races around it, the screen flickers on like a
+   CRT, the title gets an RGB split, and a pulsing PLAY button
+   with a shockwave ring appears over the screen.
+   ========================================================= */
+.arcade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+
+.cabinet {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius);
+    background: var(--panel-solid);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.2, 1.3), box-shadow 0.3s ease;
+}
+
+/* Racing neon border: a spinning conic gradient behind a solid inner card,
+   only visible on hover */
+.cabinet::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    z-index: -2;
+    border-radius: inherit;
+    background: conic-gradient(from var(--race, 0deg), transparent 0 60%, var(--cyan) 70%, var(--magenta) 80%, transparent 90%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.cabinet::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    border-radius: calc(var(--radius) - 1px);
+    background: var(--panel-solid);
+}
+@property --race { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes race { to { --race: 360deg; } }
+
+.cabinet:hover,
+.cabinet:focus-within {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 18px 50px rgba(200, 78, 240, 0.28), 0 0 0 1px rgba(34, 211, 238, 0.25);
+}
+.cabinet:hover::before,
+.cabinet:focus-within::before { opacity: 1; animation: race 1.4s linear infinite; }
+
+/* The "screen" at the top of the cabinet */
+.cab-screen {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(rgba(34, 211, 238, 0.08) 1px, transparent 1px) 0 0 / 100% 4px,
+        radial-gradient(circle at 50% 40%, #16204a, #070a1a 70%);
+    border-bottom: 1px solid var(--line);
+}
+.cab-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: brightness(0.7) saturate(0.8); }
+.cab-emoji { font-size: clamp(3.2rem, 8vw, 4.2rem); filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.5)); }
+.cab-screen > * { transition: filter 0.2s ease; }
+
+/* CRT "power on": squash to a bright line, then open up */
+.cabinet:hover .cab-screen > :not(.cab-play),
+.cabinet:focus-within .cab-screen > :not(.cab-play) { animation: crtOn 0.55s ease-out; filter: none; }
+@keyframes crtOn {
+    0%   { transform: scaleY(0.02) scaleX(0.6); filter: brightness(4); }
+    35%  { transform: scaleY(0.02) scaleX(1); filter: brightness(3); }
+    60%  { transform: scaleY(1.05); filter: brightness(1.6); }
+    100% { transform: none; filter: none; }
+}
+
+/* Big PLAY button + shockwave ring, hidden until hover */
+.cab-play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(5, 6, 15, 0.35);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.cab-play span {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    background: var(--neon-gradient);
+    color: #fff;
+    font-size: 1.7rem;
+    padding-left: 5px;
+    box-shadow: 0 0 30px rgba(200, 78, 240, 0.6);
+    transform: scale(0.6);
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.2, 1.5);
+}
+.cab-play span::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid var(--cyan);
+    opacity: 0;
+}
+.cabinet:hover .cab-play,
+.cabinet:focus-within .cab-play { opacity: 1; }
+.cabinet:hover .cab-play span,
+.cabinet:focus-within .cab-play span { transform: scale(1); animation: playPulse 1.2s ease-in-out 0.35s infinite; }
+.cabinet:hover .cab-play span::after,
+.cabinet:focus-within .cab-play span::after { animation: shockwave 1.2s ease-out 0.35s infinite; }
+@keyframes playPulse { 50% { transform: scale(1.08); } }
+@keyframes shockwave { from { opacity: 0.9; transform: scale(1); } to { opacity: 0; transform: scale(1.9); } }
+
+.cab-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    background: rgba(5, 6, 15, 0.85);
+    font: 700 0.66rem var(--font-display);
+    letter-spacing: 0.15em;
+    color: var(--green);
+    border: 1px solid rgba(52, 211, 153, 0.5);
+}
+.cab-tag.in-site { color: var(--cyan); border-color: rgba(34, 211, 238, 0.5); }
+
+.cab-body { padding: 1.15rem 1.25rem 1.3rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.cab-title { font-size: 1.35rem; transition: text-shadow 0.2s ease; }
+.cabinet:hover .cab-title { text-shadow: -2px 0 rgba(34, 211, 238, 0.8), 2px 0 rgba(200, 78, 240, 0.8); }
+.cab-desc { color: var(--muted); font-size: 0.92rem; }
+.cab-body .pack-stats { margin: 0.4rem 0 0.8rem; }
+.cab-body .btn { margin-top: auto; width: 100%; }
+.cab-note { font-size: 0.82rem; color: var(--dim); margin-top: 0.4rem; }
+.cab-note a { color: var(--cyan); font-weight: 600; }
+
+/* "Insert coin" strip above the arcade */
+.coin-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem 1.2rem;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 2rem;
+    font: 700 0.78rem var(--font-display);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+}
+.coin-strip .coin { animation: blink 1.2s steps(2) infinite; }
+.coin-strip span:not(.coin) { color: var(--muted); letter-spacing: 0.08em; text-transform: none; font-family: var(--font-body); font-weight: 400; }
+
+/* =========================================================
+   20. FORMS (contact) - "quest registration"
+   ========================================================= */
+.form-panel { padding: clamp(1.4rem, 4vw, 2.2rem); }
+.field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.field label, .field .label { font: 700 0.75rem var(--font-display); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select, .field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    background: rgba(5, 6, 15, 0.6);
+    color: var(--text);
+    font: 1rem var(--font-body);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field textarea { min-height: 130px; resize: vertical; }
+.field select option { background: var(--panel-solid); color: var(--text); }
+.field input::placeholder, .field textarea::placeholder { color: var(--dim); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--cyan); box-shadow: var(--glow-cyan); }
+
+.choices { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.package-option {
+    min-height: 42px;
+    padding: 0.5rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--muted);
+    font: 600 0.88rem var(--font-body);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.package-option:hover { color: var(--text); border-color: var(--cyan); }
+.package-option.selected { color: #fff; background: var(--neon-gradient); border-color: transparent; box-shadow: var(--glow-violet); }
+
+.success-message {
+    display: none;
+    margin-bottom: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    background: rgba(52, 211, 153, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.5);
+    color: #b7f5dc;
+}
+.success-message.show { display: block; }
+
+.comms { display: grid; gap: 0.9rem; margin-top: 1.4rem; }
+.comm { display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1rem; text-decoration: none; }
+.comm-icon { flex: none; width: 46px; height: 46px; display: grid; place-items: center; border-radius: 12px; background: rgba(34, 211, 238, 0.12); font-size: 1.3rem; }
+.comm h3 { font-size: 1rem; }
+.comm p { color: var(--muted); font-size: 0.92rem; overflow-wrap: anywhere; }
+
+/* ---------- 16. Responsive + reduced motion ---------- */
+@media (max-width: 1024px) {
+    .quests, .arcade, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+    .quests, .arcade, .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .field-row { grid-template-columns: 1fr; }
+    /* Touch screens can't hover: show the PLAY badge on demo screens all the time */
+    .cab-play { opacity: 1; background: transparent; }
+    .cab-play span { transform: scale(0.8); }
+}
+@media (hover: none) {
+    .cab-play { opacity: 1; background: transparent; }
+    .cab-play span { transform: scale(0.8); }
+}
+@media (max-width: 1024px) {
+    .levels, .loadout { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 860px) {
+    .hud-links, .hud-actions .btn { display: none; }
+    .hud-burger { display: block; }
+    .stats-panel { grid-template-columns: repeat(2, 1fr); }
+    .powerups { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+    .levels, .loadout { grid-template-columns: 1fr; }
+    .hero-buttons .btn { width: 100%; }
+    .xp-label { font-size: 0.6rem; }
+    .bg-grid { height: 40vh; }
+
+    /* On phones, pop-ups go to the bottom (above the WhatsApp button)
+       so they don't cover headings or the open menu */
+    .achievements { top: auto; bottom: 88px; left: 16px; right: 16px; }
+    .achievement { width: 100%; transform: translateY(160%); animation-name: toastUp, toastDown; }
+}
+
+@keyframes toastUp { to { transform: translateY(0); } }
+@keyframes toastDown { to { transform: translateY(160%); opacity: 0; } }
+
+/* Visitors who ask their device for less motion get a calm, static page */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+    .lava-text { animation: none !important; }
+}
