@@ -11,11 +11,14 @@
     <title>Live Demos - Cloud UKO</title>
     <meta name="description" content="Open live projects built by Cloud UKO (a tutoring marketplace and client websites) or request a demo of our School ERP and POS systems.">
     <meta name="theme-color" content="#05060f">
+    <!-- Theme before first paint, so light-mode visitors never see a dark flash:
+         the saved choice (game.js), else the device's light/dark setting -->
+    <script>(function(){var t;try{t=localStorage.getItem('cu_theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.setAttribute('data-theme',t);if(t==='light')document.querySelector('meta[name="theme-color"]').setAttribute('content','#f3f5fd')})();</script>
     <link rel="icon" type="image/png" href="img/logo/clouduko-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oxanium:wght@500;600;700;800&family=Share+Tech+Mono&display=swap">
-    <link rel="stylesheet" href="game.css?v=20261028c">
+    <link rel="stylesheet" href="game.css?v=20261029">
 </head>
 <body data-chapter="4" data-chapter-name="The Arcade" data-chapter-sub="Live Demos" data-page="demos">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -55,6 +58,8 @@
                 </ul>
             </nav>
             <div class="hud-actions">
+                <!-- Light / dark mode: icon + label set by game.js -->
+                <button type="button" class="theme-toggle" aria-label="Switch theme"></button>
                 <button type="button" class="sound-toggle" aria-pressed="false" aria-label="Turn sound effects on"></button>
                 <a href="contact.html" class="btn btn-primary btn-sm">▶ Play</a>
                 <button type="button" class="hud-burger" aria-expanded="false" aria-controls="hud-mobile" aria-label="Open menu">
@@ -97,44 +102,56 @@
             <div class="container">
                 <div class="panel coin-strip reveal">
                     <span class="coin">🪙 Insert coin</span>
-                    <span>Every demo is a real project we built. Live sites open in a new tab, no signup needed &mdash; some run on free hosting, so the first click can take up to 30 seconds. Our ERP and POS run behind staff logins, so request a demo and we'll send you access.</span>
+                    <span>Every demo is a real project we built &mdash; hover a screen (or scroll past it on your phone) to preview the whole site. Live sites open in a new tab, no signup needed &mdash; some run on free hosting, so the first click can take up to 30 seconds. Our ERP and POS run behind staff logins, so request a demo and we'll send you access.</span>
+                </div>
+
+                <!-- Filters show/hide cabinets by data-category; a group with nothing left hides (game.js) -->
+                <div class="filters reveal" role="group" aria-label="Filter demos">
+                    <button type="button" class="filter" data-filter="all" aria-pressed="true">All</button>
+                    <button type="button" class="filter" data-filter="live" aria-pressed="false">Live apps</button>
+                    <button type="button" class="filter" data-filter="request" aria-pressed="false">On request</button>
+                    <button type="button" class="filter" data-filter="client" aria-pressed="false">Client sites</button>
                 </div>
 
                 <!-- Arcade cabinets: a different hover from the projects page (see "ARCADE" in game.css).
-                     Screenshots in img/showcase/ are 1280x800 captures of each live site - retake them
-                     when a site's homepage changes. -->
+                     img src = 1280x800 screenshot of each site's homepage.
+                     data-full = tall capture of the whole site, panned on hover ("scrolling preview").
+                     Retake both with: node tools/capture-previews.mjs (see README). -->
+                <div data-filter-group>
                 <div class="eyebrow reveal arcade-group">Live systems</div>
                 <div class="arcade" data-stagger>
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="live">
                         <a class="cab-screen" href="https://online-tutor-web.vercel.app/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag app">● LIVE APP</span>
-                            <img src="img/showcase/booking.png" alt="" loading="lazy">
+                            <img src="img/showcase/booking.png" data-full="img/showcase/booking-full.jpg" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
                         <div class="cab-body">
                             <h3 class="cab-title">Booking &amp; Marketplace Platform</h3>
                             <p class="cab-desc">A two-sided booking marketplace &mdash; browse verified providers, book and pay securely, and message safely, all in one place.</p>
+                            <ul class="stack" aria-label="Built with"><li>Next.js</li><li>NestJS</li><li>Prisma</li><li>PostgreSQL</li></ul>
                             <ul class="pack-stats"><li>Provider search &amp; matching</li><li>Secure booking &amp; online payments</li><li>In-app messaging per booking</li><li>Verification &amp; ratings</li></ul>
                             <a href="https://online-tutor-web.vercel.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
                         </div>
                     </article>
                     <!-- ERP and POS sit behind staff logins, so they're "demo on request":
                          the main button opens WhatsApp with a pre-filled request -->
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="request">
                         <a class="cab-screen" href="https://wa.me/27740926666?text=Hi%20Cloud%20UKO%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20the%20School%20ERP." target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag request">● DEMO ON REQUEST</span>
-                            <img src="img/showcase/erp.png" alt="" loading="lazy">
+                            <img src="img/showcase/erp.png" data-full="img/showcase/erp-full.jpg" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
                         <div class="cab-body">
                             <h3 class="cab-title">School ERP</h3>
                             <p class="cab-desc">The full system we build for independent schools: a public school website with online enrolment, plus staff and parent portals. Request a demo and we'll send you a login and walk you through it.</p>
+                            <ul class="stack" aria-label="Built with"><li>React</li><li>Express</li><li>Prisma</li><li>PostgreSQL</li></ul>
                             <ul class="pack-stats"><li>School website &amp; news</li><li>Online enrolment applications</li><li>Application status tracking</li><li>Staff &amp; parent portals</li></ul>
                             <a href="https://wa.me/27740926666?text=Hi%20Cloud%20UKO%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20the%20School%20ERP." class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Request a demo ↗</a>
                             <p class="cab-note">Just browsing? <a href="https://clouduko-erp.onrender.com/" target="_blank" rel="noopener noreferrer" data-demo-link>View the public school site ↗</a> (can take ~30s to wake)</p>
                         </div>
                     </article>
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="request">
                         <a class="cab-screen" href="https://wa.me/27740926666?text=Hi%20Cloud%20UKO%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20the%20POS%20system." target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag request">● DEMO ON REQUEST</span>
                             <img src="img/projects/maxmeal.png" alt="" loading="lazy">
@@ -143,92 +160,102 @@
                         <div class="cab-body">
                             <h3 class="cab-title">Point of Sale (POS)</h3>
                             <p class="cab-desc">The fast, PIN-based POS we built for Max Meal's outlets, with WooCommerce keeping online and in-store sales in sync. Request a demo and we'll set you up with a test till.</p>
+                            <ul class="stack" aria-label="Built with"><li>WooCommerce</li></ul>
                             <ul class="pack-stats"><li>Touch-friendly checkout</li><li>Fast PIN staff sign-in</li><li>Multi-outlet support</li><li>WooCommerce sync</li></ul>
                             <a href="https://wa.me/27740926666?text=Hi%20Cloud%20UKO%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20the%20POS%20system." class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Request a demo ↗</a>
                         </div>
                     </article>
                 </div>
+                </div>
 
+                <div data-filter-group>
                 <div class="eyebrow reveal arcade-group">Client sites</div>
                 <div class="arcade" data-stagger>
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="client">
                         <a class="cab-screen" href="https://mullers-delights.onrender.com/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag ">● LIVE SITE</span>
-                            <img src="img/showcase/mullers-delights.jpg" alt="" loading="lazy">
+                            <img src="img/showcase/mullers-delights.jpg" data-full="img/showcase/mullers-delights-full.jpg" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
                         <div class="cab-body">
                             <h3 class="cab-title">Muller's Delights Catering</h3>
                             <p class="cab-desc">A catering business site for Chef Muller &mdash; weddings, marooro, graduations, parties and business events.</p>
+                            <ul class="stack" aria-label="Built with"><li>PHP 8.3</li><li>MySQL</li><li>Docker</li></ul>
                             <ul class="pack-stats"><li>Catering packages &amp; events</li><li>Online event booking</li><li>WhatsApp enquiries</li></ul>
                             <a href="https://mullers-delights.onrender.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
                         </div>
                     </article>
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="client">
                         <a class="cab-screen" href="https://vees-sparkles.onrender.com/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag ">● LIVE SITE</span>
-                            <img src="img/showcase/vees-sparkles.jpg" alt="" loading="lazy">
+                            <img src="img/showcase/vees-sparkles.jpg" data-full="img/showcase/vees-sparkles-full.jpg" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
                         <div class="cab-body">
                             <h3 class="cab-title">Vee's Sparkles Cleaning</h3>
                             <p class="cab-desc">A multi-page site for a South African cleaning company serving homes and businesses.</p>
+                            <ul class="stack" aria-label="Built with"><li>Node.js</li><li>Express</li><li>Turso</li><li>Cloudinary</li></ul>
                             <ul class="pack-stats"><li>Services &amp; gallery</li><li>Online booking &amp; free quotes</li><li>Customer login &amp; registration</li></ul>
                             <a href="https://vees-sparkles.onrender.com/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
                         </div>
                     </article>
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="client">
                         <a class="cab-screen" href="https://teacakes.vercel.app/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag ">● LIVE SITE</span>
-                            <img src="img/showcase/tea-cakes.jpg" alt="" loading="lazy">
+                            <img src="img/showcase/tea-cakes.jpg" data-full="img/showcase/tea-cakes-full.jpg" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
                         <div class="cab-body">
                             <h3 class="cab-title">TC Tea Cakes</h3>
                             <p class="cab-desc">An online storefront for a small-batch bakery &mdash; celebration cakes, giant muffins, scones and donuts.</p>
+                            <ul class="stack" aria-label="Built with"><li>React</li><li>Vite</li><li>Tailwind</li><li>Supabase</li></ul>
                             <ul class="pack-stats"><li>Menu with category filters</li><li>Cart &amp; online ordering</li><li>Customer accounts</li></ul>
                             <a href="https://teacakes.vercel.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
                         </div>
                     </article>
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="client">
                         <a class="cab-screen" href="https://lucianozambuko-gif.github.io/lavish-life/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag ">● LIVE SITE</span>
-                            <img src="img/showcase/lavish-bites.jpg" alt="" loading="lazy">
+                            <img src="img/showcase/lavish-bites.jpg" data-full="img/showcase/lavish-bites-full.jpg" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
                         <div class="cab-body">
                             <h3 class="cab-title">Lavish Bites</h3>
                             <p class="cab-desc">A food-ordering site for a fire-cooked braai brand &mdash; family-focused and flavour-filled.</p>
+                            <ul class="stack" aria-label="Built with"><li>HTML</li><li>SCSS</li><li>JavaScript</li><li>PHP</li></ul>
                             <ul class="pack-stats"><li>Menu &amp; online ordering</li><li>Cart &amp; customer sign-up</li><li>Hire-a-chef bookings</li></ul>
                             <a href="https://lucianozambuko-gif.github.io/lavish-life/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
                         </div>
                     </article>
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="client">
                         <a class="cab-screen" href="https://lucianozambuko-gif.github.io/S.I.C/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag ">● LIVE SITE</span>
-                            <img src="img/showcase/sic.jpg" alt="" loading="lazy">
+                            <img src="img/showcase/sic.jpg" data-full="img/showcase/sic-full.jpg" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
                         <div class="cab-body">
                             <h3 class="cab-title">S.I.C</h3>
                             <p class="cab-desc">A bold agency site for a content &amp; growth partner working with South African artists, athletes and brands since 2016.</p>
+                            <ul class="stack" aria-label="Built with"><li>Node.js</li><li>Express</li><li>Turso</li><li>Cloudinary</li></ul>
                             <ul class="pack-stats"><li>Packages &amp; process</li><li>Project showcase</li><li>Project booking</li></ul>
                             <a href="https://lucianozambuko-gif.github.io/S.I.C/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
                         </div>
                     </article>
-                    <article class="cabinet reveal">
+                    <article class="cabinet reveal" data-category="client">
                         <a class="cab-screen" href="https://lucianozambuko-gif.github.io/Unako/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true" data-demo-link>
                             <span class="cab-tag ">● LIVE SITE</span>
-                            <img src="img/showcase/unako.jpg" alt="" loading="lazy">
+                            <img src="img/showcase/unako.jpg" data-full="img/showcase/unako-full.jpg" alt="" loading="lazy">
                             <span class="cab-play"><span>▶</span></span>
                         </a>
                         <div class="cab-body">
                             <h3 class="cab-title">Unako GBV Foundation</h3>
                             <p class="cab-desc">A non-profit site for a youth development and GBV support centre being built in Mount Frere, Eastern Cape.</p>
+                            <ul class="stack" aria-label="Built with"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
                             <ul class="pack-stats"><li>Support &amp; helpline information</li><li>Ways to get involved</li><li>Fundraising for the centre</li></ul>
                             <a href="https://lucianozambuko-gif.github.io/Unako/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-demo-link>▶ Play live demo ↗</a>
                         </div>
                     </article>
+                </div>
                 </div>
             </div>
         </section>
@@ -283,6 +310,6 @@
         </div>
     </footer>
 
-    <script src="game.js?v=20261028"></script>
+    <script src="game.js?v=20261029"></script>
 </body>
 </html>

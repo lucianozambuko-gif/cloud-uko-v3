@@ -29,6 +29,9 @@ Sections:
     <title>Cloud UKO - Websites & Business Systems for South Africa</title>
     <meta name="description" content="Cloud UKO builds websites and business systems for South African schools, farms and small businesses: ERP, invoicing, POS and booking. Try our live demos.">
     <meta name="theme-color" content="#05060f">
+    <!-- Theme before first paint, so light-mode visitors never see a dark flash:
+         the saved choice (game.js), else the device's light/dark setting -->
+    <script>(function(){var t;try{t=localStorage.getItem('cu_theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.setAttribute('data-theme',t);if(t==='light')document.querySelector('meta[name="theme-color"]').setAttribute('content','#f3f5fd')})();</script>
     <link rel="icon" type="image/png" href="img/logo/clouduko-icon.png">
 
     <!-- Game-style heading font (one family, two weights) -->
@@ -36,7 +39,7 @@ Sections:
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oxanium:wght@500;600;700;800&family=Share+Tech+Mono&display=swap">
 
-    <link rel="stylesheet" href="game.css?v=20261028c">
+    <link rel="stylesheet" href="game.css?v=20261029">
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -81,6 +84,8 @@ Sections:
 
             <div class="hud-actions">
                 <!-- Sound effects: off by default, game.js remembers the choice -->
+                <!-- Light / dark mode: icon + label set by game.js -->
+                <button type="button" class="theme-toggle" aria-label="Switch theme"></button>
                 <button type="button" class="sound-toggle" aria-pressed="false" aria-label="Turn sound effects on">🔈</button>
                 <a href="contact.html" class="btn btn-primary btn-sm">▶ Play</a>
                 <button type="button" class="hud-burger" aria-expanded="false" aria-controls="hud-mobile" aria-label="Open menu">
@@ -438,6 +443,6 @@ Sections:
         </div>
     </footer>
 
-    <script src="game.js?v=20261028"></script>
+    <script src="game.js?v=20261029"></script>
 </body>
 </html>

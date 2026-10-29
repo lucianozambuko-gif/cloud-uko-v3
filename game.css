@@ -25,7 +25,11 @@ Layout of this file:
  13. Final level (CTA) + footer
  14. Achievements, sound toggle, WhatsApp, cursor glow
  15. Lava-lamp text
- 16. Responsive + reduced motion
+ 16. Responsive + reduced motion (at the end of the file)
+ 17-21. Chapters, quest log, arcade, forms, cyber readouts
+ 22. Light mode (token overrides)
+ 23. Theme switch animation
+ 24. Demos extras: scrolling previews, tech-stack tags
 ==========================================
 */
 
@@ -53,6 +57,19 @@ Layout of this file:
     --neon-gradient: linear-gradient(110deg, var(--cyan), var(--blue) 45%, var(--violet) 75%, var(--magenta));
     --glow-cyan: 0 0 18px rgba(34, 211, 238, 0.45);
     --glow-violet: 0 0 22px rgba(139, 92, 246, 0.45);
+
+    /* Surfaces that differ between dark and light mode (see 22. LIGHT MODE) */
+    --hud-bg: rgba(5, 6, 15, 0.72);
+    --footer-bg: rgba(5, 6, 15, 0.8);
+    --badge-bg: rgba(5, 6, 15, 0.85);       /* tags sitting on screenshots */
+    --field-bg: rgba(5, 6, 15, 0.6);
+    --toast-bg: rgba(14, 18, 42, 0.95);
+    --track: rgba(255, 255, 255, 0.08);     /* empty part of progress bars */
+    --readout-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+    --title-glow: drop-shadow(0 0 22px rgba(139, 92, 246, 0.45)) drop-shadow(0 0 6px rgba(34, 211, 238, 0.35));
+    --danger: #fca5a5;
+    --success-text: #b7f5dc;
+    color-scheme: dark;                     /* native scrollbars + form controls match */
 
     /* Cyberpunk type: angular display face, terminal mono for HUD readouts,
        a clean sans for body copy so long text stays readable on phones */
@@ -217,7 +234,7 @@ main, .hud, footer { position: relative; z-index: 2; }
 .loader-bar {
     height: 6px;
     border-radius: 99px;
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--track);
     overflow: hidden;
 }
 
@@ -242,7 +259,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(5, 6, 15, 0.72);
+    background: var(--hud-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
@@ -329,7 +346,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     font-size: 0.68rem;
     letter-spacing: 0.15em;
     color: var(--text);
-    text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+    text-shadow: var(--readout-shadow);
 }
 
 .xp.level-up .xp-fill { animation: xpFlash 0.6s ease; }
@@ -556,7 +573,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     letter-spacing: 0.02em;
     margin-bottom: 1.25rem;
     /* Neon glow around the lava-coloured letters */
-    filter: drop-shadow(0 0 22px rgba(139, 92, 246, 0.45)) drop-shadow(0 0 6px rgba(34, 211, 238, 0.35));
+    filter: var(--title-glow);
 }
 
 /* Occasional glitch jolt on the title. game.js toggles .glitch on the
@@ -737,7 +754,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     gap: 0.4rem;
     padding: 0.25rem 0.6rem;
     border-radius: 6px;
-    background: rgba(5, 6, 15, 0.8);
+    background: var(--badge-bg);
     border: 1px solid rgba(52, 211, 153, 0.5);
     color: var(--green);
     font: 700 0.7rem var(--font-display);
@@ -894,7 +911,7 @@ main, .hud, footer { position: relative; z-index: 2; }
 .powerup p { color: var(--muted); font-size: 0.95rem; }
 
 /* "Charge" bar that fills when the card is revealed */
-.charge { margin-top: 1.2rem; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.charge { margin-top: 1.2rem; height: 6px; border-radius: 99px; background: var(--track); overflow: hidden; }
 .charge span { display: block; height: 100%; width: 0; background: var(--neon-gradient); transition: width 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s; }
 .powerup.in .charge span { width: var(--charge, 90%); }
 
@@ -904,7 +921,7 @@ main, .hud, footer { position: relative; z-index: 2; }
 .final p { color: var(--muted); max-width: 620px; margin: 0 auto 2rem; }
 .final .hero-buttons { margin-top: 0; }
 
-.footer { border-top: 1px solid var(--line); padding: 3rem 0 2rem; background: rgba(5, 6, 15, 0.8); text-align: center; }
+.footer { border-top: 1px solid var(--line); padding: 3rem 0 2rem; background: var(--footer-bg); text-align: center; }
 .footer-logo { width: 150px; margin: 0 auto 1.25rem; }
 .footer-links, .footer-contact, .footer-socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.4rem; margin-bottom: 1rem; }
 .footer a { color: var(--muted); text-decoration: none; transition: color 0.2s ease; }
@@ -930,7 +947,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     gap: 0.8rem;
     width: min(320px, calc(100vw - 32px));
     padding: 0.8rem 1rem;
-    background: rgba(14, 18, 42, 0.95);
+    background: var(--toast-bg);
     border: 1px solid rgba(251, 191, 36, 0.5);
     border-radius: 12px;
     box-shadow: 0 0 28px rgba(251, 191, 36, 0.2);
@@ -954,7 +971,7 @@ main, .hud, footer { position: relative; z-index: 2; }
 .achievement-title { font: 700 1rem var(--font-display); color: var(--text); }
 .achievement-desc { font-size: 0.8rem; color: var(--muted); }
 
-.sound-toggle {
+.sound-toggle, .theme-toggle {
     width: 44px;
     height: 44px;
     display: grid;
@@ -965,7 +982,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     color: var(--muted);
     cursor: pointer;
 }
-.sound-toggle svg { width: 22px; height: 22px; }
+.sound-toggle svg, .theme-toggle svg { width: 22px; height: 22px; }
 .sound-toggle[aria-pressed="true"] { color: var(--cyan); border-color: var(--cyan); box-shadow: var(--glow-cyan); }
 
 .whatsapp-float {
@@ -1191,13 +1208,16 @@ main, .hud, footer { position: relative; z-index: 2; }
 .quest-body h3 { font-size: 1.15rem; margin: 1.4rem 0 0.5rem; color: var(--text); }
 .quest-body p { color: var(--muted); margin-bottom: 0.8rem; }
 .quest-body ul { list-style: none; padding: 0; margin: 0.6rem 0 1rem; display: grid; gap: 0.5rem; }
-.quest-body li { display: flex; gap: 0.6rem; color: var(--text); }
+/* Normal text flow (not flex): items mix <strong>, text and <em>, and flex
+   would turn each of those into its own squashed column */
+.quest-body li { position: relative; padding-left: 1.2rem; color: var(--text); }
 .quest-body li::before {
     content: '';
-    flex: none;
+    position: absolute;
+    left: 0;
+    top: 0.55em;
     width: 8px;
     height: 8px;
-    margin-top: 0.55em;
     background: var(--cyan);
     transform: rotate(45deg);
     box-shadow: 0 0 8px var(--cyan);
@@ -1240,7 +1260,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     right: 10px;
     padding: 0.25rem 0.6rem;
     border-radius: 6px;
-    background: rgba(5, 6, 15, 0.82);
+    background: var(--badge-bg);
     border: 1px solid rgba(251, 191, 36, 0.55);
     color: var(--gold);
     font: 700 0.66rem var(--font-display);
@@ -1342,7 +1362,9 @@ main, .hud, footer { position: relative; z-index: 2; }
         radial-gradient(circle at 50% 40%, #16204a, #070a1a 70%);
     border-bottom: 1px solid var(--line);
 }
-.cab-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: brightness(0.7) saturate(0.8); }
+/* Pinned to the screen box: in the grid, height:100% alone lets a tall preview
+   image grow to its natural height, and then object-position can't pan it */
+.cab-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; filter: brightness(0.7) saturate(0.8); }
 .cab-emoji { font-size: clamp(3.2rem, 8vw, 4.2rem); filter: drop-shadow(0 0 18px rgba(34, 211, 238, 0.5)); }
 .cab-screen > * { transition: filter 0.2s ease; }
 
@@ -1405,7 +1427,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     z-index: 1;
     padding: 0.25rem 0.6rem;
     border-radius: 6px;
-    background: rgba(5, 6, 15, 0.85);
+    background: var(--badge-bg);
     font: 700 0.66rem var(--font-display);
     letter-spacing: 0.15em;
     color: var(--green);
@@ -1456,7 +1478,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     padding: 0.75rem 0.9rem;
     border-radius: 10px;
     border: 1px solid var(--line-strong);
-    background: rgba(5, 6, 15, 0.6);
+    background: var(--field-bg);
     color: var(--text);
     font: 1rem var(--font-body);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -1488,7 +1510,7 @@ main, .hud, footer { position: relative; z-index: 2; }
     border-radius: 10px;
     background: rgba(52, 211, 153, 0.12);
     border: 1px solid rgba(52, 211, 153, 0.5);
-    color: #b7f5dc;
+    color: var(--success-text);
 }
 .success-message.show { display: block; }
 
@@ -1512,6 +1534,146 @@ main, .hud, footer { position: relative; z-index: 2; }
     font-family: var(--font-mono);
     font-weight: 400;
 }
+
+/* =========================================================
+   22. LIGHT MODE - "daylight HUD". Same layout and logo colours,
+   but on a pale lavender-white background. The neon colours are
+   darkened a shade so text and buttons stay readable on white
+   (all text colours here are at least 4.5:1 on the background).
+   Set by the tiny script at the top of every page's <head>
+   (saved choice, else the device's setting) and switched by the
+   sun/moon button in the HUD (game.js "THEME").
+   ========================================================= */
+:root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f3f5fd;
+    --bg-2: #e8ecfa;
+    --panel: rgba(255, 255, 255, 0.78);
+    --panel-solid: #ffffff;
+    --line: rgba(55, 65, 150, 0.16);
+    --line-strong: rgba(55, 65, 150, 0.32);
+    --text: #0c1130;
+    --muted: #454d75;
+    --dim: #5f6689;
+
+    --cyan: #0e7490;
+    --aqua: #0f766e;
+    --blue: #1d4ed8;
+    --violet: #6d28d9;
+    --magenta: #a21caf;
+    --gold: #b45309;
+    --green: #047857;
+
+    /* Deeper ends so white button text keeps 5:1+ contrast across the whole gradient */
+    --neon-gradient: linear-gradient(110deg, #0e7490, #1d4ed8 45%, #6d28d9 75%, #a21caf);
+    --glow-cyan: 0 0 16px rgba(8, 145, 178, 0.22);
+    --glow-violet: 0 0 18px rgba(124, 58, 237, 0.22);
+
+    --hud-bg: rgba(243, 245, 253, 0.82);
+    --footer-bg: rgba(255, 255, 255, 0.72);
+    --badge-bg: rgba(255, 255, 255, 0.92);
+    --field-bg: #ffffff;
+    --toast-bg: rgba(255, 255, 255, 0.97);
+    --track: rgba(12, 17, 48, 0.08);
+    --readout-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
+    --title-glow: drop-shadow(0 6px 18px rgba(109, 40, 217, 0.18));
+    --danger: #b91c1c;
+    --success-text: #065f46;
+}
+
+/* Background: blueprint-style grid instead of a neon floor, no CRT scanlines */
+[data-theme="light"] .bg-grid {
+    background-image:
+        linear-gradient(rgba(29, 78, 216, 0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(109, 40, 217, 0.10) 1px, transparent 1px);
+}
+[data-theme="light"] .bg-scanlines { display: none; }
+[data-theme="light"] .bg-nebula { opacity: 0.8; }
+
+/* The logo is bright cyan-to-violet on transparent - deepen it so it reads on white */
+[data-theme="light"] .hud-logo img,
+[data-theme="light"] .footer-logo,
+[data-theme="light"] .loader-logo { filter: brightness(0.78) saturate(1.35); }
+
+[data-theme="light"] .skip-link { color: #fff; }
+[data-theme="light"] .page-title { filter: var(--title-glow); }
+[data-theme="light"] .pack[data-rarity="common"] { --rarity: #5b6b80; }
+[data-theme="light"] .chapter-card { background: radial-gradient(80vmax 60vmax at 50% 50%, #ffffff, var(--bg) 70%); }
+[data-theme="light"] .quest .level-shot { background: var(--bg-2); }
+[data-theme="light"] .panel { box-shadow: 0 8px 30px rgba(40, 50, 120, 0.07); }
+[data-theme="light"] .cabinet { box-shadow: 0 8px 30px rgba(40, 50, 120, 0.08); }
+[data-theme="light"] .cab-screen img { filter: brightness(0.92) saturate(0.95); }
+
+/* Lava-lamp titles: same moving blobs, in deeper shades that keep 3:1+ on the light background */
+[data-theme="light"] .lava-text {
+    background-color: #4f46e5;
+    background-image:
+        radial-gradient(circle, #0891b2 0%, rgba(8, 145, 178, 0) 62%),
+        radial-gradient(circle, #c026d3 0%, rgba(192, 38, 211, 0) 62%),
+        radial-gradient(circle, #0d9488 0%, rgba(13, 148, 136, 0) 62%),
+        radial-gradient(circle, #7c3aed 0%, rgba(124, 58, 237, 0) 62%),
+        radial-gradient(circle, #2563eb 0%, rgba(37, 99, 235, 0) 62%),
+        linear-gradient(110deg, #0e7490, #1d4ed8 45%, #6d28d9 75%, #a21caf);
+}
+
+/* =========================================================
+   23. THEME SWITCH - the new theme spreads out in a circle from
+   the sun/moon button (View Transitions API, driven by game.js).
+   Browsers without it get a quick colour fade instead.
+   ========================================================= */
+.theme-toggle svg { transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.2, 1.3); }
+.theme-toggle.spin svg { transform: rotate(360deg); }
+
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+.theme-fade, .theme-fade *, .theme-fade *::before, .theme-fade *::after {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease !important;
+}
+
+/* =========================================================
+   24. DEMOS EXTRAS - scrolling previews, tech-stack tags
+   ========================================================= */
+/* Scrolling preview: game.js swaps a cabinet's screenshot for the
+   tall full-page capture (data-full) and adds .previewing, which
+   pans the image from the top of the site to the bottom. Mouse: on
+   hover. Touch: while the cabinet is in the middle of the screen.
+   The thin bar along the bottom of the screen shows progress. */
+.cab-screen img[data-full] { object-position: 50% 0%; transition: object-position 0.8s ease, filter 0.2s ease; }
+.cab-screen.previewing img[data-full] { object-position: 50% 100%; transition: object-position var(--preview-dur, 9s) linear 0.6s, filter 0.2s ease; }
+.cab-screen::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    height: 3px;
+    background: var(--neon-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    pointer-events: none;
+}
+.cab-screen.previewing::after { transform: scaleX(1); transition: transform var(--preview-dur, 9s) linear 0.6s; }
+/* While previewing, drop the dark PLAY overlay so the site is visible (the button stays) */
+.cab-screen.previewing .cab-play { background: transparent; }
+
+/* "Built with" tags - taken from each project's real repo */
+.stack { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.15rem 0 0; padding: 0; }
+.stack li {
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    font: 400 0.72rem var(--font-mono);
+    letter-spacing: 0.05em;
+    color: var(--cyan);
+    background: color-mix(in srgb, var(--cyan) 9%, transparent);
+    border: 1px solid color-mix(in srgb, var(--cyan) 30%, transparent);
+}
+
+/* Filters that empty a whole group hide its heading too (game.js) */
+[data-filter-group][hidden] { display: none; }
+
+.form-error { color: var(--danger); min-height: 1.2em; margin-bottom: 0.6rem; }
 
 /* ---------- 16. Responsive + reduced motion ---------- */
 @media (max-width: 1024px) {

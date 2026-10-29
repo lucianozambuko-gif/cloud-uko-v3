@@ -47,14 +47,61 @@ preselects that package in the enquiry form.
 - `demos.html` - Live demo hub: real projects we built. The Lumen
   booking marketplace and the client sites open live; the School ERP
   and POS sit behind staff logins, so their cards are "demo on request"
-  and open a pre-filled WhatsApp message. The cabinet screenshots are
-  in `img/showcase/` - retake one when that site's homepage changes
+  and open a pre-filled WhatsApp message. Filter buttons narrow it to
+  live apps / on request / client sites, and each card's "built with"
+  tags come from that project's repo
 - `contact.html` - Contact form and information
 - `game.css` / `game.js` - The shared "game" theme (styles and
   interactivity) used by every page
+- `tools/capture-previews.mjs` - Retakes the demos page's scrolling
+  previews (dev tool, not part of the site - see below)
 
 The static site needs no build step - open the HTML files directly or
 serve the repo root with any static file server.
+
+### Light / dark mode
+
+Every page has a sun/moon button in the HUD. The theme is stored as
+`data-theme="light|dark"` on `<html>`:
+
+- A tiny inline `<script>` at the top of each page's `<head>` picks the
+  theme **before the page is drawn** (the visitor's saved choice, else
+  their device's light/dark setting), so light-mode visitors never see
+  a flash of the dark theme. Keep it above the `game.css` link on any
+  new page.
+- `game.js` ("THEME TOGGLE") switches it, remembers the choice in
+  `localStorage` (`cu_theme`), and keeps following the device setting
+  until the visitor picks one.
+- `game.css` section 22 is the whole light theme: it overrides the
+  colour tokens from section 1 plus a handful of rules. When you add a
+  colour, make it a token (or use an existing one) so both themes pick
+  it up.
+
+### Demos page screenshots and scrolling previews
+
+Each cabinet on `demos.html` has two images in `img/showcase/`:
+
+- `src` - a 1280x800 screenshot of the site's homepage
+- `data-full` - a tall capture of the whole site (`<name>-full.jpg`),
+  panned from top to bottom when you hover the cabinet (or, on phones,
+  while it's in the middle of the screen). It's only downloaded at that
+  point, to save mobile data.
+
+Retake the tall captures when a site changes (needs Node 22+ and Chrome,
+no installs):
+
+```bash
+# 1. start Chrome with remote debugging (Windows example)
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --headless=new --remote-debugging-port=9336 --user-data-dir=%TEMP%\cu-shots
+# 2. all sites, or name the ones you want
+node tools/capture-previews.mjs
+node tools/capture-previews.mjs tea-cakes sic
+```
+
+Free-tier Render sites can still be waking up on the first try - the
+script warns you if a capture comes out one screen tall; just re-run it
+for that site. When replacing an image that's already live, add
+`?v=<date>` to its `src`/`data-full` so browsers fetch the new one.
 
 ### Fonts
 
@@ -97,6 +144,7 @@ This site is optimized for **GitHub Pages** static hosting:
 ## Features
 
 ✅ **Responsive Design** - Works on all devices
+✅ **Light & Dark Mode** - Follows the visitor's device, with a toggle on every page
 ✅ **Modern Animations** - Smooth hover effects and transitions
 ✅ **Professional Layout** - Corporate-grade design
 ✅ **SEO Optimized** - Search engine friendly

@@ -14,6 +14,8 @@
  *   - Scroll reveals, "decoding" headings, counting-up stats
  *   - 3D tilt on cards, cursor glow, occasional title glitch
  *   - Mobile menu, skill buttons, and a secret code easter egg
+ *   - Light / dark mode toggle (sun/moon button in the HUD)
+ *   - Demos page: scrolling site previews, filters that hide empty groups
  *
  * Respecting visitors' devices:
  *   - prefers-reduced-motion: no loader, no particles, no tilt/glitch
@@ -43,6 +45,27 @@
 
     function safe(name, fn) {
         try { fn(); } catch (e) { console.error('[game.js] ' + name + ' failed:', e); }
+    }
+
+    /* =========================================================
+       THEME - light or dark, stored as data-theme on <html>.
+       The first choice is made by a tiny script in each page's
+       <head> (before anything is drawn, so there's no dark flash):
+       the visitor's saved choice, else their device setting.
+       ========================================================= */
+    var Theme = {
+        get: function () { return root.getAttribute('data-theme') === 'light' ? 'light' : 'dark'; },
+        saved: function () { var t = store('cu_theme'); return t === 'light' || t === 'dark' ? t : null; },
+        apply: function (t) {
+            root.setAttribute('data-theme', t);
+            // Phone browser bar colour follows the theme
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', t === 'light' ? '#f3f5fd' : '#05060f');
+        }
+    };
+    // Safety net if a page is missing the <head> script
+    if (!root.hasAttribute('data-theme')) {
+        Theme.apply(Theme.saved() || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
     }
 
     /* =========================================================
@@ -94,6 +117,7 @@
         completed: { icon: '🏁', title: 'Completionist', desc: 'Reached the end of the page.' },
         skill:     { icon: '🧠', title: 'Skill Picked', desc: 'Chose a skill to talk about.' },
         story:     { icon: '📖', title: 'Story Mode', desc: 'Visited all five chapters.' },
+        dayshift:  { icon: '☀️', title: 'Day Shift', desc: 'Switched on the lights.' },
         cheat:     { icon: '🕹️', title: 'Cheat Code Activated', desc: 'You found the secret. Respect.' }
     };
 
@@ -182,7 +206,13 @@
         var canvas = document.getElementById('fx-canvas');
         if (!canvas || reduceMotion) { if (canvas) canvas.remove(); return; }
         var ctx = canvas.getContext('2d');
-        var colours = ['34,211,238', '45,212,191', '59,130,246', '139,92,246', '200,78,240'];
+        // Logo colours as "r,g,b"; light mode uses deeper shades of the same five
+        // so the dots still show on a white background. Read every frame, so
+        // switching theme recolours the dots immediately.
+        var PALETTES = {
+            dark:  ['34,211,238', '45,212,191', '59,130,246', '139,92,246', '200,78,240'],
+            light: ['14,116,144', '15,118,110', '29,78,216', '109,40,217', '162,28,175']
+        };
         var dots = [];
         var mouse = { x: -9999, y: -9999 };
         var w, h, dpr, running = true;
@@ -207,7 +237,7 @@
                 r: Math.random() * 1.8 + 0.6,
                 vx: (Math.random() - 0.5) * 0.25,
                 vy: -(Math.random() * 0.35 + 0.08),
-                c: colours[Math.floor(Math.random() * colours.length)],
+                ci: Math.floor(Math.random() * PALETTES.dark.length),
                 a: Math.random() * 0.5 + 0.35
             };
         }
@@ -215,19 +245,23 @@
         function frame() {
             if (!running) return;
             ctx.clearRect(0, 0, w, h);
+            var light = Theme.get() === 'light';
+            var colours = light ? PALETTES.light : PALETTES.dark;
+            var glow = light ? 0 : 8; // a neon glow looks muddy on white
             for (var i = 0; i < dots.length; i++) {
                 var p = dots[i];
+                p.c = colours[p.ci];
                 // Gentle push away from the mouse
                 var dx = p.x - mouse.x, dy = p.y - mouse.y, dist2 = dx * dx + dy * dy;
                 if (dist2 < 14000) { p.x += dx * 0.012; p.y += dy * 0.012; }
                 p.x += p.vx;
                 p.y += p.vy;
-                if (p.y < -10 || p.x < -10 || p.x > w + 10) dots[i] = p = newDot(false);
+                if (p.y < -10 || p.x < -10 || p.x > w + 10) { dots[i] = p = newDot(false); p.c = colours[p.ci]; }
 
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                 ctx.fillStyle = 'rgba(' + p.c + ',' + p.a + ')';
-                ctx.shadowBlur = 8;
+                ctx.shadowBlur = glow;
                 ctx.shadowColor = 'rgba(' + p.c + ',0.9)';
                 ctx.fill();
 
@@ -471,6 +505,119 @@
     }
 
     /* =========================================================
+       THEME TOGGLE - sun/moon button in the HUD. The new theme
+       spreads out in a circle from the button where the browser
+       supports View Transitions; elsewhere colours fade across.
+       ========================================================= */
+    function themeToggle() {
+        var btn = document.querySelector('.theme-toggle');
+        var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+        var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>';
+
+        // The icon shows what you'll switch TO
+        function paint() {
+            if (!btn) return;
+            var light = Theme.get() === 'light';
+            btn.innerHTML = light ? MOON : SUN;
+            btn.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+        }
+
+        function switchTo(next) {
+            var change = function () { Theme.apply(next); paint(); };
+            if (reduceMotion) { change(); return; }
+            if (document.startViewTransition) {
+                var r = btn.getBoundingClientRect();
+                var x = r.left + r.width / 2, y = r.top + r.height / 2;
+                var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+                var vt = document.startViewTransition(change);
+                vt.ready.then(function () {
+                    root.animate(
+                        { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
+                        { duration: 650, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', pseudoElement: '::view-transition-new(root)' }
+                    );
+                }).catch(function () { /* transition skipped - theme still changed */ });
+            } else {
+                root.classList.add('theme-fade');
+                change();
+                setTimeout(function () { root.classList.remove('theme-fade'); }, 450);
+            }
+        }
+
+        if (btn) {
+            btn.addEventListener('click', function () {
+                var next = Theme.get() === 'light' ? 'dark' : 'light';
+                store('cu_theme', next);
+                btn.classList.toggle('spin');
+                switchTo(next);
+                Sound.click();
+                if (next === 'light') unlock('dayshift');
+            });
+        }
+        paint();
+
+        // No saved choice yet? Keep following the device if it switches (e.g. at sunset)
+        var mq = window.matchMedia('(prefers-color-scheme: light)');
+        var follow = function (e) { if (!Theme.saved()) { Theme.apply(e.matches ? 'light' : 'dark'); paint(); } };
+        if (mq.addEventListener) mq.addEventListener('change', follow);
+    }
+
+    /* =========================================================
+       SCROLLING PREVIEWS (demos page) - a cabinet's screen img can
+       carry data-full: a tall capture of the whole site. On hover
+       (mouse) or while the cabinet is mid-screen (touch), the tall
+       image is loaded - only then, to save mobile data - and the
+       CSS pans it from the top of the site to the bottom.
+       ========================================================= */
+    function previews() {
+        if (reduceMotion) return;
+        document.querySelectorAll('.cab-screen').forEach(function (screen) {
+            var img = screen.querySelector('img[data-full]');
+            if (!img) return;
+            var loaded = false, waiting = null, want = false;
+
+            function load(cb) {
+                if (loaded) { cb(); return; }
+                if (waiting) { waiting.push(cb); return; }
+                waiting = [cb];
+                var full = new Image();
+                full.onload = function () {
+                    img.src = full.src; // same top as the small screenshot, so the swap is invisible
+                    loaded = true;
+                    waiting.forEach(function (f) { f(); });
+                };
+                full.onerror = function () { waiting = null; }; // keep the small screenshot
+                full.src = img.dataset.full;
+            }
+
+            function start() {
+                want = true;
+                load(function () {
+                    if (!want) return;
+                    // Travel at roughly 110px a second, between 5 and 14 seconds
+                    var travel = img.clientWidth * (img.naturalHeight / img.naturalWidth) - img.clientHeight;
+                    screen.style.setProperty('--preview-dur', Math.max(5, Math.min(14, travel / 110)).toFixed(1) + 's');
+                    // Two frames so the browser has laid out the tall image before panning starts
+                    requestAnimationFrame(function () { requestAnimationFrame(function () { if (want) screen.classList.add('previewing'); }); });
+                });
+            }
+            function stop() { want = false; screen.classList.remove('previewing'); }
+
+            var cab = screen.closest('.cabinet') || screen;
+            if (finePointer) {
+                cab.addEventListener('pointerenter', start);
+                cab.addEventListener('pointerleave', stop);
+                cab.addEventListener('focusin', start);
+                cab.addEventListener('focusout', function (e) { if (!cab.contains(e.relatedTarget)) stop(); });
+            } else if ('IntersectionObserver' in window) {
+                // Touch: play while the screen is in the middle third of the viewport
+                new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) { if (e.isIntersecting) start(); else stop(); });
+                }, { rootMargin: '-33% 0px -33% 0px' }).observe(screen);
+            }
+        });
+    }
+
+    /* =========================================================
        PAGE-LEVEL TRACKING for achievements
        ========================================================= */
     function tracking() {
@@ -587,7 +734,9 @@
         window.addEventListener('pageshow', function () { wipe.classList.remove('on'); });
     }
 
-    // Projects filters: buttons with data-filter show matching [data-category] cards
+    // Filters (projects + demos): buttons with data-filter show matching
+    // [data-category] cards. A [data-filter-group] (heading + its grid) is
+    // hidden when the filter leaves it with no cards.
     function filters() {
         var buttons = document.querySelectorAll('.filter[data-filter]');
         if (!buttons.length) return;
@@ -599,6 +748,10 @@
                     var show = f === 'all' || card.dataset.category === f;
                     card.hidden = !show;
                     if (show) card.classList.add('in'); // make sure revealed cards are visible
+                });
+                document.querySelectorAll('[data-filter-group]').forEach(function (group) {
+                    group.hidden = !group.querySelector('[data-category]:not([hidden])');
+                    if (!group.hidden) group.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
                 });
                 Sound.click();
             });
@@ -640,7 +793,9 @@
     /* ---------- Start everything ---------- */
     function start() {
         safe('hud', hud);
+        safe('themeToggle', themeToggle);
         safe('particles', particles);
+        safe('previews', previews);
         safe('xpBar', xpBar);
         safe('reveals', reveals);
         safe('tilt', tilt);
