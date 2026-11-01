@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oxanium:wght@500;600;700;800&family=Share+Tech+Mono&display=swap">
-    <link rel="stylesheet" href="game.css?v=20261029">
+    <link rel="stylesheet" href="game.css?v=20261101b">
 </head>
 <body data-chapter="Side quest" data-chapter-name="Smart Automation" data-chapter-sub="Services" data-page="smart-automation">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -196,6 +196,8 @@
         </div>
     </footer>
 
-    <script src="game.js?v=20261029"></script>
+    <!-- Realism layer (springs, fluid): must load before game.js, which hands over to it -->
+    <script src="realism.js?v=20261101b"></script>
+    <script src="game.js?v=20261101b"></script>
 </body>
 </html>

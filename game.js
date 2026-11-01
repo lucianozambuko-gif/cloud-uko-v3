@@ -104,6 +104,8 @@
         };
     })();
 
+    window.CUSound = Sound; // realism.js plays these for card presses
+
     /* =========================================================
        ACHIEVEMENTS - each unlocks once per browser (localStorage)
        and shows a toast in the top-right. role="status" makes
@@ -224,8 +226,8 @@
             canvas.width = w * dpr;
             canvas.height = h * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            // Roughly one dot per 18,000px² - about 30 on a phone, 70-90 on desktop
-            var target = Math.max(24, Math.min(90, Math.round((w * h) / 18000)));
+            // Roughly one dot per 18,000px² - about 30 on a phone, up to 60 on desktop
+            var target = Math.max(24, Math.min(60, Math.round((w * h) / 18000)));
             while (dots.length < target) dots.push(newDot(true));
             dots.length = target;
         }
@@ -261,16 +263,20 @@
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                 ctx.fillStyle = 'rgba(' + p.c + ',' + p.a + ')';
-                ctx.shadowBlur = glow;
-                ctx.shadowColor = 'rgba(' + p.c + ',0.9)';
                 ctx.fill();
+                // Glow as a faint larger dot: canvas shadowBlur is very slow per dot
+                if (glow) {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(' + p.c + ',' + (p.a * 0.18) + ')';
+                    ctx.fill();
+                }
 
                 // Lines to nearby dots (only check later dots so each pair is drawn once)
                 for (var j = i + 1; j < dots.length; j++) {
                     var q = dots[j];
                     var ex = p.x - q.x, ey = p.y - q.y, d2 = ex * ex + ey * ey;
                     if (d2 < 9000) {
-                        ctx.shadowBlur = 0;
                         ctx.strokeStyle = 'rgba(' + p.c + ',' + (0.14 * (1 - d2 / 9000)) + ')';
                         ctx.lineWidth = 1;
                         ctx.beginPath();
@@ -280,7 +286,6 @@
                     }
                 }
             }
-            ctx.shadowBlur = 0;
             requestAnimationFrame(frame);
         }
 
@@ -407,7 +412,7 @@
        TILT - cards lean towards the mouse in 3D (mouse only)
        ========================================================= */
     function tilt() {
-        if (!finePointer || reduceMotion) return;
+        if (!finePointer || reduceMotion || (window.CURealism && window.CURealism.tilt)) return; // realism.js uses springs
         document.querySelectorAll('[data-tilt]').forEach(function (card) {
             var max = 7; // degrees
             card.addEventListener('pointermove', function (e) {
@@ -433,14 +438,18 @@
         var x = 0, y = 0, gx = 0, gy = 0;
         window.addEventListener('pointermove', function (e) { x = e.clientX; y = e.clientY; }, { passive: true });
         (function follow() {
-            // Ease towards the pointer so the light trails slightly behind
-            gx += (x - gx) * 0.12;
-            gy += (y - gy) * 0.12;
-            glow.style.transform = 'translate3d(' + gx + 'px,' + gy + 'px,0)';
+            // Ease towards the pointer so the light trails slightly behind.
+            // Only writes while it's moving, so an idle cursor costs nothing.
+            var nx = gx + (x - gx) * 0.12, ny = gy + (y - gy) * 0.12;
+            if (Math.abs(nx - gx) + Math.abs(ny - gy) > 0.05) {
+                gx = nx; gy = ny;
+                glow.style.transform = 'translate3d(' + gx + 'px,' + gy + 'px,0)';
+            }
             requestAnimationFrame(follow);
         })();
 
-        // Buttons drift a few pixels towards the cursor
+        // Buttons drift a few pixels towards the cursor (realism.js uses springs instead)
+        if (window.CURealism && window.CURealism.magnetic) return;
         document.querySelectorAll('.btn').forEach(function (btn) {
             btn.addEventListener('pointermove', function (e) {
                 var r = btn.getBoundingClientRect();
@@ -530,6 +539,9 @@
                 var x = r.left + r.width / 2, y = r.top + r.height / 2;
                 var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
                 var vt = document.startViewTransition(change);
+                // Safety net: a transition that stalls holds back all page rendering until it ends
+                var stuck = setTimeout(function () { vt.skipTransition(); }, 1500);
+                vt.finished.then(function () { clearTimeout(stuck); }, function () { clearTimeout(stuck); });
                 vt.ready.then(function () {
                     root.animate(
                         { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
@@ -725,7 +737,8 @@
             if (url.pathname === location.pathname && url.hash) return; // same-page anchor
             if (!/\.html$|\/$/.test(url.pathname)) return;
             e.preventDefault();
-            wipe.classList.add('on');
+            if (window.CURealism && window.CURealism.wipe) window.CURealism.wipe();
+            else wipe.classList.add('on');
             setTimeout(function () { location.href = url.href; }, 380);
         });
 

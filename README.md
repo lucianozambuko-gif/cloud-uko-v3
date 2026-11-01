@@ -77,6 +77,21 @@ Every page has a sun/moon button in the HUD. The theme is stored as
   colour, make it a token (or use an existing one) so both themes pick
   it up.
 
+### Realism layer (`realism.js`)
+
+Loaded on every page **before** `game.js`, which then hands over its tilt,
+magnetic buttons and page wipe. It adds a WebGL2 fluid background, spring
+physics on presses, glass highlights and pointer/tilt depth. No libraries.
+
+- Without it (reduced motion, or the file fails to load) `game.js` falls back
+  to its simpler versions. Without WebGL2 only the fluid is missing.
+- The fluid starts at a quality level chosen from the device, drops a level
+  after two slow stretches, and switches off if the lowest is still too slow.
+  Add `?fx=force` to a URL to turn that off while testing.
+- Keep it fast: no `backdrop-filter` over the fluid, no `mix-blend-mode` on
+  full-screen layers, and animate `transform`/`opacity` rather than
+  `background-position` on large areas. Each of these caused visible lag.
+
 ### Demos page screenshots and scrolling previews
 
 Each cabinet on `demos.html` has two images in `img/showcase/`:
