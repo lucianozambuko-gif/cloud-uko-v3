@@ -4,7 +4,7 @@
 
 Cloud UKO Version 2 features enhanced design, improved performance, and expanded service offerings. This version includes professional animations, optimized responsiveness, and a refined user interface for better customer engagement.
 
-🚀 **Live Website**: [View on GitHub Pages](https://lucianozambuko-gif.github.io/cloud-uko-v3/)
+🚀 **Live Website**: [clouduko.com](https://clouduko.com/)
 
 ## About Cloud UKO
 
@@ -133,6 +133,39 @@ If you change a font, update the Google Fonts link on every page.
 - **Responsive**: Mobile-first design
 - **Performance**: Optimized for fast loading
 - **Accessibility**: Screen reader friendly
+
+## SEO and the clouduko.com domain
+
+The site's address is `https://clouduko.com/` (no www). Each page has its
+own title, description, canonical URL, sharing tags and JSON-LD structured
+data in its `<head>`. `robots.txt`, `sitemap.xml`, `404.html` and the share
+image (`img/og/clouduko-share.jpg`, 1200x630) live alongside them.
+
+When you add or rename a page: give it all of the above, add it to
+`sitemap.xml`, and update `<lastmod>` when a page's content changes. Don't
+add ratings, reviews or figures to the structured data unless they're real.
+
+### Connecting the domain
+
+Pages deploys through GitHub Actions, which ignores a `CNAME` file, so the
+domain is set in the repo settings rather than in a file.
+
+1. At your domain registrar, add these DNS records:
+   - `A` records for `@`: `185.199.108.153`, `185.199.109.153`,
+     `185.199.110.153`, `185.199.111.153`
+   - `AAAA` records for `@`: `2606:50c0:8000::153`, `2606:50c0:8001::153`,
+     `2606:50c0:8002::153`, `2606:50c0:8003::153`
+   - `CNAME` record for `www`: `lucianozambuko-gif.github.io`
+2. In the repo, go to Settings > Pages > Custom domain, enter `clouduko.com`
+   and save. Tick "Enforce HTTPS" once the certificate is ready.
+3. Verify the domain under your GitHub profile's Settings > Pages, so nobody
+   else can claim it for their own site.
+
+### After launch
+
+1. Add `clouduko.com` to Google Search Console and submit `sitemap.xml`.
+2. Create a Google Business Profile for Cloud UKO.
+3. Paste a page link into WhatsApp or Facebook to check the share preview.
 
 ## Deployment
 

@@ -98,7 +98,8 @@ body {
     overflow-x: hidden;
 }
 
-img { max-width: 100%; display: block; }
+/* height:auto keeps images in proportion now that they carry width/height attributes */
+img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
 
 h1, h2, h3 {

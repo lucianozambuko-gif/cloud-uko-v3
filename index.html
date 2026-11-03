@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en-ZA" class="no-js">
 <!--
 ==========================================
 CLOUD UKO - HOMEPAGE ("game" theme)
@@ -26,20 +26,40 @@ Sections:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud UKO - Websites & Business Systems for South Africa</title>
-    <meta name="description" content="Cloud UKO builds websites and business systems for South African schools, farms and small businesses: ERP, invoicing, POS and booking. Try our live demos.">
+    <title>Web Development &amp; Business Systems South Africa | Cloud UKO</title>
+    <meta name="description" content="Cloud UKO builds websites, ERP, invoicing, POS and booking systems for South African schools, farms and small businesses. See our live demos.">
     <meta name="theme-color" content="#05060f">
     <!-- Theme before first paint, so light-mode visitors never see a dark flash:
          the saved choice (game.js), else the device's light/dark setting -->
     <script>(function(){var t;try{t=localStorage.getItem('cu_theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.setAttribute('data-theme',t);if(t==='light')document.querySelector('meta[name="theme-color"]').setAttribute('content','#f3f5fd')})();</script>
     <link rel="icon" type="image/png" href="img/logo/clouduko-icon.png">
+    <!-- SEO: canonical address, sharing previews and structured data (see README) -->
+    <link rel="canonical" href="https://clouduko.com/">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Cloud UKO">
+    <meta property="og:locale" content="en_ZA">
+    <meta property="og:url" content="https://clouduko.com/">
+    <meta property="og:title" content="Web Development &amp; Business Systems South Africa | Cloud UKO">
+    <meta property="og:description" content="Cloud UKO builds websites, ERP, invoicing, POS and booking systems for South African schools, farms and small businesses. See our live demos.">
+    <meta property="og:image" content="https://clouduko.com/img/og/clouduko-share.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Cloud UKO: websites and business systems for South Africa">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Web Development &amp; Business Systems South Africa | Cloud UKO">
+    <meta name="twitter:description" content="Cloud UKO builds websites, ERP, invoicing, POS and booking systems for South African schools, farms and small businesses. See our live demos.">
+    <meta name="twitter:image" content="https://clouduko.com/img/og/clouduko-share.jpg">
+    <link rel="apple-touch-icon" href="img/logo/clouduko-icon.png">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://clouduko.com/#organization","name":"Cloud UKO","alternateName":"United Knowledge Operations","url":"https://clouduko.com/","logo":"https://clouduko.com/img/logo/clouduko-logo.png","image":"https://clouduko.com/img/og/clouduko-share.jpg","description":"Cloud UKO builds websites, ERP, invoicing, POS and booking systems for South African schools, farms and small businesses. See our live demos.","email":"antoniozambuko@gmail.com","telephone":"+27740926666","address":{"@type":"PostalAddress","addressLocality":"Johannesburg","addressRegion":"Gauteng","addressCountry":"ZA"},"areaServed":{"@type":"Country","name":"South Africa"},"sameAs":["https://www.linkedin.com/company/cloud-uko","https://www.facebook.com/clouduko","https://www.instagram.com/clouduko"]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://clouduko.com/#website","url":"https://clouduko.com/","name":"Cloud UKO","inLanguage":"en-ZA","publisher":{"@id":"https://clouduko.com/#organization"}}</script>
 
     <!-- Game-style heading font (one family, two weights) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oxanium:wght@500;600;700;800&family=Share+Tech+Mono&display=swap">
 
-    <link rel="stylesheet" href="game.css?v=20261101b">
+    <link rel="stylesheet" href="game.css?v=20261102">
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -47,7 +67,7 @@ Sections:
     <!-- Loading screen: removed by game.js (once per session, never for reduced motion) -->
     <div class="loader" aria-hidden="true">
         <div class="loader-inner">
-            <img src="img/logo/clouduko-logo.png" alt="" class="loader-logo">
+            <img width="500" height="500" src="img/logo/clouduko-logo.png" alt="" class="loader-logo">
             <div class="loader-text">BOOTING SYSTEMS 0%</div>
             <div class="loader-bar"><span></span></div>
             <div class="loader-skip">CLICK OR PRESS ANY KEY TO SKIP</div>
@@ -68,7 +88,7 @@ Sections:
     <header class="hud">
         <div class="container hud-inner">
             <a href="index.html" class="hud-logo" aria-label="Cloud UKO home">
-                <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations">
+                <img width="500" height="500" src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations">
             </a>
 
             <nav aria-label="Main">
@@ -198,7 +218,7 @@ Sections:
                     <!-- School ERP: staff/parent portals need a login, so this opens a WhatsApp demo request -->
                     <a class="panel level reveal" data-tilt data-demo-link href="https://wa.me/27740926666?text=Hi%20Cloud%20UKO%2C%20I%27d%20like%20to%20request%20a%20demo%20of%20the%20School%20ERP." target="_blank" rel="noopener noreferrer">
                         <div class="level-shot">
-                            <img src="img/showcase/erp.png" alt="CloudUko School ERP system" loading="lazy">
+                            <img width="1440" height="900" src="img/showcase/erp.png" alt="CloudUko School ERP system" loading="lazy">
                             <span class="level-badge request">DEMO ON REQUEST</span>
                         </div>
                         <div class="level-body">
@@ -211,7 +231,7 @@ Sections:
 
                     <a class="panel level reveal" data-tilt data-demo-link href="https://online-tutor-web.vercel.app/" target="_blank" rel="noopener noreferrer">
                         <div class="level-shot">
-                            <img src="img/showcase/booking.png" alt="Lumen tutor booking platform" loading="lazy">
+                            <img width="1440" height="900" src="img/showcase/booking.png" alt="Lumen tutor booking platform" loading="lazy">
                             <span class="level-badge"><span class="live-dot"></span> LIVE</span>
                         </div>
                         <div class="level-body">
@@ -410,7 +430,7 @@ Sections:
     <!-- ==================== FOOTER ==================== -->
     <footer class="footer">
         <div class="container">
-            <img src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" class="footer-logo" loading="lazy">
+            <img width="500" height="500" src="img/logo/clouduko-logo.png" alt="Cloud UKO - United Knowledge Operations" class="footer-logo" loading="lazy">
 
             <nav class="footer-links" aria-label="Footer">
                 <a href="index.html">Home</a>

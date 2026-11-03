@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /tools/
+Disallow: /README.md
+
+Sitemap: https://clouduko.com/sitemap.xml
