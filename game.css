@@ -1685,6 +1685,9 @@ main, .hud, footer { position: relative; z-index: 2; }
 
 .form-error { color: var(--danger); min-height: 1.2em; margin-bottom: 0.6rem; }
 
+/* Projects: a client logo shown on its own background colour (set per card with --shot-bg) */
+.quest .level-shot.logo-shot { background: var(--shot-bg, #fff); }
+
 /* =========================================================
    25. REALISM (realism.js) - fluid background, glass light,
    shockwave and liquid wipe. .fx-on is added by realism.js, so
