@@ -3,4 +3,4 @@ Allow: /
 Disallow: /tools/
 Disallow: /README.md
 
-Sitemap: https://clouduko.com/sitemap.xml
+Sitemap: https://lucianozambuko-gif.github.io/cloud-uko-v3/sitemap.xml
